@@ -1,0 +1,58 @@
+// src/components/Gnb/gnb.scss
+.header {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.menuContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+}
+
+.leftCenterGroup {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.leftMenu {
+  margin-right: 2rem;
+}
+
+.centerMenu ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.centerMenu li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.rightMenu ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rightMenu li a {
+  text-decoration: none;
+  color: #333;
+}
