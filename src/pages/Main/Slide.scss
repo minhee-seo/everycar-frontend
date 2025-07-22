@@ -1,0 +1,12 @@
+@import '../../styles/global.scss';
+
+.mySwiper {
+  width: 100%;
+  height: 500px;
+  background: $color-gray-500;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: black; // 네비게이션 버튼 색상
+  }
+}

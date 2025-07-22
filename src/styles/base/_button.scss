@@ -1,0 +1,53 @@
+// styles/base/_button.scss
+@import './variables';
+@import './mixins';
+
+.btn {
+  @include button-base;
+
+  &--primary {
+    background: $gradient-color;
+    border-radius: 50px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: 0.8s ease;
+
+    &:hover {
+      
+    }
+  }
+
+  // &--secondary {
+  //   background-color: $secondary-color;
+  //   color: $white;
+
+  //   &:hover {
+  //     background-color: $secondary-hover;
+  //   }
+  // }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid $color-black;
+    color: $color-black;
+
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+
+  &--disabled {
+    background-color: #e0e0e0;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+
+  &--small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  &--large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+  }
+}

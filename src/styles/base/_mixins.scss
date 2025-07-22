@@ -1,0 +1,11 @@
+// styles/base/_mixins.scss
+
+@mixin button-base {
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}

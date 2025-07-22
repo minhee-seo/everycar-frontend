@@ -1,7 +1,9 @@
+@import '../../styles/global.scss';
+
 // src/components/Gnb/gnb.scss
 .header {
   width: 100%;
-  background-color: #fff;
+  background-color: $color-white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -40,12 +42,18 @@
 
 .centerMenu li a {
   text-decoration: none;
-  color: #333;
+  color: $text-color;
   font-weight: 500;
+  transition: 0.2s;
+}
+
+.centerMenu li a:hover{
+  color: $text-muted;
 }
 
 .rightMenu ul {
   display: flex;
+  align-items: center;
   gap: 1rem;
   list-style: none;
   margin: 0;
@@ -55,4 +63,5 @@
 .rightMenu li a {
   text-decoration: none;
   color: #333;
+  transition: 0.2s;
 }

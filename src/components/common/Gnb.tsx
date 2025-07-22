@@ -56,7 +56,11 @@ const Gnb: React.FC = () => {
               ) : (
                 <>
                   <li><Link to="/auth/login">로그인</Link></li>
-                  <li><Link to="/auth/registerConditions">회원가입</Link></li>
+                  <li>
+                    <div className="btn btn--primary">
+                      <Link to="/auth/registerConditions">회원가입</Link>    
+                    </div>
+                  </li>
                 </>
               )}
             </ul>
