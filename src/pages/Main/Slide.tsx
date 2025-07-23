@@ -15,9 +15,9 @@ export default function Slide() {
   return (
     <>
       <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
+        <SwiperSlide></SwiperSlide>
       </Swiper>
     </>
   );
