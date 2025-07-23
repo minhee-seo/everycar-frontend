@@ -1,0 +1,94 @@
+.footer {
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footerLinkContainer {
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+
+    li a {
+      text-decoration: none;
+      color: #666;
+      font-weight: 500;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+  margin: 20px 0;
+}
+
+.footerContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.customerService,
+.companyInfo,
+.snsLinkContainer {
+  flex: 1;
+  min-width: 240px;
+}
+
+.customerService h4,
+.companyInfo h4,
+.snsTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.customerService p,
+.companyInfo p {
+  margin: 4px 0;
+}
+
+.infoWrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.infoTitle,
+.infoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.snsIcon {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: #888;
+    cursor: pointer;
+
+    &:hover {
+      fill: #000;
+    }
+  }
+}

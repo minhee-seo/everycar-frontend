@@ -3,6 +3,7 @@ import styled from './MainPage.module.scss';
 import Content from './Content.tsx';
 import Slide from './Slide.tsx';
 import ShortCut from './ShortCut.tsx';
+import CarSlider from './CarSlide.tsx';
 
 function MainPage() {
   return (
@@ -10,6 +11,7 @@ function MainPage() {
       <Slide></Slide>
       <Content></Content>
       <ShortCut></ShortCut>
+      <CarSlider></CarSlider>
     </div>
   )
 }
