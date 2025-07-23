@@ -1,0 +1,57 @@
+@import '../../styles/global.scss';
+
+.serviceShortcut {
+  display: flex;
+  color: #2F2F2F;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 50px;
+
+  .serviceShortcutTitle {
+    width: 18%;
+    font-size: 32px;
+    font-weight: normal;
+  }
+
+  .shortcutContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+
+    .shortcutBox {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      font-size: $font-md;
+      text-align: center;
+      gap: clamp(8px, 0.8vw, 39px);
+      cursor: pointer;
+      color: #2F2F2F;
+      border-radius: 100px;
+      transition: 0.2s;
+    }
+
+    .shortcutBox:hover {
+      background-color: $color-gray-300;
+    }
+  }
+}
+
+
+
+
+/* 미디어 쿼리 */
+@media (max-width: 1200px) {}
+
+@media (max-width: 768px) {
+  /* 태블릿 */
+
+}
+
+@media (max-width: 480px) {
+  /* 모바일 */
+
+}

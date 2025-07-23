@@ -29,11 +29,11 @@ function Content() {
                 <path d="M11.5 5.74999V11.5L15.3334 13.4167M21.0834 11.5C21.0834 16.7927 16.7928 21.0833 11.5 21.0833C6.20729 21.0833 1.91669 16.7927 1.91669 11.5C1.91669 6.20726 6.20729 1.91666 11.5 1.91666C16.7928 1.91666 21.0834 6.20726 21.0834 11.5Z" stroke="#B3B3B3" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <div className={styled.period}>
-                <p className='start-period'>
+                <p>
                   01.01 (수)
                 </p>
                 <p className='period-wave'>~</p>
-                <p className='end-period'>
+                <p>
                   01.03 (금)
                 </p>
               </div>
