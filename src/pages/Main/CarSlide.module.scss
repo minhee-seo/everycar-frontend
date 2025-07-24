@@ -1,7 +1,8 @@
+@import '../../styles/global.scss';
+
 .container {
   width: 100%;
   padding: 2rem;
-  background: #f5f5f5;
 }
 
 .title {
@@ -12,13 +13,42 @@
 
 .slider {
   width: 100%;
+  padding-bottom: 40px; // dot 위치 확보
+  position: relative;
+  --swiper-navigation-color: #{$color-gray-800}; // 버튼 색상
+  --swiper-pagination-color: #{$color-gray-800}; // dot 색상
+--swiper-navigation-top-offset: 40%;
+  .swiper-pagination {
+    position: absolute;
+    bottom: 0px; // 원하는 위치 조정
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: $color-gray-800;
+    opacity: 0.5;
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: $color-black;
+    ;
+  }
+
+    .swiper-button-prev,
+  .swiper-button-next {
+    top: 50%; // 수직 가운데 정렬
+    transform: translateY(-50%);
+  }
 }
 
 .slide {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #fff;
+  background: $color-white;
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
