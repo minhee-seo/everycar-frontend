@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import styles from './Gnb.module.scss';
+import MobileGnb from './MobileGnb.tsx';
 
 const Gnb: React.FC = () => {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem('accessToken'));
 
   useEffect(() => {
@@ -24,6 +28,11 @@ const Gnb: React.FC = () => {
     setIsLoggedIn(false);
     window.dispatchEvent(new Event('loginStateChange'));
   };
+
+  // 모바일 조건부 렌더링
+  if (isMobile) {
+    return <MobileGnb />;
+  }
 
   return (
     <div className={styles.header}>

@@ -13,5 +13,6 @@ src/
 │   ├── store.ts
 │   └── slices/
 ├── styles/             # SCSS 파일들 (theme.scss, variables.scss 등)
+│   └── base/
 ├── utils/              # 공통 유틸 함수
 └── index.tsx           # 엔트리 포인트

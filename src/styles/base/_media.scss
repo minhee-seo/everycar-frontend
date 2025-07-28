@@ -1,0 +1,21 @@
+// 1. 브레이크포인트 정의
+$breakpoints: (
+  mobile-s: 480px, // 소형 모바일
+  mobile-m: 768px, // 일반 모바일
+  tablet: 1024px, // 태블릿
+  laptop: 1440px, // 일반 데스크탑
+  desktop: 1920px // 고해상도 모바일
+);
+
+// 2. 미디어쿼리 mixin
+@mixin respond-max($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin respond-min($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
