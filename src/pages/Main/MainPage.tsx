@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from './MainPage.module.scss';
 import Content from './main_desktop/Content.tsx';
-import Slide from './Slide.tsx';
-import ShortCut from './ShortCut.tsx';
-import CarSlider from './main_desktop/CarSlide.tsx';
+import Slide from './main_desktop/Slide.tsx';
+import ShortCut from './main_commoon/ShortCut.tsx';
+import CarSlider from './main_commoon/CarSlide.tsx';
 import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
-import Mainbanner from './main_mobile/Mainbanner.tsx';
+import Searchbar from './main_mobile/Searchbar.tsx';
 
 function MainPage() {
   return (
@@ -30,9 +30,12 @@ function Desktop() {
 function Mobile() {
   return (
     <div className={styled.container}>
-      <Mainbanner></Mainbanner>
+      <Searchbar></Searchbar>
+      <div className={styled.mainCont}>
       <ShortCut></ShortCut>
       <CarSlider></CarSlider>
+
+      </div>
     </div>
   );
 }

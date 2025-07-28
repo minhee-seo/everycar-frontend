@@ -1,0 +1,21 @@
+@import '../../../styles/global.scss';
+
+.searchCont{
+    padding: 0 2rem 3rem 2rem;
+    background: linear-gradient($primary-color, 40%, #eaff4f);
+    .searchBar{
+        cursor: pointer;
+        display: flex;
+        padding: 1rem;
+        height: 40px;
+        background: $color-white;
+        opacity: 0.7;
+        border-radius: 20px;
+        align-items: center;
+
+        p{
+            padding: 0 1rem;
+            color: $color-gray-800;
+        }
+    }
+}

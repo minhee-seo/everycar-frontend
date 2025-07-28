@@ -20,7 +20,6 @@ export default function CarSlider() {
     <div className={styles.container}>
       <h2 className={styles.title}>인기 차량</h2>
       <Swiper
-        modules={[Navigation, Pagination]}
         navigation
         pagination={{ clickable: true }}
         spaceBetween={20}

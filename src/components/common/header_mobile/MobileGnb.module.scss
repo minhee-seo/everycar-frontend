@@ -3,6 +3,7 @@
 .mobileMenuContainer {
   display: none;
   padding: 1rem 0;
+  background: $primary-color;
 
   @include respond-max(tablet) {
     display: flex;
@@ -20,7 +21,7 @@
   width: 32px;
   height: 32px;
   position: absolute;
-  right: 10px;
+  right: 2rem;
   z-index: 1001;
 
   span {

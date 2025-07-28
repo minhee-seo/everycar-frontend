@@ -17,7 +17,8 @@
   position: relative;
   --swiper-navigation-color: #{$color-gray-800}; // 버튼 색상
   --swiper-pagination-color: #{$color-gray-800}; // dot 색상
---swiper-navigation-top-offset: 40%;
+  --swiper-navigation-top-offset: 40%;
+
   .swiper-pagination {
     position: absolute;
     bottom: 0px; // 원하는 위치 조정
@@ -37,7 +38,7 @@
     ;
   }
 
-    .swiper-button-prev,
+  .swiper-button-prev,
   .swiper-button-next {
     top: 50%; // 수직 가운데 정렬
     transform: translateY(-50%);
