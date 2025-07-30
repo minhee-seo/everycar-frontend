@@ -1,0 +1,45 @@
+@import '../../../styles/global.scss';
+
+.banner {
+  height: 200px;
+  width: 100%;
+  background-color: $color-gray-300;
+}
+
+.cont {
+  padding: 20px 0;
+
+  h3 {
+    padding-bottom: 10px;
+  }
+
+  .resentSearch {
+    .searchList {
+      padding: 6px 12px; // (상하6px, 좌우12px)
+      background: $color-gray-200;
+      border: 1px solid $border-color;
+      border-radius: 3px;
+
+
+      .region {
+        display: flex;
+        align-items: center;
+      }
+
+      .time{
+        p{
+          color: $color-gray-500;
+          font-size: $font-sm;
+        }
+      }
+      .arrow {
+        margin: 0 6px;
+        color: #888;
+      }
+    }
+  }
+
+  .detail{
+    height: 500px;
+  }
+}

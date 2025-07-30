@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import MobileGnb from './header_mobile/MobileGnb.tsx';
+import MobileGnb from './header/header_mobile/MobileGnb.tsx';
 import ResponsiveSwitch from '../responsive/ResponsiveSwitch.tsx';
-import DesktopGnb from './header_desktop/DesktopGnb.tsx';
+import DesktopGnb from './header/header_desktop/DesktopGnb.tsx';
 
 const Gnb: React.FC = () => {
   // const isMobile = useMediaQuery({ maxWidth: 768 });

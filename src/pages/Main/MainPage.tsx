@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from './MainPage.module.scss';
-import Content from './main_desktop/Content.tsx';
+import Content from '../../components/common/reservationControl/Content.tsx';
 import Slide from './main_desktop/Slide.tsx';
 import ShortCut from './main_commoon/ShortCut.tsx';
 import CarSlider from './main_commoon/CarSlide.tsx';
