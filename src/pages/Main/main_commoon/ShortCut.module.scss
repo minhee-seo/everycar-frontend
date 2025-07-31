@@ -8,10 +8,20 @@
   justify-content: center;
   margin-top: 50px;
 
+  @include respond-max(mobile-m) {
+    display: block;
+    margin: 0;
+    padding: 2rem;
+  }
+
   .serviceShortcutTitle {
     width: 18%;
     font-size: 32px;
     font-weight: normal;
+
+    @include respond-max(mobile-m) {
+      display: none;
+    }
   }
 
   .shortcutContainer {
@@ -19,7 +29,15 @@
     justify-content: space-between;
     width: 50%;
 
+    @include respond-max(mobile-m) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.3rem;
+      width: 100%;
+    }
+
     .shortcutBox {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -30,6 +48,53 @@
       color: #2F2F2F;
       border-radius: 100px;
       transition: 0.2s;
+
+      @include respond-max(mobile-m) {
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-radius: 5px;
+        border: 1px solid $color-gray-200;
+        background: $color-gray-100;
+        gap: 0.5rem;
+        text-align: left;
+      }
+
+      .icon {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+
+        svg {
+          @include respond-max(mobile-m) {
+            position: relative;
+            width: 40px;
+            right: 0;
+          }
+        }
+      }
+
+      .text {
+        .title {
+          font-weight: bold;
+          font-size: $font-md;
+        }
+
+        .subscript {
+          display: none;
+
+          @include respond-max(mobile-m) {
+            display: block;
+            font-size: $font-sm;
+            color: $color-gray-500;
+          }
+        }
+
+      }
+
+
+
     }
 
     .shortcutBox:hover {
@@ -41,46 +106,46 @@
 
 
 
-/* 미디어 쿼리 */
-@media (max-width: 1200px) {}
+// /* 미디어 쿼리 */
+// @media (max-width: 1200px) {}
 
-@media (max-width: 768px) {
+// @media (max-width: 768px) {
 
-  /* 태블릿 */
-  .serviceShortcut {
-    display: flex;
-    margin: 0;
-    padding: 2rem;
+//   /* 태블릿 */
+//   .serviceShortcut {
+//     display: flex;
+//     margin: 0;
+//     padding: 2rem;
 
-    .serviceShortcutTitle {
-      display: none;
-    }
+//     .serviceShortcutTitle {
+//       display: none;
+//     }
 
-    .shortcutContainer {
-      width: 100%;
+//     .shortcutContainer {
+//       width: 100%;
 
-      .shortcutBox {
-        border-radius: 0;
-        align-items: center;
-        svg{
-          padding: 1rem;
-          width: 1rem;
-          height: 1rem;
-          border-radius: 5px;
-          box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        }
-      }
+//       .shortcutBox {
+//         border-radius: 0;
+//         align-items: center;
+//         svg{
+//           padding: 1rem;
+//           width: 1rem;
+//           height: 1rem;
+//           border-radius: 5px;
+//           box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+//         }
+//       }
 
-      .shortcutBox:hover {
-        background: none;
-      }
+//       .shortcutBox:hover {
+//         background: none;
+//       }
 
-    }
+//     }
 
-  }
-}
+//   }
+// }
 
-@media (max-width: 480px) {
-  /* 모바일 */
+// @media (max-width: 480px) {
+//   /* 모바일 */
 
-}
+// }
