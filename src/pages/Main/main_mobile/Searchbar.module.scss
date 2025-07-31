@@ -1,5 +1,10 @@
 @import '../../../styles/global.scss';
 
+.logo{
+    padding: 10px 0;
+    background: $primary-color;
+    text-align: center;
+}
 .searchCont{
     padding: 0 2rem 3rem 2rem;
     background: linear-gradient($primary-color, 40%, #eaff4f);

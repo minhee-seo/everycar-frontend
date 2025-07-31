@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { Link } from 'react-router-dom';
 import MobileGnb from './header/header_mobile/MobileGnb.tsx';
 import ResponsiveSwitch from '../responsive/ResponsiveSwitch.tsx';
 import DesktopGnb from './header/header_desktop/DesktopGnb.tsx';
@@ -31,11 +31,20 @@ const Gnb: React.FC = () => {
 
   return (
     <ResponsiveSwitch
-      mobileComponent={<MobileGnb />}
+      mobileComponent={<Mobile />}
       desktopComponent={<DesktopGnb />}
     />
   );
 
 };
+
+function Mobile() {
+  return (
+    <>
+      <MobileGnb />
+    </>
+
+  );
+}
 
 export default Gnb;

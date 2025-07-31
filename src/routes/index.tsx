@@ -1,22 +1,27 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import MainPage from '../pages/Main/MainPage.tsx';
 import Reservation from '../pages/reservation/reservation_desktop/reservation.tsx';
 import Header from '../components/common/Gnb.tsx';
 import Footer from '../components/common/Footer.tsx';
 
+import ResponsiveLayout from '../layouts/ResponsiveLayout.tsx';
+
 import '../styles/global.scss';
+import '../layouts/layout.scss';
 
 const AppRoutes = () => (
-<>
-  <BrowserRouter>
-  <Header></Header>
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="reservation" element={<Reservation />} />
-    </Routes>
-  <Footer></Footer>
-  </BrowserRouter>
-</>
+  <>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<ResponsiveLayout />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="reservation" element={<Reservation />} />
+        </Route>
+      </Routes>
+      
+    </BrowserRouter>
+  </>
 );
 
 export default AppRoutes;

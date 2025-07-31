@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from './MainPage.module.scss';
+import styles from './MainPage.module.scss';
 import Content from '../../components/common/reservationControl/Content.tsx';
 import Slide from './main_desktop/Slide.tsx';
 import ShortCut from './main_commoon/ShortCut.tsx';
@@ -18,7 +18,7 @@ function MainPage() {
 
 function Desktop() {
   return (
-    <div className={styled.container}>
+    <div className={styles.container}>
       <Slide></Slide>
       <Content></Content>
       <ShortCut></ShortCut>
@@ -29,12 +29,13 @@ function Desktop() {
 
 function Mobile() {
   return (
-    <div className={styled.container}>
-      <Searchbar></Searchbar>
-      <div className={styled.mainCont}>
-      <ShortCut></ShortCut>
-      <CarSlider></CarSlider>
-
+    <div className={styles.container}>
+      <div className={styles.searchBar}>
+        <Searchbar></Searchbar>
+      </div>
+      <div className={styles.mainCont}>
+        <ShortCut></ShortCut>
+        <CarSlider></CarSlider>
       </div>
     </div>
   );

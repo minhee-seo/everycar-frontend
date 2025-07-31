@@ -1,0 +1,26 @@
+.mobileAppBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+
+  h1 {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #333;
+  }
+}
