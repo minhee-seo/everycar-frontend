@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './reservation.module.scss';
+import styles from './reservation_desktop.module.scss';
 import Content from '../../../components/common/reservationControl/Content.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';

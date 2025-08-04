@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import MainPage from '../pages/Main/MainPage.tsx';
-import Reservation from '../pages/reservation/reservation_desktop/reservation.tsx';
+import Reservation from '../pages/reservation/reservation.tsx';
 import Header from '../components/common/Gnb.tsx';
 import Footer from '../components/common/Footer.tsx';
 
