@@ -35,7 +35,7 @@ const MobileLayout = () => {
             customClass={config.customClass}
           />
         )}
-        <Outlet />
+                <Outlet />
         <Footer />
         <MobileTabBar />
       </div>

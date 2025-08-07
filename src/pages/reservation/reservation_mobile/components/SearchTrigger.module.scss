@@ -1,0 +1,31 @@
+@import "../../../../styles/base/variables";
+@import "../../../../styles/base/mixins";
+
+.trigger {
+  position: absolute;
+  margin-top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 90%;
+  max-width: 480px;
+  height: 52px;
+  background-color: white;
+  border-radius: 26px; /* 캡슐 모양 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateX(-50%) scale(1.02);
+  }
+
+  .text {
+    font-size: 16px;
+    font-weight: bold;
+    color: $color-gray-800;
+  }
+}
