@@ -1,8 +1,7 @@
 .mobileAppBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  display: block;
+  position: relative;
+  padding: 100px;
   height: 56px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;

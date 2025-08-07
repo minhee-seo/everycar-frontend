@@ -10,19 +10,6 @@ const MobileLayout = () => {
   const path = location.pathname;
   const config = appBarConfigMap[path] ?? { show: true, title: '페이지' };
 
-  // 경로별 title 매핑
-  const appBarTitleMap: Record<string, string | null> = {
-    '/': null, // 메인에서는 숨김
-    '/reservation': '예약하기',
-    '/support/event': '이벤트',
-    '/support/inquiry': '문의하기',
-    '/support/announcement': '공지사항',
-    '/myPage/info': '내 정보',
-    '/auth/login': '로그인',
-    // 필요 시 더 추가
-  };
-
-  const title = appBarTitleMap[location.pathname] ?? '페이지';
 
   return (
     <>
@@ -35,8 +22,7 @@ const MobileLayout = () => {
             customClass={config.customClass}
           />
         )}
-                <Outlet />
-        <Footer />
+        <Outlet />
         <MobileTabBar />
       </div>
     </>
