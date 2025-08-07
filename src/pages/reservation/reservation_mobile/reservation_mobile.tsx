@@ -1,12 +1,17 @@
 import React from 'react'
 import styles from './reservation_mobile.module.scss';
-import MapView from '../components/MapView.tsx';
-
+import MapView from './components/MapView.tsx';
+import Remocorn from './components/reservationController.tsx'
 function reservation_mobile() {
     return (
-        <>
-            <MapView />
-        </>
+        <div className={styles.container}>
+            <section className={styles.searchArea}>
+                <Remocorn />
+            </section>
+            <section className={styles.mapWrap}>
+                <MapView />
+            </section>
+        </div>
     )
 }
 

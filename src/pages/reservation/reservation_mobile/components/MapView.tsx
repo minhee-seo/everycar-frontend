@@ -1,7 +1,10 @@
 // pages/Reservation/components/MapView.tsx
 import { useRef } from 'react';
-import KakaoMap from '../../../components/map/KaKaoMap.tsx';
-
+import KakaoMap from '../../../../components/map/KaKaoMap.tsx';
+import styles from './MapView.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 const MapView = () => {
   const mapRef = useRef<any>(null);
 
@@ -13,19 +16,23 @@ const MapView = () => {
     const marker = new window.kakao.maps.Marker({
       position: markerPosition,
     });
+
     marker.setMap(map);
 
     // 예: 지도 중심 이동도 가능
     // map.setCenter(markerPosition);
   };
 
+
   return (
-    <section style={{ width: '100%', height: '400px' }}>
-      <h3>지점 위치</h3>
-      <div style={{ width: '100%', height: '100%' }}>
+      <div className={styles.map}>
         <KakaoMap onMapLoad={handleMapLoad} />
+        {/* <div className={styles.btn}>
+            <button style={styles.btnStyle}>
+                <FontAwesomeIcon icon={faCrosshairs}></FontAwesomeIcon>
+            </button>
+        </div> */}
       </div>
-    </section>
   );
 };
 

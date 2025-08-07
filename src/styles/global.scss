@@ -36,4 +36,9 @@ button {
   width: 100%;
   padding-bottom: 347.54px;
   /* footer의 높이 */
+  @include respond-max(mobile-m) {
+    display: block;
+    position: relative;
+    padding-top: 56px;
+  }
 }

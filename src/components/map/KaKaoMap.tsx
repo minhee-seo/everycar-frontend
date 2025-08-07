@@ -1,3 +1,4 @@
+// components/map/KakaoMap.tsx
 import { useEffect } from 'react';
 
 declare global {
@@ -6,35 +7,50 @@ declare global {
   }
 }
 
-const KakaoMap = () => {
+interface KakaoMapProps {
+  onMapLoad?: (map: any) => void;
+}
+
+const KakaoMap = ({ onMapLoad }: KakaoMapProps) => {
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false`;
-    script.async = true;
+    const mapScriptId = 'kakao-map-script';
 
-    script.onload = () => {
-      window.kakao.maps.load(() => {
-        const container = document.getElementById('map');
-        const options = {
-          center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 서울시청
-          level: 3,
-        };
-        new window.kakao.maps.Map(container, options);
-      });
-    };
+    if (!document.getElementById(mapScriptId)) {
+      const script = document.createElement('script');
+      script.id = mapScriptId;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false`;
+      script.async = true;
 
-    document.head.appendChild(script);
-  }, []);
+      script.onload = () => {
+        window.kakao.maps.load(() => {
+          const container = document.getElementById('map');
+          if (!container) return;
+
+          const options = {
+            center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+            level: 3,
+          };
+
+          const map = new window.kakao.maps.Map(container, options);
+
+          // 부모에 map 객체 전달
+          if (onMapLoad) onMapLoad(map);
+        });
+      };
+
+      document.head.appendChild(script);
+    }
+  }, [onMapLoad]);
 
   return (
     <div
       id="map"
       style={{
         width: '100%',
-        height: '400px',
+        height: '100%',
         borderRadius: '8px',
       }}
-    ></div>
+    />
   );
 };
 
