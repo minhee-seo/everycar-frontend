@@ -11,7 +11,8 @@ body {
   color: $text-color;
   margin: 0;
   padding: 0;
-    // ✅ 모바일 화면일 때
+
+  // ✅ 모바일 화면일 때
   @include respond-max(mobile-m) {
     background-color: $color-white;
   }
@@ -34,6 +35,8 @@ button {
   margin: 0 auto;
   padding: 0 0; // 양쪽 여백
   width: 100%;
+  height: 100%;
+
   /* footer의 높이 */
   @include respond-max(mobile-m) {
     display: block;
