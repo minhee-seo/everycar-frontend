@@ -1,0 +1,47 @@
+[
+  {
+    "parking_id": 1,
+    "parking_name": "서울역 공영주차장",
+    "parking_address": "서울특별시 중구 한강대로 405",
+    "parking_latitude": 37.554678,
+    "parking_longtitude": 126.970607,
+    "parking_province": "서울특별시",
+    "parking_district": "중구"
+  },
+  {
+    "parking_id": 2,
+    "parking_name": "강남역 지하주차장",
+    "parking_address": "서울특별시 강남구 강남대로 396",
+    "parking_latitude": 37.497942,
+    "parking_longtitude": 127.027621,
+    "parking_province": "서울특별시",
+    "parking_district": "강남구"
+  },
+  {
+    "parking_id": 3,
+    "parking_name": "부산역 공영주차장",
+    "parking_address": "부산광역시 동구 중앙대로 206",
+    "parking_latitude": 35.115111,
+    "parking_longtitude": 129.041944,
+    "parking_province": "부산광역시",
+    "parking_district": "동구"
+  },
+  {
+    "parking_id": 4,
+    "parking_name": "대전시청 주차장",
+    "parking_address": "대전광역시 서구 둔산로 100",
+    "parking_latitude": 36.350412,
+    "parking_longtitude": 127.384548,
+    "parking_province": "대전광역시",
+    "parking_district": "서구"
+  },
+  {
+    "parking_id": 5,
+    "parking_name": "광주송정역 주차장",
+    "parking_address": "광주광역시 광산구 송정로 10",
+    "parking_latitude": 35.139722,
+    "parking_longtitude": 126.793056,
+    "parking_province": "광주광역시",
+    "parking_district": "광산구"
+  }
+]

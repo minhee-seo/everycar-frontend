@@ -1,3 +1,6 @@
+public/
+├── data/               # json 데이터
+├──
 src/
 ├── assets/             # 이미지, 폰트 등 정적 파일
 ├── components/         # 재사용 가능한 UI 컴포넌트

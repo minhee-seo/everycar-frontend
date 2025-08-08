@@ -6,6 +6,7 @@ import SearchTrigger from './components/SearchTrigger.tsx';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
+    const [map, setMap] = useState<any>(null);
 
     const openSheet = () => setIsSheetOpen(true);
     const closeSheet = () => setIsSheetOpen(false);
@@ -15,13 +16,13 @@ function ReservationMobile() {
             {!isSheetOpen && <SearchTrigger onClick={openSheet} />}
 
             <section className={styles.mapWrap}>
-                <MapView />
+                <MapView onMapLoad={setMap} />
             </section>
 
             {isSheetOpen && (
                 <div className={styles.bottomSheet} onClick={closeSheet}>
                     <div className={styles.sheetContent} onClick={(e) => e.stopPropagation()}>
-                        <ReservationController />
+                        <ReservationController map={map} />
                     </div>
                 </div>
             )}
