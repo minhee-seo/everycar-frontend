@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './reservation_mobile.module.scss';
 import MapView from './components/MapView.tsx';
-import ReservationController from './components/reservationController.tsx';
+import ReservationController from './components/ReservationController.tsx';
 import SearchTrigger from './components/SearchTrigger.tsx';
 
 function ReservationMobile() {
