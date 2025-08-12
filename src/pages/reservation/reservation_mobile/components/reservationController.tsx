@@ -29,6 +29,11 @@ function ReservationController({ map, closeSheet }: { map: any, closeSheet: () =
         e.preventDefault();
         if (!map) return;
 
+        const iwContent = `
+      <div class="CustomOverlay">
+        <span>마커 테스트</span>
+      </div>`;
+
         const filtered = parkingData.filter(
             p =>
                 p.parking_province.includes(keyword) ||
@@ -44,10 +49,21 @@ function ReservationController({ map, closeSheet }: { map: any, closeSheet: () =
                     parking.parking_latitude,
                     parking.parking_longtitude
                 );
-                new window.kakao.maps.Marker({
+
+                // 마커 생성
+                const marker = new window.kakao.maps.Marker({
                     map,
                     position,
                 });
+
+                // 커스텀 오버레이 생성
+                const iwfowindow = new window.kakao.maps.CustomOverlay({
+                    position: position,
+                    content: iwContent,
+                    yAnchor: 2.5
+                })
+
+                iwfowindow.setMap(map);
                 bounds.extend(position);
             });
 
