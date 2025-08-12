@@ -44,19 +44,39 @@ function ReservationController({ map, closeSheet }: { map: any, closeSheet: () =
                     parking.parking_latitude,
                     parking.parking_longtitude
                 );
-                const marker = new window.kakao.maps.Marker({
+                new window.kakao.maps.Marker({
                     map,
                     position,
                 });
                 bounds.extend(position);
             });
 
-            map.setBounds(bounds);
+            // bounds 확장 (20% margin)
+            const sw = bounds.getSouthWest();
+            const ne = bounds.getNorthEast();
+
+            const marginRatio = 0.2;
+
+            const latSpan = ne.getLat() - sw.getLat();
+            const lngSpan = ne.getLng() - sw.getLng();
+
+            const newSw = new window.kakao.maps.LatLng(
+                sw.getLat() - latSpan * marginRatio,
+                sw.getLng() - lngSpan * marginRatio
+            );
+            const newNe = new window.kakao.maps.LatLng(
+                ne.getLat() + latSpan * marginRatio,
+                ne.getLng() + lngSpan * marginRatio
+            );
+
+            const expandedBounds = new window.kakao.maps.LatLngBounds(newSw, newNe);
+
+            map.setBounds(expandedBounds);
         }
 
-        // ✅ 검색 버튼 클릭 시에만 닫기
         closeSheet();
     };
+
 
     return (
         <form className={styles.searchWrap} onSubmit={searchParking}>
