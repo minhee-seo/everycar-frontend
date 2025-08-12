@@ -28,7 +28,7 @@ const KakaoMap = ({ onMapLoad }: KakaoMapProps) => {
 
           const options = {
             center: new window.kakao.maps.LatLng(37.5665, 126.9780),
-            level: 3,
+            level: 5,
           };
           const map = new window.kakao.maps.Map(container, options);
           if (onMapLoad) onMapLoad(map);

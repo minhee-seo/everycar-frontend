@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useState } from 'react';
 import styles from './ReservationController.module.scss';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faAngleRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 declare global {
     interface Window {
@@ -12,10 +15,14 @@ function ReservationController({ map, closeSheet }: { map: any, closeSheet: () =
     const [keyword, setKeyword] = useState('');
     const [parkingData, setParkingData] = useState<any[]>([]);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
     useEffect(() => {
         fetch('/data/parking.json')
             .then(res => res.json())
             .then(data => setParkingData(data));
+
+        inputRef.current?.focus();
     }, []);
 
     const searchParking = (e: React.FormEvent) => {
@@ -53,23 +60,30 @@ function ReservationController({ map, closeSheet }: { map: any, closeSheet: () =
 
     return (
         <form className={styles.searchWrap} onSubmit={searchParking}>
-            <div className={styles.date}>
-                <div className={styles.rentalDate}>
-                    <input type="text" /> 월
-                    <input type="text" /> 일
+            <div className={styles.dateWrap}>
+                <div className={styles.date}>
+                    <FontAwesomeIcon icon={faClock} />
+                    <div className={styles.rentalDate}>
+                        <span className={styles.selectDate}>1.1(수)</span>
+                        <span>10:00</span>
+                    </div>
+                    <FontAwesomeIcon icon={faAngleRight} />
+                    <div className={styles.rentalDate}>
+                        <span className={styles.selectDate}>1.2(목)</span>
+                        <span>10:00</span>
+                    </div>
                 </div>
-                <div className={styles.rentalDate}>
-                    <input type="text" /> 월
-                    <input type="text" /> 일
-                </div>
+                <span className={styles.totalHoure}>24시간</span>
             </div>
             <div className={styles.rentalState}>
+                <FontAwesomeIcon icon={faLocationDot} />
                 <input
                     type="text"
                     className={styles.inputState}
                     placeholder="렌트 지역을 입력해주세요"
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
+                    ref={inputRef}
                 />
             </div>
             <button type="submit" className={styles.searchBtn}>검색</button>

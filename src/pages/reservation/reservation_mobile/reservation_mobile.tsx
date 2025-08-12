@@ -3,6 +3,7 @@ import styles from './reservation_mobile.module.scss';
 import MapView from './components/MapView.tsx';
 import ReservationController from './components/reservationController.tsx';
 import SearchTrigger from './components/SearchTrigger.tsx';
+import ParkingList from './components/ParkingList.tsx';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -39,6 +40,7 @@ function ReservationMobile() {
                     </div>
                 </div>
             )}
+                <ParkingList></ParkingList>
         </div>
     );
 }

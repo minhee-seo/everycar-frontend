@@ -1,0 +1,98 @@
+@import '../../../../styles/global.scss';
+
+.parkingList {
+    padding: 0 20px;
+    width: 100%;
+    border: 1px solid $border-color;
+    border-radius: 10px 10px 0 0;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    .bar {
+        padding: 10px 0;
+
+        .barIcon {
+            display: flex;
+            width: 10%;
+            height: 5px;
+            background: $color-gray-400;
+            border-radius: 50px;
+            margin: 0 auto;
+        }
+    }
+
+    ul {
+        list-style: none;
+        max-height: 294px; // 3개까지만 보이도록
+        overflow-y: auto;
+
+        /* 스크롤바 스타일 (크롬, 사파리, 엣지) */
+        &::-webkit-scrollbar {
+            width: 6px;
+            /* 얇은 스크롤바 */
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+            /* 트랙 투명 */
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            /* 회색 반투명 */
+            border-radius: 3px;
+        }
+
+        /* 파이어폭스 */
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+        li {
+            padding: 10px 0;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid #ddd; // 마지막 li 빼고 줄 표시
+            }
+
+            .parkingName {
+                font-size: $font-lg;
+                font-weight: bold;
+            }
+
+            .addr {
+                display: flex;
+                align-items: center;
+
+                span {
+                    padding: 0 3px;
+                    border: 1px solid $border-color;
+                    font-size: $font-xs;
+                    color: $color-gray-500;
+                    border-radius: 3px;
+                    margin-right: 10px;
+                }
+
+                .parkingAddr {
+                    color: $color-gray-700;
+                }
+            }
+
+            .information {
+                display: flex;
+                
+                .info{
+                    display: flex;
+                    align-items: center;
+
+                    svg{
+                        color: $color-gray-700;
+                        margin-right: 10px;
+                    }
+                    p {
+                        margin-right: 20px;
+                        color: $color-gray-700;
+                    }
+                }
+            }
+        }
+    }
+}
