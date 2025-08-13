@@ -10,7 +10,7 @@
   },
   {
     "parking_id": 2,
-    "parking_name": "강남역 지하주차장",
+    "parking_name": "강남역 지하주차장1",
     "parking_address": "서울특별시 강남구 강남대로 396",
     "parking_latitude": 37.497942,
     "parking_longtitude": 127.027621,
@@ -19,7 +19,7 @@
   },
   {
     "parking_id": 6,
-    "parking_name": "강남역 지하주차장",
+    "parking_name": "강남역 지하주차장2",
     "parking_address": "서울특별시 강남구 강남대로 396",
     "parking_latitude": 37.520812,
     "parking_longtitude": 127.048190,
@@ -28,7 +28,16 @@
   },
   {
     "parking_id": 7,
-    "parking_name": "강남역 지하주차장",
+    "parking_name": "강남역 지하주차장3",
+    "parking_address": "서울특별시 강남구 강남대로 396",
+    "parking_latitude": 37.516864,
+    "parking_longtitude": 127.052310,
+    "parking_province": "서울특별시",
+    "parking_district": "강남구"
+  },
+    {
+    "parking_id": 7,
+    "parking_name": "강남역 지하주차장4",
     "parking_address": "서울특별시 강남구 강남대로 396",
     "parking_latitude": 37.516864,
     "parking_longtitude": 127.052310,

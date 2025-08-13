@@ -11,35 +11,18 @@ declare global {
     }
 }
 
-function ReservationController({ map, closeSheet }: { map: any, closeSheet: () => void }) {
-    const [keyword, setKeyword] = useState('');
-    const [parkingData, setParkingData] = useState<any[]>([]);
+function ReservationController({ map, closeSheet, keyword, setKeyword, filtered }: { map: any, closeSheet: () => void; keyword: string; setKeyword: React.Dispatch<React.SetStateAction<string>>, filtered: any[]; }) {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // 자동 포커스
     useEffect(() => {
-        fetch('/data/parking.json')
-            .then(res => res.json())
-            .then(data => setParkingData(data));
-
         inputRef.current?.focus();
     }, []);
 
     const searchParking = (e: React.FormEvent) => {
         e.preventDefault();
         if (!map) return;
-
-        const iwContent = `
-      <div class="CustomOverlay">
-        <span>마커 테스트</span>
-      </div>`;
-
-        const filtered = parkingData.filter(
-            p =>
-                p.parking_province.includes(keyword) ||
-                p.parking_district.includes(keyword) ||
-                p.parking_name.includes(keyword)
-        );
 
         if (filtered.length > 0) {
             const bounds = new window.kakao.maps.LatLngBounds();
@@ -57,6 +40,11 @@ function ReservationController({ map, closeSheet }: { map: any, closeSheet: () =
                 });
 
                 // 커스텀 오버레이 생성
+                const iwContent = `
+                        <div class="CustomOverlay">
+                            <span>${parking.parking_name}</span>
+                        </div>`;
+
                 const iwfowindow = new window.kakao.maps.CustomOverlay({
                     position: position,
                     content: iwContent,
