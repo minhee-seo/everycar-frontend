@@ -11,6 +11,7 @@ function ReservationMobile() {
     const [parkingData, setParkingData] = useState<any[]>([]);
     const [keyword, setKeyword] = useState('');
     const [map, setMap] = useState<any>(null);
+    const [searchDone, setSearchDone] = useState(false);
 
     // 주차장 데이터 로드
     useEffect(() => {
@@ -30,6 +31,7 @@ function ReservationMobile() {
     const openSheet = () => {
         setIsClosing(false);
         setIsSheetOpen(true);
+        setSearchDone(false);
     };
 
     const closeSheet = () => {
@@ -39,6 +41,13 @@ function ReservationMobile() {
             setIsClosing(false);
         }, 300);
     };
+
+    // 검색 완료 핸들러
+    const handleSearchComplete = () => {
+        setSearchDone(true);
+        closeSheet();
+
+    }
 
     return (
         <div className={styles.container}>
@@ -58,13 +67,18 @@ function ReservationMobile() {
                             closeSheet={closeSheet} 
                             keyword={keyword}
                             setKeyword={setKeyword}
-                            filtered={filtered} />
+                            filtered={filtered}
+                            onSearchComplete={handleSearchComplete}
+                        />
+                            
                     </div>
                 </div>
             )}
-            <ParkingList 
-                filtered={filtered}
-            />
+            {searchDone &&
+                <ParkingList 
+                    filtered={filtered}
+                />
+            }
         </div>
     );
 }

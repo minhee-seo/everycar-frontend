@@ -11,7 +11,17 @@ declare global {
     }
 }
 
-function ReservationController({ map, closeSheet, keyword, setKeyword, filtered }: { map: any, closeSheet: () => void; keyword: string; setKeyword: React.Dispatch<React.SetStateAction<string>>, filtered: any[]; }) {
+interface ReservationControllerProps {
+    map: any;
+    closeSheet: () => void;
+    keyword: string;
+    setKeyword: React.Dispatch<React.SetStateAction<string>>;
+    filtered: any[];
+    onSearchComplete?: () => void;
+}
+
+
+function ReservationController({ map, closeSheet, keyword, setKeyword, filtered, onSearchComplete }: ReservationControllerProps) {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -19,6 +29,13 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered 
     useEffect(() => {
         inputRef.current?.focus();
     }, []);
+
+    const handleSearchClick = () => {
+        if (onSearchComplete) {
+            console.log("검색실행됨");
+            onSearchComplete();
+        }
+    }
 
     const searchParking = (e: React.FormEvent) => {
         e.preventDefault();
@@ -79,6 +96,7 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered 
         }
 
         closeSheet();
+        handleSearchClick();
     };
 
 
