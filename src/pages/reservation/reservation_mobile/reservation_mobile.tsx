@@ -60,22 +60,21 @@ function ReservationMobile() {
             {isSheetOpen && (
                 <div className={styles.bottomSheet} onClick={closeSheet}>
                     <div
-                        className={`${styles.sheetContent} ${isClosing ? styles.slideDown : styles.slideUp}`}
+                        className={`${styles.sheetContent} ${isClosing ? styles.exit : styles.entrance}`}
                         onClick={(e) => e.stopPropagation()}>
-                        <ReservationController 
-                            map={map} 
-                            closeSheet={closeSheet} 
+                        <ReservationController
+                            map={map}
+                            closeSheet={closeSheet}
                             keyword={keyword}
                             setKeyword={setKeyword}
                             filtered={filtered}
                             onSearchComplete={handleSearchComplete}
                         />
-                            
                     </div>
                 </div>
             )}
             {searchDone &&
-                <ParkingList 
+                <ParkingList
                     filtered={filtered}
                 />
             }
