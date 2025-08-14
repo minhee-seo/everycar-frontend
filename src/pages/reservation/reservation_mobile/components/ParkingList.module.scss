@@ -8,6 +8,7 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
     .bar {
+        cursor: pointer;
         padding: 10px 0;
 
         .barIcon {
@@ -24,6 +25,7 @@
         list-style: none;
         max-height: 294px; // 3개까지만 보이도록
         overflow-y: auto;
+        transition: max-height 0.4s ease-in-out;
 
         /* 스크롤바 스타일 (크롬, 사파리, 엣지) */
         &::-webkit-scrollbar {
@@ -45,6 +47,11 @@
         /* 파이어폭스 */
         scrollbar-width: thin;
         scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+        &.collapsed {
+            max-height: 0;
+            border-width: 0;
+        }
 
         li {
             padding: 10px 0;

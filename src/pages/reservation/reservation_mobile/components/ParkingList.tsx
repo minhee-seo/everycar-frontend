@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './ParkingList.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCar } from '@fortawesome/free-solid-svg-icons';
 
 function ParkingList({ filtered }: { filtered: any[] }) {
+    const [isExpanded, setIsExpanded] = useState(true);
+
     return (
         <div className={styles.parkingList}>
-            <div className={styles.bar}>
+            <div className={styles.bar} onClick={() => setIsExpanded(!isExpanded)}>
                 <span className={styles.barIcon}></span>
             </div>
-            <ul>
+            <ul className={!isExpanded ? styles.collapsed : ''}>
                 {filtered.map((parking, index) => {
                     return (
                         <li key={index}>
@@ -30,6 +32,7 @@ function ParkingList({ filtered }: { filtered: any[] }) {
                             </div>
                         </li>
                     );
+
                 })}
             </ul>
         </div>
