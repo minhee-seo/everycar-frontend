@@ -1,5 +1,5 @@
 // components/map/KakaoMap.tsx
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -12,32 +12,39 @@ interface KakaoMapProps {
 }
 
 const KakaoMap = ({ onMapLoad }: KakaoMapProps) => {
-  useEffect(() => {
-    const mapScriptId = 'kakao-map-script';
+  const onMapLoadRef = useRef(onMapLoad);
 
-    if (!document.getElementById(mapScriptId)) {
+  useEffect(() => {
+    onMapLoadRef.current = onMapLoad;
+  }, [onMapLoad]);
+
+  useEffect(() => {
+    const initMap = () => {
+      const container = document.getElementById('map');
+      if (!container) return;
+
+      const options = {
+        center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+        level: 5,
+      };
+      const map = new window.kakao.maps.Map(container, options);
+      if (onMapLoadRef.current) onMapLoadRef.current(map);
+    };
+
+    if (!window.kakao) {
       const script = document.createElement('script');
-      script.id = mapScriptId;
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false`;
       script.async = true;
 
       script.onload = () => {
-        window.kakao.maps.load(() => {
-          const container = document.getElementById('map');
-          if (!container) return;
-
-          const options = {
-            center: new window.kakao.maps.LatLng(37.5665, 126.9780),
-            level: 5,
-          };
-          const map = new window.kakao.maps.Map(container, options);
-          if (onMapLoad) onMapLoad(map);
-        });
+        window.kakao.maps.load(initMap);
       };
 
       document.head.appendChild(script);
+    } else {
+      initMap();
     }
-  }, [onMapLoad]);
+  }, []);
 
   return (
     <div
