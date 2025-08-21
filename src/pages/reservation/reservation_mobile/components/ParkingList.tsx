@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from './ParkingList.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCar, faFaceFrown } from '@fortawesome/free-solid-svg-icons';
+import { Link, Route } from 'react-router-dom';
 
 function ParkingList({ filtered }: { filtered: any[] }) {
     const [isExpanded, setIsExpanded] = useState(true);
@@ -22,7 +23,9 @@ function ParkingList({ filtered }: { filtered: any[] }) {
                         {filtered.map((parking, index) => {
                             return (
                                 <li key={index}>
-                                    <p className={styles.parkingName}>{parking.parking_name}</p>
+                                    <Link to="/reservation/carList">
+                                        <p className={styles.parkingName}>{parking.parking_name}</p>
+                                    </Link>
                                     <div className={styles.information}>
                                         <div className={styles.info}>
                                             <FontAwesomeIcon icon={faLocationDot} />
