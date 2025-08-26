@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './ReservationController.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 interface ReservationControllerProps {
   map: any;
-  filtered: any[];
-  keyword: string;
+  parkingData: any[];
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   onSearchComplete?: () => void;
 }
 
-function ReservationController({ map, filtered, keyword, setKeyword, onSearchComplete }: ReservationControllerProps) {
+function ReservationController({ map, parkingData, setKeyword, onSearchComplete }: ReservationControllerProps) {
+  const [localKeyword, setLocalKeyword] = useState('');
 
   const handleSearchClick = () => {
     if (onSearchComplete) {
@@ -24,6 +24,15 @@ function ReservationController({ map, filtered, keyword, setKeyword, onSearchCom
   const searchParking = (e: React.FormEvent) => {
     e.preventDefault();
     if (!map) return;
+
+    setKeyword(localKeyword);
+
+    const filtered = parkingData.filter(
+      p =>
+        p.parking_province.includes(localKeyword) ||
+        p.parking_district.includes(localKeyword) ||
+        p.parking_name.includes(localKeyword)
+    );
 
     if (filtered.length > 0) {
       // LatLngBounds 지도 재설정 범위 정보 객체
@@ -107,8 +116,8 @@ function ReservationController({ map, filtered, keyword, setKeyword, onSearchCom
             type="text"
             className={styles.searchInput}
             placeholder='지역을 검색하세요'
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
+            value={localKeyword}
+            onChange={(e) => setLocalKeyword(e.target.value)}
           />
         </div>
       </div>

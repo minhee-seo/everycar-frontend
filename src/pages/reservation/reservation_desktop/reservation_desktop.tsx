@@ -37,8 +37,7 @@ function Reservation() {
         <div className={styles.search}>
           <ReservationController
             map={map}
-            filtered={filtered}
-            keyword={keyword}
+            parkingData={parkingData}
             setKeyword={setKeyword}
             onSearchComplete={handleSearchComplete}
           />
