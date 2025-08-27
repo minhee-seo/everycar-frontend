@@ -24,8 +24,8 @@ const KakaoMap = ({ onMapLoad }: KakaoMapProps) => {
       if (!container) return;
 
       const options = {
-        center: new window.kakao.maps.LatLng(37.5665, 126.9780),
-        level: 5,
+        center: new window.kakao.maps.LatLng(35.95, 128.25),
+        level: 12
       };
       const map = new window.kakao.maps.Map(container, options);
       if (onMapLoadRef.current) onMapLoadRef.current(map);
@@ -33,7 +33,7 @@ const KakaoMap = ({ onMapLoad }: KakaoMapProps) => {
 
     if (!window.kakao) {
       const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false&libraries=clusterer`;
       script.async = true;
 
       script.onload = () => {

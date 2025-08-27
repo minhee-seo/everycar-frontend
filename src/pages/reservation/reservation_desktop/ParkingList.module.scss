@@ -60,7 +60,7 @@
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 
     &:hover {
-      background-color:  $primary-color;
+      background-color:  $primary-hover;
       /* hover 시 살짝 어두운 색 */
 
     }
