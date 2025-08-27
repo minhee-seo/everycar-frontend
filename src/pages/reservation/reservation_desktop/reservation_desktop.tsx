@@ -46,13 +46,34 @@ function Reservation() {
           />
 
           <div className={styles.resultCont}>
-            <ParkingList
-              parkingData={parkingData}
-              keyword={keyword}
-              map={map}
-            />
+            <div className={styles.selectParking}>
+              {
+                filtered.length === 0 ?
+                  <div className={styles.empty}>
+                    <FontAwesomeIcon icon={faFaceFrown} />
+                    <p>검색 결과가 없습니다.</p>
+                  </div> :
+                  <>
+                    <h3>{keyword} 에브리카 대여소</h3>
+                    <ul className={styles.collapsed}>
+                      {
+                        filtered.map((parking, index) => {
+                          return (
+                            <ParkingList
+                              key={index}
+                              parking={parking}
+                              map={map}
+                            />
+                          );
+                        })
 
-            <div className={styles.selectArea}>
+                      }
+                    </ul>
+                  </>
+              }
+            </div>
+
+            {/* <div className={styles.selectArea}>
               <h3>어디에서 출발하시나요?</h3>
               <ul>
                 <li>서울</li>
@@ -61,7 +82,7 @@ function Reservation() {
                 <li>부산광역시</li>
                 <li>제주도</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

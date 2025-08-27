@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './ReservationController.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,12 @@ interface ReservationControllerProps {
 
 function ReservationController({ map, parkingData, setKeyword, onSearchComplete }: ReservationControllerProps) {
   const [localKeyword, setLocalKeyword] = useState('');
+
+  useEffect(() => {
+    if(map){
+      map.panBy(-150, 0);
+    }
+  }, [map]);
 
   const handleSearchClick = () => {
     if (onSearchComplete) {
