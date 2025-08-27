@@ -6,6 +6,7 @@ import ReservationController from './ReservationController.tsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import ParkingList from './ParkingList.tsx';
 
 
 function Reservation() {
@@ -14,7 +15,6 @@ function Reservation() {
   const [keyword, setKeyword] = useState('');
   const [searchDone, setSearchDone] = useState(false);
 
-  console.log(keyword);
   useEffect(() => {
     fetch('/data/parking.json')
       .then(res => res.json())
@@ -23,6 +23,7 @@ function Reservation() {
 
   const filtered = parkingData.filter(
     p =>
+      p.parking_id.toString().includes(keyword) ||
       p.parking_province.includes(keyword) ||
       p.parking_district.includes(keyword) ||
       p.parking_name.includes(keyword)
@@ -31,6 +32,8 @@ function Reservation() {
   const handleSearchComplete = () => {
     setSearchDone(true);
   }
+
+
   return (
     <>
       <div className={styles.mapContainer}>
@@ -43,42 +46,11 @@ function Reservation() {
           />
 
           <div className={styles.resultCont}>
-            <div className={styles.selectParking}>
-              {
-                filtered.length === 0 ?
-                  <div className={styles.empty}>
-                    <FontAwesomeIcon icon={faFaceFrown} />
-                    <p>검색 결과가 없습니다.</p>
-                  </div> :
-                  <>
-                    <h3>{keyword} 에브리카 대여소</h3>
-                    <ul className={styles.collapsed}>
-                      {
-                        filtered.map((parking, index) => {
-                          return (
-                            <li key={`parking${index}`}>
-                              <p className={styles.parkingName}>{parking.parking_name}</p>
-                              <div className={styles.information}>
-                                <div className={styles.info}>
-                                  <FontAwesomeIcon icon={faLocationDot} />
-                                  <p className={styles.parkingKm}>현재 위치에서 300m</p>
-                                </div>
-                                <div className={styles.info}>
-                                  <FontAwesomeIcon icon={faCar} />
-                                  <p className={styles.parkingNum}>3대 이용 가능</p>
-                                </div>
-                              </div>
-                              <div className={styles.addr}>
-                                <p className={styles.parkingAddr}>서울특별시 강남구 어쩌구 저쩌구</p>
-                              </div>
-                            </li>
-                          );
-                        })
-                      }
-                    </ul>
-                  </>
-              }
-            </div>
+            <ParkingList
+              parkingData={parkingData}
+              keyword={keyword}
+              map={map}
+            />
 
             <div className={styles.selectArea}>
               <h3>어디에서 출발하시나요?</h3>

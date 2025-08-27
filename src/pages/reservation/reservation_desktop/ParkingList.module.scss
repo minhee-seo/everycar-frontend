@@ -1,0 +1,67 @@
+@import '../../../styles/global.scss';
+
+      .selectParking {
+        height: 100%;
+
+        .empty {
+          text-align: center;
+          padding: 20px;
+          color: #888;
+
+          svg {
+            font-size: 24px;
+            margin-bottom: 10px;
+          }
+        }
+
+        .collapsed {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          height: 100%;
+
+          li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #f9f9f9;
+            }
+
+            .parkingName {
+              font-weight: bold;
+              font-size: 18px;
+              margin-bottom: 10px;
+            }
+
+            .information {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 10px;
+
+              .info {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                color: #555;
+                line-height: 20px;
+
+                svg {
+                  margin-right: 5px;
+                }
+              }
+            }
+
+            .addr {
+              font-size: 14px;
+              color: #777;
+
+              span {
+                font-weight: bold;
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+      }
