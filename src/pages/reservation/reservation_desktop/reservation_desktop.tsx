@@ -1,77 +1,86 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './reservation_desktop.module.scss';
 import Content from '../../../components/common/reservationControl/Content.tsx';
+import MapView from '../reservation_mobile/components/MapView.tsx';
+import ReservationController from './ReservationController.tsx';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import ParkingList from './ParkingList.tsx';
+import SelectList from './SelectList.tsx';
 
 
-// import required modules
-import { Pagination } from 'swiper/modules';
+function Reservation() {
+  const [parkingData, setParkingData] = useState<any[]>([]);
+  const [map, setMap] = useState<any>(null);
+  const [keyword, setKeyword] = useState('');
+  const [searchDone, setSearchDone] = useState(false);
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-function reservation() {
-  const recentSearches = ['강남지점', '역삼지점', '삼성지점', '용산지점', '부산지점']; // 예시 배열
+  useEffect(() => {
+    fetch('/data/parking.json')
+      .then(res => res.json())
+      .then(data => setParkingData(data))
+  }, []);
+
+  const filtered = parkingData.filter(
+    p =>
+      p.parking_id.toString().includes(keyword) ||
+      p.parking_province.includes(keyword) ||
+      p.parking_district.includes(keyword) ||
+      p.parking_name.includes(keyword)
+  );
+
+  const handleSearchComplete = () => {
+    setSearchDone(true);
+  }
+
 
   return (
     <>
-      <div className={styles.banner}>      </div>
-      <div className={styles.container}>
-        <Content></Content>
-        <div className={styles.cont}>
-          <h3>최근 검색</h3>
-          <div className={styles.resentSearch}>
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={10}
-              modules={[Pagination]}
-              className={styles.resentSlide}
-              breakpoints={{
-                1024: { slidesPerView: 4 },
-                768: { slidesPerView: 2 },
-                480: { slidesPerView: 1 },
-              }}
-            >
-              {recentSearches.map((branch, index) => (
-                <SwiperSlide key={index}>
-                  <ResentSearch name={branch} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+      <div className={styles.mapContainer}>
+        <div className={styles.search}>
+          <ReservationController
+            map={map}
+            parkingData={parkingData}
+            setKeyword={setKeyword}
+            onSearchComplete={handleSearchComplete}
+          />
 
-
+          <div className={styles.resultCont}>
+            {
+              searchDone ? (
+                <div className={styles.selectParking}>
+                  {
+                    filtered.length === 0 ? (
+                      <div className={styles.empty}>
+                        <FontAwesomeIcon icon={faFaceFrown} />
+                        <p>검색 결과가 없습니다.</p>
+                      </div>
+                    ) : (
+                      <>
+                        <h3>{keyword} 에브리카 대여소</h3>
+                        <ul className={styles.collapsed}>
+                          {
+                            filtered.map((parking, index) => (
+                              <ParkingList key={index} parking={parking} map={map} />
+                            ))
+                          }
+                        </ul>
+                      </>
+                    )
+                  }
+                </div>
+              ) : (
+                <SelectList />
+              )
+            }
           </div>
         </div>
-        <div className={styles.cont}>
-          <h3>이용 규칙</h3>
-          <div className={styles.detail}></div>
-        </div>
       </div>
+      <MapView onMapLoad={setMap} />
     </>
   )
 }
 
-function ResentSearch({ name }) {
-  return (
-    <li>
-      <div className={styles.searchList}>
-        <div className={styles.region}>
-          <p>{name}</p>
-          <FontAwesomeIcon icon={faArrowRight} className={styles.arrow} />
-          <p>{name}</p>
-        </div>
-        <div className={styles.time}>
-          <p>03.24(월) 10:00 ~ 03.25(화) 10:00 (24시간)</p>
-        </div>
-      </div>
-    </li>
-  );
-}
 
-export default reservation
+export default Reservation;

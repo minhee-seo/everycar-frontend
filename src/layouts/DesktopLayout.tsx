@@ -10,7 +10,6 @@ const DesktopLayout = () => (
       <div className="content">
         <Outlet />
       </div>
-      <Footer />
     </div>
   </>
 );

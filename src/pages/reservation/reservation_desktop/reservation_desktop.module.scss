@@ -1,45 +1,101 @@
-@import '../../../styles/global.scss';
+@import "../../../styles/base/_variables";
+@import "../../../styles/base/_mixins";
 
-.banner {
-  height: 200px;
-  width: 100%;
-  background-color: $color-gray-300;
-}
+.mapContainer {
+  position: relative;
+  max-width: 1200px;
 
-.cont {
-  padding: 20px 0;
+  .search {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    top: 20px;
+    left: 20px;
+    width: 380px;
+    height: 80vh;
+    background-color: $color-white;
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 
-  h3 {
-    padding-bottom: 10px;
-  }
+    .searchCont {
+      flex: 0 0 auto; // 검색창은 높이 고정
+    }
 
-  .resentSearch {
-    .searchList {
-      padding: 6px 12px; // (상하6px, 좌우12px)
-      background: $color-gray-200;
-      border: 1px solid $border-color;
-      border-radius: 3px;
+    .resultCont {
+      position: relative;
+      margin-top: 20px;
+      overflow-y: scroll;
 
-
-      .region {
-        display: flex;
-        align-items: center;
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #c4c4c4;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #f5f5f5;
+        border-radius: 10px;
       }
 
-      .time{
-        p{
-          color: $color-gray-500;
-          font-size: $font-sm;
+      
+      .selectParking {
+        height: 100%;
+
+        .empty {
+          text-align: center;
+          padding: 20px;
+          color: #888;
+
+          svg {
+            font-size: 24px;
+            margin-bottom: 10px;
+          }
+        }
+
+        .collapsed {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          height: 100%;
+
         }
       }
-      .arrow {
-        margin: 0 6px;
-        color: #888;
+
+      .selectArea {
+
+        h3 {
+          font-size: 16px;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+
+          li {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+
+            &:hover {
+              background-color: $primary-color;
+              color: #fff;
+              border-color: $primary-color;
+            }
+          }
+        }
       }
     }
-  }
-
-  .detail{
-    height: 500px;
   }
 }
