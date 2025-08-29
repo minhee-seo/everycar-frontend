@@ -7,6 +7,7 @@ import ReservationController from './ReservationController.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import ParkingList from './ParkingList.tsx';
+import SelectList from './SelectList.tsx';
 
 
 function Reservation() {
@@ -46,43 +47,33 @@ function Reservation() {
           />
 
           <div className={styles.resultCont}>
-            <div className={styles.selectParking}>
-              {
-                filtered.length === 0 ?
-                  <div className={styles.empty}>
-                    <FontAwesomeIcon icon={faFaceFrown} />
-                    <p>검색 결과가 없습니다.</p>
-                  </div> :
-                  <>
-                    <h3>{keyword} 에브리카 대여소</h3>
-                    <ul className={styles.collapsed}>
-                      {
-                        filtered.map((parking, index) => {
-                          return (
-                            <ParkingList
-                              key={index}
-                              parking={parking}
-                              map={map}
-                            />
-                          );
-                        })
-
-                      }
-                    </ul>
-                  </>
-              }
-            </div>
-
-            {/* <div className={styles.selectArea}>
-              <h3>어디에서 출발하시나요?</h3>
-              <ul>
-                <li>서울</li>
-                <li>경기도</li>
-                <li>인천광역시</li>
-                <li>부산광역시</li>
-                <li>제주도</li>
-              </ul>
-            </div> */}
+            {
+              searchDone ? (
+                <div className={styles.selectParking}>
+                  {
+                    filtered.length === 0 ? (
+                      <div className={styles.empty}>
+                        <FontAwesomeIcon icon={faFaceFrown} />
+                        <p>검색 결과가 없습니다.</p>
+                      </div>
+                    ) : (
+                      <>
+                        <h3>{keyword} 에브리카 대여소</h3>
+                        <ul className={styles.collapsed}>
+                          {
+                            filtered.map((parking, index) => (
+                              <ParkingList key={index} parking={parking} map={map} />
+                            ))
+                          }
+                        </ul>
+                      </>
+                    )
+                  }
+                </div>
+              ) : (
+                <SelectList />
+              )
+            }
           </div>
         </div>
       </div>

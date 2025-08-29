@@ -1,0 +1,30 @@
+@import '../../../styles/global';
+      .selectArea {
+
+        h3 {
+          font-size: 16px;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+
+          li {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+
+            &:hover {
+              background-color: $color-gray-100;
+            }
+          }
+        }
+      }
