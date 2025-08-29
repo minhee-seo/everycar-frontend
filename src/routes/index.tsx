@@ -9,7 +9,7 @@ import ResponsiveLayout from '../layouts/ResponsiveLayout.tsx';
 
 import '../styles/global.scss';
 import '../layouts/layout.scss';
-import CarList from '../pages/reservation/carList/CarList.tsx';
+import CarList from '../pages/carList/CarList.tsx';
 
 const AppRoutes = () => (
   <>
