@@ -3,6 +3,7 @@ import styles from './ParkingList.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationCrosshairs, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 interface ParkingListProps {
     parking: {
@@ -41,9 +42,11 @@ const ParkingList: React.FC<ParkingListProps> = ({ parking, map }) => {
                     <p className={styles.parkingAddr}>{parking.parking_address}</p>
                 </div>
             </div>
-            <button className={styles.viewCarsButton} >
-                이용 가능 차량 보기
-            </button>
+            <Link to='/reservation/carList'>
+                <div className={styles.viewCarsButton} >
+                    이용 가능 차량 보기
+                </div>
+            </Link>
         </li >
     );
 };

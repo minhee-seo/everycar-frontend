@@ -9,6 +9,7 @@ import ResponsiveLayout from '../layouts/ResponsiveLayout.tsx';
 
 import '../styles/global.scss';
 import '../layouts/layout.scss';
+import CarList from '../pages/reservation/carList/CarList.tsx';
 
 const AppRoutes = () => (
   <>
@@ -17,7 +18,7 @@ const AppRoutes = () => (
         <Route element={<ResponsiveLayout />}>
           <Route path="/" element={<MainPage />} />
           <Route path="reservation" element={<Reservation />} />
-          <Route path="/reservation/carList" element={<Reservation />} />
+          <Route path="/reservation/carList" element={<CarList />} />
         </Route>
       </Routes>
       
