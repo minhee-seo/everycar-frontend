@@ -26,13 +26,19 @@ function CarList() {
       <div className={styles.searchHeader}>
         <div className={styles.searchOption}>
           <div className={styles.locationCont}>
-            <FontAwesomeIcon icon={faLocationDot} />
-            <div className={styles.location}>강남역지하주차장</div>
+            <p>대여장소</p>
+            <div className={styles.inputCont}>
+              <FontAwesomeIcon icon={faLocationDot} />
+              <div className={styles.location}>강남역지하주차장</div>
+            </div>
           </div>
-          <div className={styles.dateTime}>
-            2025.01.01(월) 10:00
-            <FontAwesomeIcon icon={faCarSide} />
-            2025.01.02(화) 10:00 24시간
+          <div className={styles.locationCont}>
+            <p>대여기간</p>
+            <div className={styles.inputCont}>
+              01.01 (월) 10:00
+              <FontAwesomeIcon icon={faCarSide} className={styles.carSide} />
+              01.02 (화) 10:00
+            </div>
           </div>
         </div>
         <button className={styles.researchButton}>주차장 재검색</button>
