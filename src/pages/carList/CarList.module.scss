@@ -1,7 +1,6 @@
 @import '../../styles/global.scss';
 
-.container {
-}
+.container {}
 
 .searchHeader {
   display: flex;
@@ -45,6 +44,9 @@
           font-size: 1.2rem;
         }
 
+        .faX{
+          display: none;
+        }
         .carSide {
           margin: 0 1rem;
         }
@@ -290,3 +292,4 @@
     margin-left: 0.5rem;
   }
 }
+
