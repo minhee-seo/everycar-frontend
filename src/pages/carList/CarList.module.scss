@@ -44,9 +44,10 @@
           font-size: 1.2rem;
         }
 
-        .faX{
+        .faX {
           display: none;
         }
+
         .carSide {
           margin: 0 1rem;
         }
@@ -224,16 +225,37 @@
   grid-area: header;
   padding: 1.5rem;
 
-  h4 {
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin: 0 0 0.5rem;
+  .title {
+    display: flex;
+    align-items: center;
+
+    h4 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 0 0 0.5rem;
+    }
+    .gradeBtn {
+      padding: 3px 10px;
+      margin: 0 10px;
+      text-align: center;
+      font-size: $font-sm;
+      border-radius: 50px;
+      color: $color-gray-800;
+    }
+    .gradeBtn.premium{
+      background: linear-gradient(to bottom right, #AFFF4F, 50%, #ffea4e);
+    }
+    .gradeBtm.standard{
+      background: linear-gradient(to bottom right, #AFFF4F, 50%, #ffea4e);
+
+    }
   }
 
   p {
     margin: 0;
     color: #666;
   }
+
 }
 
 .carImage {
@@ -268,7 +290,7 @@
 
     svg {
       margin-right: 0.75rem;
-      color: $primary-color;
+      color: $color-gray-500;
       width: 20px;
     }
   }
@@ -292,4 +314,3 @@
     margin-left: 0.5rem;
   }
 }
-

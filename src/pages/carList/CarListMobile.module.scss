@@ -141,8 +141,8 @@
 
   // Style for the "on" state
   label:has(input:checked) {
-    background-color: $color-gray-200;
-    border-color: $color-gray-400;
+    background-color: $primary-color;
+    border-color: $primary-color;
     color: $color-gray-800;
     font-weight: 600;
   }

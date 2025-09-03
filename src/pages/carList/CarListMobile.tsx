@@ -90,7 +90,8 @@ function CarListMobile() {
                 </aside>
                 <section className={styles.carListSection}>
                     <ul className={styles.carList}>
-                        {carListData.map((car, index) => (
+                        {Array.from({ length: 5 }).map((_, index) => 
+                        carListData.map((car, index) => (
                             <li key={index}>
                                 <article className={styles.carCard}>
                                     <header className={styles.cardHeader}>
@@ -126,7 +127,7 @@ function CarListMobile() {
                                     </footer>
                                 </article>
                             </li>
-                        ))}
+                        )))}
                     </ul>
                 </section>
             </div>
