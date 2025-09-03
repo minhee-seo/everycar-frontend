@@ -156,3 +156,97 @@
     width: 0;
   }
 }
+
+.carListSection {
+  padding-top: 1.5rem;
+}
+
+.carList {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+}
+
+.carCard {
+  display: grid;
+  grid-template-columns: 120px 1fr; // Image column, content column
+  grid-template-rows: auto 1fr auto; // Header, details, price
+  grid-template-areas:
+    "image header"
+    "image details"
+    "image price";
+  gap: 0 1rem; // No row gap, 1rem column gap
+  background-color: $color-white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.carImage {
+  grid-area: image;
+  height: 100%; // Make image take full height of the card
+  background-color: #e9ecef;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.cardHeader {
+  grid-area: header;
+  padding: 1rem 1rem 0.5rem 0; // Adjust padding
+  h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  p {
+    font-size: 0.8rem;
+    color: $color-gray-600;
+    margin: 0;
+  }
+}
+
+.carDetails {
+  grid-area: details;
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-top: none;
+  align-self: start; // Align to the top of its grid area
+}
+
+.optionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: $color-gray-700;
+
+  li {
+    display: flex;
+    align-items: center;
+    svg {
+      width: 14px;
+      margin-right: 0.4rem;
+      color: $color-gray-500;
+    }
+  }
+}
+
+.priceSection {
+  grid-area: price;
+  padding: 0.5rem 1rem 1rem 0;
+  background-color: transparent;
+  text-align: right;
+  align-self: end; // Align to the bottom of its grid area
+  p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $color-gray-600;
+  }
+  span {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $color-gray-800;
+  }
+}
