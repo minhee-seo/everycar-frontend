@@ -3,6 +3,7 @@ import styles from './CarList.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faLocationDot, faCarSide, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 
 function CarListDesktop() {
@@ -82,47 +83,49 @@ function CarListDesktop() {
                     <ul className={styles.carList}>
                         {carListData.map((car, index) => (
                             <li key={index}>
-                                <article className={styles.carCard}>
-                                    <header className={styles.cardHeader}>
-                                        <div className={styles.title}>
-                                            <h4>{car.model}</h4>
-                                            <p className={`${styles.gradeBtn} ${styles.premium}`}>{car.grade}</p>
+                                <Link to="/reservation/carDetail">
+                                    <article className={styles.carCard}>
+                                        <header className={styles.cardHeader}>
+                                            <div className={styles.title}>
+                                                <h4>{car.model}</h4>
+                                                <p className={`${styles.gradeBtn} ${styles.premium}`}>{car.grade}</p>
+                                            </div>
+                                            <p>{car.year}</p>
+                                        </header>
+                                        <div className={styles.carImage}>
+                                            {/* Placeholder for image */}
                                         </div>
-                                        <p>{car.year}</p>
-                                    </header>
-                                    <div className={styles.carImage}>
-                                        {/* Placeholder for image */}
-                                    </div>
-                                    <div className={styles.carDetails}>
-                                        <ul className={styles.optionList}>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.type}
-                                            </li>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.seats}
-                                            </li>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.fuel}
-                                            </li>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.transmission}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <footer className={styles.priceSection}>
-                                        <p>월 <span>{car.price} 원</span></p>
-                                    </footer>
-                                </article>
+                                        <div className={styles.carDetails}>
+                                            <ul className={styles.optionList}>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.type}
+                                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.seats}
+                                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.fuel}
+                                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.transmission}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <footer className={styles.priceSection}>
+                                            <p>월 <span>{car.price} 원</span></p>
+                                        </footer>
+                                    </article>
+                                </Link>
                             </li>
                         ))}
                     </ul>
                 </section>
             </div>
-        </main>
+        </main >
     );
 }
 

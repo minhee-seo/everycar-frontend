@@ -9,6 +9,7 @@ import { Navigation, Pagination, FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Link } from 'react-router-dom';
 
 function CarListMobile() {
     const carListData = [
@@ -90,44 +91,46 @@ function CarListMobile() {
                 </aside>
                 <section className={styles.carListSection}>
                     <ul className={styles.carList}>
-                        {Array.from({ length: 5 }).map((_, index) => 
-                        carListData.map((car, index) => (
-                            <li key={index}>
-                                <article className={styles.carCard}>
-                                    <header className={styles.cardHeader}>
-                                        <h4>{car.model}</h4>
-                                        <p>{car.year}</p>
-                                        <p>{car.grade}</p>
-                                    </header>
-                                    <div className={styles.carImage}>
-                                        {/* Placeholder for image */}
-                                    </div>
-                                    <div className={styles.carDetails}>
-                                        <ul className={styles.optionList}>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.type}
-                                            </li>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.seats}
-                                            </li>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.fuel}
-                                            </li>
-                                            <li>
-                                                <FontAwesomeIcon icon={faCar} />
-                                                {car.transmission}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <footer className={styles.priceSection}>
-                                        <p>월 <span>{car.price} 원</span></p>
-                                    </footer>
-                                </article>
-                            </li>
-                        )))}
+                        {Array.from({ length: 5 }).map((_, index) =>
+                            carListData.map((car, index) => (
+                                <li key={index}>
+                                    <Link to="/reservation/carDetail">
+                                    <article className={styles.carCard}>
+                                        <header className={styles.cardHeader}>
+                                            <h4>{car.model}</h4>
+                                            <p>{car.year}</p>
+                                            <p>{car.grade}</p>
+                                        </header>
+                                        <div className={styles.carImage}>
+                                            {/* Placeholder for image */}
+                                        </div>
+                                        <div className={styles.carDetails}>
+                                            <ul className={styles.optionList}>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.type}
+                                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.seats}
+                                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.fuel}
+                                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon icon={faCar} />
+                                                    {car.transmission}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <footer className={styles.priceSection}>
+                                            <p>월 <span>{car.price} 원</span></p>
+                                        </footer>
+                                    </article>
+                                    </Link>
+                                </li>
+                            )))}
                     </ul>
                 </section>
             </div>

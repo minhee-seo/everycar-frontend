@@ -10,6 +10,7 @@ import ResponsiveLayout from '../layouts/ResponsiveLayout.tsx';
 import '../styles/global.scss';
 import '../layouts/layout.scss';
 import CarList from '../pages/carList/CarList.tsx';
+import CarDetail from '../pages/carDetail/CarDetail.tsx';
 
 const AppRoutes = () => (
   <>
@@ -19,6 +20,7 @@ const AppRoutes = () => (
           <Route path="/" element={<MainPage />} />
           <Route path="reservation" element={<Reservation />} />
           <Route path="/reservation/carList" element={<CarList />} />
+          <Route path="/reservation/carDetail" element={<CarDetail />} />
         </Route>
       </Routes>
       
