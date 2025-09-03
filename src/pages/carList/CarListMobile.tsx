@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './CarListMobile.module.scss';
+import './Slide.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faLocationDot, faCarSide, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -47,11 +48,12 @@ function CarListMobile() {
             <div className={styles.contentWrapper}>
                 <aside className={styles.filterSidebar}>
                     <Swiper
-                        slidesPerView={3}
-                        spaceBetween={30}
+                        slidesPerView={5}
+                        spaceBetween={10}
                         freeMode={true}
                         modules={[FreeMode, Pagination]}
-                        className="mySwiper"
+                        className="option"
+
                     >
                         <ul className={styles.filterList}>
                             <li className={styles.filterItem}>

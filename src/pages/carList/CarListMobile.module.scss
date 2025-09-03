@@ -31,7 +31,8 @@
                 background-color: $color-gray-100;
                 padding: 0.75rem 1rem;
                 border-radius: 8px;
-    align-items: center;
+                align-items: center;
+
                 .faX {
                     display: block;
                     margin: 0;
@@ -50,27 +51,13 @@
 }
 
 .filterSidebar {
+    margin-top: 10px;
     border: none;
     background-color: transparent;
     min-width: 0; // Prevent grid item from expanding
 
-    .filterTitle {
-        display: none;
-    }
 }
 
-.filterList {
-    display: flex;
-
-    .filterItem {
-        margin: 0;
-        list-style: none;
-
-        h3 {
-            display: none;
-        }
-    }
-}
 
 .checkboxGroup {
     display: flex;
@@ -89,33 +76,34 @@
     scrollbar-width: none;
 
     li {
-        list-style:none;
+        list-style: none;
         margin-bottom: 0;
         flex-shrink: 0; // Added flex-shrink
-    }
 
-    label {
-        display: block;
-        padding: 0.6rem 1.2rem;
-        border: 1px solid $color-gray-300;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        background-color: $color-white;
-        color: $color-gray-800;
-        font-weight: 500;
-        white-space: nowrap; // Prevent text wrapping in labels
+        label {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid $color-gray-300;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: $color-white;
+            color: $color-gray-800;
+            font-weight: 500;
+            white-space: nowrap; // Prevent text wrapping in labels
 
-        &:hover {
-            border-color: $primary-color;
+            &:hover {
+                border-color: $primary-color;
+            }
+
+            &:has(input:checked) {
+                background-color: $primary-color;
+                color: $color-white;
+                border-color: $primary-color;
+                font-weight: 600;
+            }
         }
 
-        &:has(input:checked) {
-            background-color: $primary-color;
-            color: $color-white;
-            border-color: $primary-color;
-            font-weight: 600;
-        }
     }
 
     input[type="checkbox"] {
@@ -125,4 +113,46 @@
         height: 0;
         width: 0;
     }
+}
+
+
+// slide
+:global(.option .swiper-slide) {
+  li {
+    text-align: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  label {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid $color-gray-300;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: $color-white;
+    color: $color-gray-500;
+    font-weight: 500;
+    white-space: nowrap;
+
+  }
+
+  // Style for the "on" state
+  label:has(input:checked) {
+    background-color: $color-gray-200;
+    border-color: $color-gray-400;
+    color: $color-gray-800;
+    font-weight: 600;
+  }
+
+  // Hide the actual checkbox
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
 }
