@@ -1,2 +1,433 @@
 @import '../../styles/global.scss';
+// =============================================================================
+// Overall Layout
+// =============================================================================
 
+
+.mainTitle {
+  padding: 1rem 0;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $color-black;
+  }
+}
+
+.carDetailContainer {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  background: $color-white;
+  border-radius: 12px;
+  border: 1px solid $border-color;
+}
+
+.right {
+  width: 380px;
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+// =============================================================================
+// Common Section Container
+// =============================================================================
+
+
+// =============================================================================
+// Component Styles
+// =============================================================================
+
+// --- RentTime ---
+.rentTimeContainer {
+
+  .rentTime {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: $color-gray-100;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+
+    .startRent,
+    .endRent {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: $color-gray-800;
+
+      span {
+        display: block;
+      }
+
+      .date {
+        font-weight: 600;
+        color: $color-black;
+      }
+    }
+
+    img {
+      width: 40px; // 아이콘 크기 조절
+    }
+  }
+}
+
+.detailWrap {
+  padding-bottom: 1.2rem;
+
+  h2 {
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+}
+
+// --- CarInfo ---
+.carInfoContainer {
+
+  .carName {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-end;
+
+    span {
+      font-size: $font-sm;
+      line-height: $font-sm;
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+      background: linear-gradient(to bottom right, #AFFF4F, 60%, #FFF187);
+    }
+
+    h5 {
+      font-size: $font-lg;
+    }
+  }
+
+  .carInfo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 1rem;
+
+    .carInfoItem {
+      display: flex;
+      padding: 0.5rem;
+      border-radius: 6px;
+
+      .carInfoTitle {
+        width: 40%;
+        color: $color-gray-700;
+        font-weight: 500;
+      }
+
+      .carInfoContent {
+        width: 60%;
+        color: $color-black;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// --- CarOption ---
+.carOptionContainer {
+  .carOptionBox {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+
+    .carOption {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      border: 1px solid $color-gray-200;
+      border-radius: 8px;
+
+      img {
+        width: 40px;
+        height: 40px;
+        // 임시 아이콘 스타일
+        background-color: $color-gray-300;
+        border-radius: 50%;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: $color-gray-800;
+      }
+    }
+  }
+}
+
+// --- RentLocation ---
+.rentLocationContainer {
+  .map {
+    // 임시 지도 스타일
+    height: 200px;
+    background-color: $color-gray-200;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-gray-500;
+  }
+
+  .greyTitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: $color-gray-600;
+    padding: 0.5rem 0;
+
+    p:last-child {
+      color: $color-black;
+      font-weight: 500;
+    }
+  }
+}
+
+// --- RentCondition ---
+.rentConditionContainer {
+  .rentConditionCont {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    background: $color-gray-100;
+    padding: 1rem;
+    border-radius: 5px;
+
+    .rentCondition {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      svg {
+        flex-shrink: 0;
+
+        path {
+          // stroke: $primary-color;
+        }
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: $color-gray-800;
+      }
+    }
+  }
+}
+
+// --- ContractInfo ---
+.contractInfoContainer {
+  .contractInfoBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .contractTitle {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .contractContent {
+      font-size: 0.9rem;
+      color: $color-gray-700;
+      line-height: 1.5;
+    }
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid $color-gray-100;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      p:first-child {
+        color: $color-gray-600;
+      }
+
+      p:last-child {
+        font-weight: 500;
+        color: $color-black;
+      }
+    }
+  }
+}
+
+// --- ReservationInfo (Right Panel) ---
+.reservationInfoContainer {
+  padding: 1.5rem 2rem;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  background-color: $color-white;
+
+  .carImage {
+    img {
+      width: 100%;
+      border-radius: 8px;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background-color: $color-gray-200; // Placeholder
+    }
+
+    margin-bottom: 1.5rem;
+  }
+
+  .line {
+    border-top: 1px solid $color-gray-200;
+    margin: 1.5rem 0;
+  }
+
+  .priceInfoBox {
+    p:first-child {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .priceInfo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      font-size: 1rem;
+      color: $color-gray-700;
+
+      p:last-child {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $color-black;
+      }
+    }
+  }
+
+  .buttonsContainer {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      border: none;
+
+      &.counselButton {
+        background-color: $color-white;
+        color: $color-gray-500;
+        border: 1px solid $color-gray-400;
+
+        &:hover {
+          background-color: $color-gray-100;
+          color: $color-gray-900;
+        }
+      }
+
+      &.reservationButton {
+        background-color: $primary-color;
+        border: 1px solid $primary-color;
+
+        &:hover {
+          background-color: darken($primary-color, 5%);
+        }
+      }
+    }
+  }
+}
+
+
+// =============================================================================
+// Media Queries
+// =============================================================================
+
+@media (max-width: 1024px) {
+  .carDetailContainer {
+    flex-direction: column;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+  }
+
+  .right {
+    position: static;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .carDetail {
+    padding: 1rem;
+  }
+
+  .mainTitle h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .container,
+  .reservationInfoContainer {
+    padding: 1.5rem;
+  }
+
+  // --- ReservationInfo Mobile ---
+  .reservationInfoContainer {
+    .carContent {
+      width: 100%;
+    }
+  }
+
+  // --- CarInfo Mobile ---
+  .carInfoContainer .carInfo {
+    grid-template-columns: 1fr;
+  }
+
+  // --- RentCondition Mobile ---
+  .rentConditionContainer div {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainTitle h2 {
+    font-size: 1.5rem;
+  }
+
+  .container,
+  .reservationInfoContainer {
+    padding: 1rem;
+  }
+
+  .rentTimeContainer .rentTime {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .reservationInfoContainer .priceInfoBox .priceInfo p:last-child {
+    font-size: 1.3rem;
+  }
+
+  .buttonsContainer button {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
