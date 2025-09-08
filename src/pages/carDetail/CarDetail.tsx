@@ -11,24 +11,45 @@ import ReservationInfo from './ReservationInfo.tsx';
 function CarDetail() {
     return (
         <div className={styles.container}>
-            <div className={styles.mainTitle}>
-                <h2>상세정보</h2>
-            </div>
-
-            <div className={styles.carDetailContainer}>
-                <div className={styles.left}>
-                    <RentTime/>
-                    <CarInfo/>
-                    <CarOption />
-                    <RentLocation/>
-                    <RentCondition/>
-                    <ContractInfo/>
+            <section className={styles.ContentSection_article}>
+                <div className={styles.rentalTime}>
+                    <h2>대여기간</h2>
+                    <p>01. 01(월) 10:00 ~ 01. 02(화) 10:00</p>
                 </div>
+            </section>
+            <section className={styles.ContentSection_article}>
+                <div className={styles.carImage}>
 
-                <div className={styles.right}>
-                    <ReservationInfo/>
                 </div>
-            </div>
+                <div className={styles.carInfo}>
+                    <div>
+                        <h3>EV6</h3>
+                        <span>premium</span>
+                    </div>
+                    <div className={styles.car}>
+
+                    </div>
+                </div>
+                <div className={styles.price}>
+
+                </div>
+            </section>
+            <section className={styles.ContentSection_article}>
+                <h2>대여 위치</h2>
+                <div className={styles.location}>
+                    <div className={styles.pickup}>
+                        <h3>Pick Up & Drop Off</h3>
+                        <p>서울특별시 강남구 서초동 어쩌구 저쩌구 강남역주차장</p>
+                    </div>
+                    <div className={styles.Houres}>
+                        <h3>대여 기간</h3>
+                        
+                    </div>
+                </div>
+                <div className={styles.map}>
+
+                </div>
+            </section>
         </div>
     );
 }
