@@ -14,7 +14,7 @@ body {
 
   // ✅ 모바일 화면일 때
   @include respond-max(mobile-m) {
-    background-color: $color-white;
+    background-color: $bg-color;
   }
 }
 
@@ -45,7 +45,7 @@ button {
     height: 100vh;
     position: relative;
     flex: 1 1;
-    overflow-x: scroll;
+    overflow-y: scroll;
   }
 }
 

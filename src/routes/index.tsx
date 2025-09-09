@@ -11,6 +11,7 @@ import '../styles/global.scss';
 import '../layouts/layout.scss';
 import CarList from '../pages/carList/CarList.tsx';
 import CarDetail from '../pages/carDetail/CarDetail.tsx';
+import Payment from '../pages/payment/Payment.tsx';
 
 const AppRoutes = () => (
   <>
@@ -21,6 +22,7 @@ const AppRoutes = () => (
           <Route path="reservation" element={<Reservation />} />
           <Route path="/reservation/carList" element={<CarList />} />
           <Route path="/reservation/carDetail" element={<CarDetail />} />
+          <Route path="/reservation/payment" element={<Payment />} />
         </Route>
       </Routes>
       
