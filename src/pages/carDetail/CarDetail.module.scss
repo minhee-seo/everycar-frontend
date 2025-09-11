@@ -1,26 +1,227 @@
 @import '../../styles/global.scss';
 
-section{
+section {
   // padding margin
-  padding: 1.5rem;
+  padding: 2rem;
   margin-top: 20px;
   background-color: $color-white;
   border-radius: 10px;
   border-color: $border-color;
 }
 
-.conditions{
+.conditions {}
+
+//  예약기간 섹션
+.rentalTime {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 차량정보 섹션
+.infoSection {
+  display: flex; // 가로 배치
+  align-items: flex-start; // 세로 정렬 (원하는 대로 center 등 변경 가능)
+
+  .carImage {
+    width: 400px; // 원하는 크기 지정
+    height: 300px;
+    flex-shrink: 0; // 줄어들지 않게
+    background: $color-gray-200;
+  }
+
+  .carInfo {
+    flex: 1;
+    padding: 0 16px;
+
+    .infoHeader {
+      display: flex;
+      align-items: center;
+
+      h3 {
+        font-size: $font-lg;
+        margin-right: 10px;
+      }
+
+      span {
+
+        font-size: $font-sm;
+        background: linear-gradient(to bottom right, #AFFF4F, 60%, #FFF187);
+        border-radius: 100px;
+        padding: 1px 10px;
+        color: $color-gray-700;
+      }
+    }
+  }
 
 }
 
-.info{
+.carPrice {
   display: flex;
-  .carImage{
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem; 
+  border-top: 1px solid $color-gray-200;
+}
 
+.priceDisplay {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.priceLabel {
+  font-size: $font-sm;
+  color: $color-gray-600;
+}
+
+.priceValue {
+  font-size: $font-lg;
+  font-weight: bold;
+  margin: 0;
+}
+
+.reservationButton {
+  padding: 0.8rem 2rem;
+  background-color: $primary-color;
+  color: $color-gray-800;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: darken($primary-color, 10%);
   }
-  .rentalTime{
+}
+
+.info {
+  margin-bottom: 2rem;
+}
+
+.subTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.specList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  li {
     display: flex;
-    
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid $color-gray-200;
+
+    strong {
+      font-weight: 500;
+      color: $color-gray-600;
+    }
+
+    span {
+      font-weight: 600;
+    }
   }
-  
+}
+
+.optionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: $color-gray-100;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    svg {
+      color: $primary-color;
+    }
+  }
+}
+
+.locationSection {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 20px;
+
+  .location {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .locationCont {
+    display: flex;
+    align-items: flex-start; 
+    gap: 1.5rem;
+
+    .iconCont {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      background-color: lighten($primary-color, 40%); 
+      border-radius: 50%;
+
+      svg {
+        font-size: 1.5rem;
+        color: $color-gray-600;
+      }
+    }
+
+    .textCont {
+      h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
+      }
+      p {
+        font-size: 1rem;
+        color: $color-gray-700;
+        line-height: 1.6;
+        margin: 0;
+      }
+    }
+  }
+
+  .map {
+    width: 400px;
+    height: 250px;
+    flex-shrink: 0;
+    background: $color-gray-200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-gray-500;
+  }
+
+  // Responsive
+  @media (max-width: 992px) {
+    flex-direction: column;
+    .map {
+      width: 100%;
+    }
+  }
 }
