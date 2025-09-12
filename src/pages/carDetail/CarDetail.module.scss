@@ -228,6 +228,9 @@ section {
 }
 
 @include respond-max(mobile-m) {
+  section{
+    margin-top: 0
+  }
   .ContentSection_article{
     background: none;
   }
