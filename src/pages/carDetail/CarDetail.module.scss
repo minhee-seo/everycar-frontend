@@ -2,14 +2,16 @@
 
 section {
   // padding margin
-  padding: 2rem;
+
+}
+
+.ContentSection_article {
+    padding: 2rem;
   margin-top: 20px;
   background-color: $color-white;
   border-radius: 10px;
   border-color: $border-color;
 }
-
-.conditions {}
 
 //  예약기간 섹션
 .rentalTime {
