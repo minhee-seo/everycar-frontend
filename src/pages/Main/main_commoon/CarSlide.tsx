@@ -14,7 +14,7 @@ const cars = [
 
 export default function CarSlider() {
   return (
-    <div className={styles.container}>
+    <div className={styles.carSlider}>
       <h2 className={styles.title}>인기 차량</h2>
       <Swiper
         navigation

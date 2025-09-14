@@ -5,9 +5,9 @@ function Content() {
   return (
     <>
       <div className={styled.contentContainer} >
-        <div data-aos="fade-up" data-aos-duration="800">
+        <div className={styled.mainImg}>
+          <img src="/mainslide.png" alt="Logo" />
         </div>
-
         <div className={styled.rentContainer}>
           <div className={styled.rentPos}>
             <h5 className={styled.title}>렌트 장소</h5>

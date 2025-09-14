@@ -12,7 +12,7 @@ const DesktopGnb: React.FC = () => {
               <div className={styles.leftCenterGroup}>
                 <div className={styles.leftMenu}>
                   <Link to="/">
-                    <img src="/logo.png" alt="Logo" width={138} height={50} />
+                    <img src="/logo_white.png" alt="Logo" width={138} height={50} />
                   </Link>
                 </div>
     
@@ -37,7 +37,7 @@ const DesktopGnb: React.FC = () => {
                     <>
                       <li><Link to="/auth/login">로그인</Link></li>
                       <li>
-                        <div className="btn btn--primary">
+                        <div className={`btn btn--primary ${styles.signUp}`}>
                           <Link to="/auth/registerConditions">회원가입</Link>    
                         </div>
                       </li>

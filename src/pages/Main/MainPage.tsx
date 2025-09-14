@@ -19,7 +19,7 @@ function MainPage() {
 function Desktop() {
   return (
     <div className={styles.container}>
-      <Slide></Slide>
+      {/* <Slide></Slide> */}
       <Content></Content>
       <ShortCut></ShortCut>
       <CarSlider></CarSlider>

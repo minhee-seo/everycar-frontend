@@ -2,9 +2,10 @@
 
 // src/components/Gnb/gnb.scss
 .header {
+  position: fixed;
   width: 100%;
-  background-color: $color-white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  z-index: 999;
 }
 
 .menu {
@@ -42,9 +43,10 @@
 
 .centerMenu li a {
   text-decoration: none;
-  color: $text-color;
   font-weight: 500;
   transition: 0.2s;
+  color: $color-white;
+
 }
 
 .centerMenu li a:hover{
@@ -64,4 +66,9 @@
   text-decoration: none;
   color: #333;
   transition: 0.2s;
+  color: $color-white;
+}
+
+.rightMenu li .signUp a{
+  color: $text-color;
 }
