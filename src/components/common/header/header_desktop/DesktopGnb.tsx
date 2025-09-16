@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 import styles from './DesktopGnb.module.scss';
 
 const DesktopGnb: React.FC = () => {
@@ -8,6 +10,9 @@ const DesktopGnb: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   // 로그인 상태 감지
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem('accessToken'));
+
+  const location = useLocation();
+  const isMainPage = location.pathname === '/';
 
 
   useEffect(() => {
@@ -32,18 +37,21 @@ const DesktopGnb: React.FC = () => {
 
   return (
     <div
-      className={`${styles.header} ${isScrolled ? "" : styles.headerWhite} ${isScrolled ? styles.headerBlack : ""
-        }`}
+      className={`
+    ${styles.header} 
+    ${!isMainPage ? styles.headerBlack : isScrolled ? styles.headerBlack : styles.headerWhite}
+  `}
     >
+
       <nav className={styles.menu}>
         <div className={styles.menuContainer}>
           <div className={styles.leftCenterGroup}>
             <div className={styles.leftMenu}>
               <Link to="/">
-                {isScrolled ? 
-                <img src="/logo.png" alt="Logo" width={138} height={50} />
-                :
-                <img src="/logo_white.png" alt="Logo" width={138} height={50} />
+                {isScrolled ?
+                  <img src="/logo.png" alt="Logo" width={138} height={50} />
+                  :
+                  <img src="/logo_white.png" alt="Logo" width={138} height={50} />
                 }
               </Link>
             </div>
