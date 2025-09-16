@@ -48,10 +48,13 @@ const DesktopGnb: React.FC = () => {
           <div className={styles.leftCenterGroup}>
             <div className={styles.leftMenu}>
               <Link to="/">
-                {isScrolled ?
+                {!isMainPage ?
                   <img src="/logo.png" alt="Logo" width={138} height={50} />
-                  :
-                  <img src="/logo_white.png" alt="Logo" width={138} height={50} />
+
+                  : isScrolled ?
+                    <img src="/logo.png" alt="Logo" width={138} height={50} />
+                    :
+                    <img src="/logo_white.png" alt="Logo" width={138} height={50} />
                 }
               </Link>
             </div>
