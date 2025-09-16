@@ -6,7 +6,23 @@
   width: 100%;
   padding-top: 10px;
   z-index: 999;
-  transition: 0.3s;
+  overflow: hidden; // 배경 잘림 방지
+  // transition: background-color 0.3s ease, color 0.3s ease;
+
+    // 배경을 위한 가상 요소
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-white;
+    transform: translateY(-100%); // 위로 숨김
+    transition: transform 0.4s ease, opacity 0.8s ease;
+    z-index: -1; // 텍스트 위로 덮지 않게 뒤로 보냄
+    opacity: 0;
+  }
 
   .centerMenu ul {
     display: flex;
@@ -19,7 +35,7 @@
   .centerMenu li a {
     text-decoration: none;
     font-weight: 500;
-    transition: 0.2s;
+    transition: color 0.3s ease;
     color: $color-white;
   }
 
@@ -29,16 +45,29 @@
 }
 
 .headerBlack {
-  background: $color-white;
-
-  .centerMenu li a {
-    color: $text-color;
+  &::before {
+    transform: translateY(0); // 내려옴
+    opacity: 1;
   }
 
+  .centerMenu li a,
   .rightMenu li a {
     color: $text-color;
   }
 }
+
+// .headerBlack {
+//   background-color: $color-white;
+
+//   .centerMenu li a {
+//     color: $text-color;
+//   }
+
+//   .rightMenu li a {
+//     color: $text-color;
+//     transition: color 0.3s ease;
+//   }
+// }
 
 .menu {
   display: flex;

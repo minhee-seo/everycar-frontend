@@ -23,7 +23,6 @@ function Desktop() {
       <Content></Content>
       <ShortCut></ShortCut>
       {/* <CarSlider></CarSlider> */}
-      <Footer></Footer>
     </div>
   );
 }
