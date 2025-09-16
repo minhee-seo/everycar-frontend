@@ -6,7 +6,7 @@ import ShortCut from './main_commoon/ShortCut.tsx';
 import CarSlider from './main_commoon/CarSlide.tsx';
 import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
 import Searchbar from './main_mobile/Searchbar.tsx';
-
+import Footer from '../../components/common/Footer.tsx';
 function MainPage() {
   return (
     <ResponsiveSwitch
@@ -22,7 +22,8 @@ function Desktop() {
       {/* <Slide></Slide> */}
       <Content></Content>
       <ShortCut></ShortCut>
-      <CarSlider></CarSlider>
+      {/* <CarSlider></CarSlider> */}
+      <Footer></Footer>
     </div>
   );
 }
