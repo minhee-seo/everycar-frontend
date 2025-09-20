@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styles from './ReservationController.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-
+import { ko } from "date-fns/locale";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 interface ReservationControllerProps {
   map: any;
   parkingData: any[];
@@ -13,9 +15,12 @@ interface ReservationControllerProps {
 
 function ReservationController({ map, parkingData, setKeyword, onSearchComplete }: ReservationControllerProps) {
   const [localKeyword, setLocalKeyword] = useState('');
-
+  // const [startDate, setStartDate] = useState(new Date());
+  // const [dateRange, setDateRange] = useState([null, null]);
+  // const [startDate, endDate] = dateRange;
+  const monthsShown = useMemo(() => 2, []);
   useEffect(() => {
-    if(map){
+    if (map) {
       map.panBy(-150, 0);
     }
   }, [map]);
@@ -62,7 +67,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
                         <div class="CustomOverlay">
                             <span>${parking.parking_name}</span>
                         </div>`;
- 
+
         const iwfowindow = new window.kakao.maps.CustomOverlay({
           position: position,
           content: iwContent,
@@ -97,22 +102,77 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
     handleSearchClick();
   }
 
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
   return (
     <form onSubmit={searchParking}>
       <div className={styles.searchCont}>
         <div className={styles.dateWrap}>
-          <div className={styles.date}>
-            <FontAwesomeIcon icon={faClock} />
-            <div className={styles.rentalDate}>
-              <span className={styles.selectDate}>1.1(수)</span>
-              <span>10:00</span>
-            </div>
-            <FontAwesomeIcon icon={faAngleRight} />
-            <div className={styles.rentalDate}>
-              <span className={styles.selectDate}>1.2(목)</span>
-              <span>10:00</span>
-            </div>
-          </div>
+          <DatePicker
+            selectsRange={true}
+            startDate={startDate}
+            endDate={endDate}
+            isClearable={true}
+            locale={ko} // 한글화
+            onChange={(update) => {
+              setDateRange(update);
+            }}
+            withPortal
+            renderCustomHeader={({
+              monthDate,
+              customHeaderCount,
+              decreaseMonth,
+              increaseMonth,
+            }) => (
+              <div>
+                <button
+                  aria-label="Previous Month"
+                  className={
+                    "react-datepicker__navigation react-datepicker__navigation--previous"
+                  }
+                  onClick={decreaseMonth}
+                  style={{
+                    visibility: customHeaderCount === 0 ? "visible" : "hidden",
+                  }}
+                >
+                  <span
+                    className={
+                      "react-datepicker__navigation-icon react-datepicker__navigation-icon--previous"
+                    }
+                  >
+                    {"<"}
+                  </span>
+                </button>
+                <span className="react-datepicker__current-month">
+                  {monthDate.toLocaleString("en-US", {
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </span>
+                <button
+                  aria-label="Next Month"
+                  className={
+                    "react-datepicker__navigation react-datepicker__navigation--next"
+                  }
+                  onClick={increaseMonth}
+                  style={{
+                    visibility:
+                      customHeaderCount === monthsShown - 1 ? "visible" : "hidden",
+                  }}
+                >
+                  <span
+                    className={
+                      "react-datepicker__navigation-icon react-datepicker__navigation-icon--next"
+                    }
+                  >
+                    {">"}
+                  </span>
+                </button>
+              </div>
+            )}
+            selected={startDate}
+            monthsShown={monthsShown}
+          />
           <span className={styles.totalHoure}>24시간</span>
         </div>
 

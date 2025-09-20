@@ -8,13 +8,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import ParkingList from './ParkingList.tsx';
 import SelectList from './SelectList.tsx';
+import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
 
-function Reservation() {
+const Reservation = () => {
   const [parkingData, setParkingData] = useState<any[]>([]);
   const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState('');
   const [searchDone, setSearchDone] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     fetch('/data/parking.json')
@@ -45,7 +47,6 @@ function Reservation() {
             setKeyword={setKeyword}
             onSearchComplete={handleSearchComplete}
           />
-
           <div className={styles.resultCont}>
             {
               searchDone ? (
