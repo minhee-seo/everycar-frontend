@@ -1,44 +1,86 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; 
+import "react-datepicker/dist/react-datepicker.css";
 
 import styles from './ReservationDatePicker.module.scss';
 
-const ReservationDatePicker: React.FC = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+import { ko } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
+const ReservationDatePicker: React.FC = () => {
+  const [localKeyword, setLocalKeyword] = useState('');
+  const monthsShown = useMemo(() => 2, []);
+
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
   return (
-    <div className={styles.datePickerWrapper}>
-      <div>
-        <label>대여 시작</label>
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate}
-          minDate={new Date()}
-          dateFormat="yyyy.MM.dd (EEE) HH:mm"
-          showTimeSelect
-        />
-      </div>
-      <div>
-        <label>반납</label>
-        <DatePicker
-          selected={endDate}
-          onChange={(date) => setEndDate(date)}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate || new Date()}
-          dateFormat="yyyy.MM.dd (EEE) HH:mm"
-          showTimeSelect
-        />
-      </div>
-    </div>
-  );
+      <DatePicker
+        className={styles.inputCont}
+        selectsRange={true}
+        startDate={startDate}
+        endDate={endDate}
+        locale={ko} // 한글화
+        onChange={(update) => {
+          setDateRange(update);
+        }}
+        withPortal
+        renderCustomHeader={({
+          monthDate,
+          customHeaderCount,
+          decreaseMonth,
+          increaseMonth,
+        }) => (
+          <div>
+            <button
+              aria-label="Previous Month"
+              className={
+                "react-datepicker__navigation react-datepicker__navigation--previous"
+              }
+              onClick={decreaseMonth}
+              style={{
+                visibility: customHeaderCount === 0 ? "visible" : "hidden",
+              }}
+            >
+              <span
+                className={
+                  "react-datepicker__navigation-icon react-datepicker__navigation-icon--previous"
+                }
+              >
+                {"<"}
+              </span>
+            </button>
+            <span className="react-datepicker__current-month">
+              {monthDate.toLocaleString("en-US", {
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
+            <button
+              aria-label="Next Month"
+              className={
+                "react-datepicker__navigation react-datepicker__navigation--next"
+              }
+              onClick={increaseMonth}
+              style={{
+                visibility:
+                  customHeaderCount === monthsShown - 1 ? "visible" : "hidden",
+              }}
+            >
+              <span
+                className={
+                  "react-datepicker__navigation-icon react-datepicker__navigation-icon--next"
+                }
+              >
+                {">"}
+              </span>
+            </button>
+          </div>
+        )}
+        selected={startDate}
+        monthsShown={monthsShown}
+      />
+  )
 };
 
 export default ReservationDatePicker;

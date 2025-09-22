@@ -1,24 +1,9 @@
 @import '../../../../styles/global.scss';
-.datePickerWrapper {
-  position: relative;
-  display: flex;
-  gap: 20px;
-  z-index: 999;
-  height: 500px;
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
 
-  .react-datepicker-wrapper {
-    width: 200px;
-    input {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-  }
+.inputCont {
+  width: 220px;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: $font-md;
 }

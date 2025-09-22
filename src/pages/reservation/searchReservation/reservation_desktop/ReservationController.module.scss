@@ -1,39 +1,44 @@
   @import '../../../../styles/global.scss';
 
-      .dateWrap {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 15px;
-        background-color: $color-gray-200;
-        border-radius: 5px 5px 0 0;
-        border-bottom: 1px solid $color-gray-300;
+  .dateWrap {
+    display: flex;
+    align-items: center; // 세로 중앙 정렬
+    gap: 10px;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: $color-gray-200;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid $color-gray-300;
 
 
-        .date {
-          display: flex;
-          align-items: center;
+    .date {
+      display: flex;
+      align-items: center;
 
-          .rentalDate{
-            margin: 0 10px ;
-          }
-        }
+      .rentalDate {
+        margin: 0 10px;
       }
+    }
 
-            .inputState {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 15px;
-        background-color: $color-gray-200;
-        border-radius: 0 0 5px 5px;
+    .totalHoure{
+       margin-left: auto;
+    }
+  }
 
-        .searchInput {
-          width: 100%;
-          border: none;
-          outline: none;
-          margin-left: 10px;
-          font-size: 16px;
-          background: none;
-        }
-      }
+  .inputState {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: $color-gray-200;
+    border-radius: 0 0 5px 5px;
+
+    .searchInput {
+      width: 100%;
+      border: none;
+      outline: none;
+      margin-left: 10px;
+      font-size: 16px;
+      background: none;
+    }
+  }
