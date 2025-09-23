@@ -20,6 +20,12 @@
       }
     }
 
+    input{
+      border: none;
+      background: none;
+      font-size: $font-md;
+      outline: none;
+    }
     .totalHoure{
        margin-left: auto;
     }

@@ -4,6 +4,7 @@ import MapView from './components/MapView.tsx';
 import ReservationController from './components/reservationController.tsx';
 import SearchTrigger from './components/SearchTrigger.tsx';
 import ParkingList from './components/ParkingList.tsx';
+import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -12,7 +13,7 @@ function ReservationMobile() {
     const [keyword, setKeyword] = useState('');
     const [map, setMap] = useState<any>(null);
     const [searchDone, setSearchDone] = useState(false);
-
+    const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     // 주차장 데이터 로드
     useEffect(() => {
         fetch('/data/parking.json')
@@ -49,6 +50,11 @@ function ReservationMobile() {
 
     }
 
+    // 입력 완료 핸들러
+    const closeDatePicker = () => {
+        setIsDatePickerOpen(false);
+    };
+
     return (
         <div className={styles.container}>
             {!isSheetOpen && <SearchTrigger onClick={openSheet} />}
@@ -69,8 +75,25 @@ function ReservationMobile() {
                             setKeyword={setKeyword}
                             filtered={filtered}
                             onSearchComplete={handleSearchComplete}
+                            isDatePickerOpen={isDatePickerOpen}
+                            setIsDatePickerOpen={setIsDatePickerOpen}
                         />
                     </div>
+                    {isDatePickerOpen && (
+                        <div className={styles.datePickerOverlay} onClick={(e) => e.stopPropagation()}>
+                            <ReservationDatePicker
+                                onClose={() => setIsDatePickerOpen(false)}
+                                onDateSelect={(range) => {
+                                    console.log("선택된 기간:", range);
+                                    // 👉 여기서 state로 관리 가능
+                                    // setSelectedDateRange(range);
+                                }}
+                                />
+                                    {/* <button onClick={closeDatePicker} className={styles.closeButton}>
+                                    선택 완료
+                                </button> */}
+                        </div>
+                    )}
                 </div>
             )}
             {searchDone &&

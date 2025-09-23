@@ -20,6 +20,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
   // const [dateRange, setDateRange] = useState([null, null]);
   // const [startDate, endDate] = dateRange;
   const monthsShown = useMemo(() => 2, []);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   useEffect(() => {
     if (map) {
       map.panBy(-150, 0);
@@ -103,27 +104,44 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
     handleSearchClick();
   }
 
-  return (
-    <form onSubmit={searchParking}>
-      <div className={styles.searchCont}>
-        <div className={styles.dateWrap}>
-          <FontAwesomeIcon icon={ faClock } />
-          <ReservationDatePicker />
-          <span className={styles.totalHoure}>24시간</span>
-        </div>
+  const handleDatePicker = () => {
+    setIsDatePickerOpen(true);
+  }
 
-        <div className={styles.inputState}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder='지역을 검색하세요'
-            value={localKeyword}
-            onChange={(e) => setLocalKeyword(e.target.value)}
-          />
+  return (
+    <>
+      <form onSubmit={searchParking}>
+        <div className={styles.searchCont}>
+          <div className={styles.dateWrap}>
+            <FontAwesomeIcon icon={faClock} />
+            <input type="text" placeholder='날짜를 입력하세요' readOnly onClick={handleDatePicker} />
+            {/* <ReservationDatePicker /> */}
+            <span className={styles.totalHoure}>24시간</span>
+          </div>
+
+          <div className={styles.inputState}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder='지역을 검색하세요'
+              value={localKeyword}
+              onChange={(e) => setLocalKeyword(e.target.value)}
+            />
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+      {isDatePickerOpen && (
+        <ReservationDatePicker
+          onClose={() => setIsDatePickerOpen(false)}
+          onDateSelect={(range) => {
+            console.log("선택된 기간:", range);
+          }}
+        />
+      )
+
+      }
+    </>
   )
 }
 
