@@ -12,16 +12,18 @@ interface ReservationControllerProps {
   parkingData: any[];
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   onSearchComplete?: () => void;
+  setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  dateRange: [Date | null, Date | null];
 }
 
-function ReservationController({ map, parkingData, setKeyword, onSearchComplete }: ReservationControllerProps) {
+function ReservationController({ map, parkingData, setKeyword, onSearchComplete, setIsDatePickerOpen, dateRange }: ReservationControllerProps) {
   const [localKeyword, setLocalKeyword] = useState('');
   // const [startDate, setStartDate] = useState(new Date());
   // const [dateRange, setDateRange] = useState([null, null]);
   // const [startDate, endDate] = dateRange;
   const monthsShown = useMemo(() => 2, []);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+  // const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   useEffect(() => {
     if (map) {
       map.panBy(-150, 0);
@@ -141,16 +143,16 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
           </div>
         </div>
       </form>
-      {isDatePickerOpen && (
-        <ReservationDatePicker
-          onClose={() => setIsDatePickerOpen(false)}
-          onDateSelect={(range) => {
-            setDateRange(range);
-          }}
-        />
-      )
-
-      }
+      {/* {isDatePickerOpen && (
+        <div className={styles.datePickerOverlay}>
+          <ReservationDatePicker
+            onClose={() => setIsDatePickerOpen(false)}
+            onDateSelect={(range) => {
+              setDateRange(range);
+            }}
+          />
+        </div>
+      )} */}
     </>
   )
 }

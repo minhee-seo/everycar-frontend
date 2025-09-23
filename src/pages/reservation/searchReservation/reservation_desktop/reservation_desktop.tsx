@@ -18,6 +18,8 @@ const Reservation = () => {
   const [searchDone, setSearchDone] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
 
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   useEffect(() => {
     fetch('/data/parking.json')
       .then(res => res.json())
@@ -36,7 +38,6 @@ const Reservation = () => {
     setSearchDone(true);
   }
 
-
   return (
     <>
       <div className={styles.mapContainer}>
@@ -46,6 +47,8 @@ const Reservation = () => {
             parkingData={parkingData}
             setKeyword={setKeyword}
             onSearchComplete={handleSearchComplete}
+            setIsDatePickerOpen={setIsDatePickerOpen}
+            dateRange={dateRange}
           />
           <div className={styles.resultCont}>
             {
@@ -77,6 +80,16 @@ const Reservation = () => {
             }
           </div>
         </div>
+        {isDatePickerOpen && (
+          <div className={styles.datePickerOverlay}>
+            <ReservationDatePicker
+              onClose={() => setIsDatePickerOpen(false)}
+              onDateSelect={(range) => {
+                setDateRange(range);
+              }}
+            />
+          </div>
+        )}
       </div>
       <MapView onMapLoad={setMap} />
     </>
