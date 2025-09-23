@@ -21,6 +21,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
   // const [startDate, endDate] = dateRange;
   const monthsShown = useMemo(() => 2, []);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   useEffect(() => {
     if (map) {
       map.panBy(-150, 0);
@@ -114,7 +115,16 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
         <div className={styles.searchCont}>
           <div className={styles.dateWrap}>
             <FontAwesomeIcon icon={faClock} />
-            <input type="text" placeholder='날짜를 입력하세요' readOnly onClick={handleDatePicker} />
+            <input
+              type="text"
+              placeholder='날짜를 입력하세요'
+              readOnly
+              onClick={handleDatePicker}
+              value={
+                dateRange[0] && dateRange[1]
+                  ? `${dateRange[0].toLocaleDateString()} ~ ${dateRange[1].toLocaleDateString()}`
+                  : ""
+              } />
             {/* <ReservationDatePicker /> */}
             <span className={styles.totalHoure}>24시간</span>
           </div>
@@ -135,7 +145,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete 
         <ReservationDatePicker
           onClose={() => setIsDatePickerOpen(false)}
           onDateSelect={(range) => {
-            console.log("선택된 기간:", range);
+            setDateRange(range);
           }}
         />
       )

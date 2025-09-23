@@ -19,22 +19,16 @@ interface ReservationControllerProps {
     onSearchComplete?: () => void;
     isDatePickerOpen: boolean;
     setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    dateRange: [Date | null, Date | null];
 }
 
-function ReservationController({ map, closeSheet, keyword, setKeyword, filtered, onSearchComplete, isDatePickerOpen, setIsDatePickerOpen }: ReservationControllerProps) {
+function ReservationController({ map, closeSheet, keyword, setKeyword, filtered, onSearchComplete, isDatePickerOpen, setIsDatePickerOpen, dateRange }: ReservationControllerProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     // const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
     useEffect(() => {
         inputRef.current?.focus();
     }, []);
-
-    const handleSearchClick = () => {
-        if (onSearchComplete) {
-            console.log('검색실행됨');
-            onSearchComplete();
-        }
-    };
 
     const searchParking = (e: React.FormEvent) => {
         e.preventDefault();
@@ -84,13 +78,17 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
         handleSearchClick();
     };
 
+    const handleSearchClick = () => {
+        if (onSearchComplete) {
+            console.log('검색실행됨');
+            onSearchComplete();
+        }
+    };
+
+
     const openDatePicker = () => {
         setIsDatePickerOpen(true);
     };
-
-    // const closeDatePicker = () => {
-    //     setIsDatePickerOpen(false);
-    // };
 
     return (
         <>
@@ -98,15 +96,17 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                 <div className={styles.dateWrap}>
                     <div className={styles.date} onClick={openDatePicker}>
                         <FontAwesomeIcon icon={faClock} />
-                        <div className={styles.rentalDate}>
-                            <span className={styles.selectDate}>1.1(수)</span>
-                            <span>10:00</span>
-                        </div>
-                        <FontAwesomeIcon icon={faAngleRight} />
-                        <div className={styles.rentalDate}>
-                            <span className={styles.selectDate}>1.2(목)</span>
-                            <span>10:00</span>
-                        </div>
+                        <input
+                            type="text"
+                            className={styles.inputCont}
+                            placeholder='이용 기간을 입력해주세요'
+                            readOnly
+                            value={
+                                dateRange[0] && dateRange[1]
+                                    ? `${dateRange[0].toLocaleDateString()} ~ ${dateRange[1].toLocaleDateString()}`
+                                    : ""
+                            }
+                        />
                     </div>
                     <span className={styles.totalHoure}>24시간</span>
                 </div>
@@ -125,16 +125,6 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                     검색
                 </button>
             </form>
-            {/* {isDatePickerOpen && (
-        <div className={styles.datePickerOverlay}>
-          <div className={styles.datePickerContainer}>
-            <ReservationDatePicker />
-            <button onClick={closeDatePicker} className={styles.closeButton}>
-              선택 완료
-            </button>
-          </div>
-        </div>
-      )} */}
         </>
     );
 }

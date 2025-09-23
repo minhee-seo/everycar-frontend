@@ -21,8 +21,13 @@
       justify-content: space-around;
       align-items: center;
       gap: 10px;
-      .inputCont{
 
+      .inputCont{
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: $font-md;
+        outline: none;
       }
     }
 

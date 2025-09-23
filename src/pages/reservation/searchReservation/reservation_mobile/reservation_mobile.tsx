@@ -14,6 +14,7 @@ function ReservationMobile() {
     const [map, setMap] = useState<any>(null);
     const [searchDone, setSearchDone] = useState(false);
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
     // 주차장 데이터 로드
     useEffect(() => {
         fetch('/data/parking.json')
@@ -50,10 +51,6 @@ function ReservationMobile() {
 
     }
 
-    // 입력 완료 핸들러
-    const closeDatePicker = () => {
-        setIsDatePickerOpen(false);
-    };
 
     return (
         <div className={styles.container}>
@@ -77,6 +74,7 @@ function ReservationMobile() {
                             onSearchComplete={handleSearchComplete}
                             isDatePickerOpen={isDatePickerOpen}
                             setIsDatePickerOpen={setIsDatePickerOpen}
+                            dateRange={dateRange}
                         />
                     </div>
                     {isDatePickerOpen && (
@@ -84,14 +82,9 @@ function ReservationMobile() {
                             <ReservationDatePicker
                                 onClose={() => setIsDatePickerOpen(false)}
                                 onDateSelect={(range) => {
-                                    console.log("선택된 기간:", range);
-                                    // 👉 여기서 state로 관리 가능
-                                    // setSelectedDateRange(range);
+                                    setDateRange(range);
                                 }}
-                                />
-                                    {/* <button onClick={closeDatePicker} className={styles.closeButton}>
-                                    선택 완료
-                                </button> */}
+                            />
                         </div>
                     )}
                 </div>
