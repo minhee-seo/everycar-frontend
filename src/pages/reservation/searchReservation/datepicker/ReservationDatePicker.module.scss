@@ -1,9 +1,31 @@
 @import '../../../../styles/global.scss';
 
-.inputCont {
-  width: 220px;
-  border: none;
-  background: none;
-  outline: none;
-  font-size: $font-md;
+.datepicker {
+  width: 800px;
+  padding: 20px;
+  border-radius: 10px;
+  background: $color-white;
+
+  .inputCont {
+    width: 220px;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: $font-md;
+  }
 }
+
+:global {
+  .react-datepicker {
+    border: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .react-datepicker__month-container{
+    width: 500px;
+  }
+  
+  
+}
+

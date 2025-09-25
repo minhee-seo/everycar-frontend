@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ko } from "date-fns/locale";
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 interface ReservationControllerProps {
   map: any;
@@ -143,16 +142,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
           </div>
         </div>
       </form>
-      {/* {isDatePickerOpen && (
-        <div className={styles.datePickerOverlay}>
-          <ReservationDatePicker
-            onClose={() => setIsDatePickerOpen(false)}
-            onDateSelect={(range) => {
-              setDateRange(range);
-            }}
-          />
-        </div>
-      )} */}
+
     </>
   )
 }
