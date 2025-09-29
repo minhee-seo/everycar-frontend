@@ -7,18 +7,38 @@ import styles from './ReservationDatePicker.module.scss';
 
 import { ko } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import CustomSelect from './CustomSelect.tsx';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 
 interface ReservationDatePickerProps {
   onClose: () => void; // 달력 닫기
   onDateSelect: (range: [Date | null, Date | null]) => void; // 선택 값 전달
 }
 
+const generateTimes = () => {
+  const times: string[] = [];
+  for (let hour = 0; hour <= 24; hour++) {
+    for (let min of [0, 30]) {
+      if (hour === 24 && min > 0) continue;
+      const h = String(hour).padStart(2, '0');
+      const m = String(min).padStart(2, '0');
+      times.push(`${h}:${m}`);
+    }
+  }
+  return times;
+};
+
 const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, onDateSelect }) => {
-  const [localKeyword, setLocalKeyword] = useState('');
   const monthsShown = useMemo(() => 2, []);
 
-  const [dateRange, setDateRange] = useState([null, null]);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [startDate, endDate] = dateRange;
+
+  const [rentTime, setRentTime] = useState('');
+  const [returnTime, setReturnTime] = useState('');
+
   return (
     <>
       <div className={styles.datepicker}>
@@ -66,7 +86,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
                 </span>
               </button>
               <span className="react-datepicker__current-month">
-                {monthDate.toLocaleString("en-US", {
+                {monthDate.toLocaleString("KO-US", {
                   month: "long",
                   year: "numeric",
                 })}
@@ -96,29 +116,45 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
           monthsShown={monthsShown}
         />
         <div className={styles.rentTime}>
-          <div>
-            <label>대여 시각</label>
-            <select >
-              <option value="09:00">09:00</option>
-              <option value="10:00">10:00</option>
-              <option value="11:00">11:00</option>
-              <option value="12:00">12:00</option>
-            </select>
+          <div className={styles.selectTime}>
+            <CustomSelect label="대여 시각" value={rentTime} onChange={setRentTime} />
           </div>
-
-          <div>
-            <label>반납 시각</label>
-            <select >
-              <option value="09:00">09:00</option>
-              <option value="10:00">10:00</option>
-              <option value="11:00">11:00</option>
-              <option value="12:00">12:00</option>
-            </select>
+          <div className={styles.selectTime}>
+            <CustomSelect label="반납 시각" value={returnTime} onChange={setReturnTime} />
           </div>
         </div>
 
-        <div>
-          <button>선택 완료</button>
+        <div className={styles.result}>
+          <div className={styles.resultCont}>
+            <span>시작일</span>
+            <span>01월 01일 10 : 00</span>
+          </div>
+          <FontAwesomeIcon icon={faCarSide} />
+          <div className={styles.resultCont}>
+            <span>반납일</span>
+            <span> 01월 02일 10 : 00</span>
+          </div>
+        </div>
+
+        <div className={styles.button}>
+          <button className={styles.reset}>취소</button>
+          <button
+            className={styles.submit}
+            onClick={() => {
+              if (startDate && endDate && rentTime && returnTime) {
+                console.log('예약 정보:', {
+                  날짜: [startDate, endDate],
+                  대여시각: rentTime,
+                  반납시각: returnTime,
+                });
+                onDateSelect([startDate, endDate]); // 필요 시 시간도 전달
+                onClose();
+              } else {
+                alert('날짜와 시간을 모두 선택해주세요.');
+              }
+            }}>
+            선택 완료
+          </button>
         </div>
       </div>
     </>

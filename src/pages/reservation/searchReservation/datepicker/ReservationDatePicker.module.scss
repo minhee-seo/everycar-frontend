@@ -2,7 +2,7 @@
 
 .datepicker {
   width: 800px;
-  padding: 20px;
+  padding: 30px 20px;
   border-radius: 10px;
   background: $color-white;
 
@@ -13,6 +13,84 @@
     outline: none;
     font-size: $font-md;
   }
+
+  .rentTime {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 85px;
+    padding-bottom: 10px;
+    gap: 5px;
+
+    .selectTime {
+      position: relative;
+      width: 100%;
+
+    }
+
+  }
+
+
+  .result {
+    display: flex;
+    align-items: center;
+    padding: 10px 85px;
+
+    .resultCont {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      span:first-child {
+        margin-right: 20px;
+        color: $color-gray-600;
+      }
+
+      span{
+      }
+      
+    }
+
+    svg {
+      color: $color-gray-800;
+      margin: 0 20px;
+    }
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid $color-gray-200;
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: $font-sm;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .reset {
+      background-color: $color-gray-100;
+      color: $color-gray-800;
+
+      &:hover {
+        background-color: $color-gray-200;
+      }
+    }
+
+    .submit {
+      background-color: $primary-color;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+
 }
 
 :global {
@@ -22,10 +100,15 @@
     justify-content: center;
   }
 
-  .react-datepicker__month-container{
-    width: 500px;
+  .react-datepicker__header {
+    margin: 0 -50px;
+    background: none;
+    border-bottom: 1px solid $primary-color;
   }
-  
-  
-}
 
+  .react-datepicker__month-container {
+    width: 300px
+  }
+
+
+}
