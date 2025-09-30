@@ -36,9 +36,31 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [startDate, endDate] = dateRange;
 
-  const [rentTime, setRentTime] = useState('');
-  const [returnTime, setReturnTime] = useState('');
+  // 현재 시각을 구하고 30분 단위로 끊는 함수
+  const now = new Date();
+  let hour = now.getHours();
+  const minute = now.getMinutes();
+  let roundedMinute = 0; // 30분 단위 반올림
 
+  if (minute < 15) {
+    roundedMinute = 0;
+  } else if (minute < 45) {
+    roundedMinute = 30;
+  } else {
+    roundedMinute = 0;
+    hour = (hour + 1) % 24;
+  }
+
+  const pad = (num) => String(num).padStart(2, '0');
+
+  const rentHour = hour;
+  const rentMinute = roundedMinute;
+  const returnHour = (rentHour + 6) % 24;
+  const returnMinute = rentMinute;
+
+  const [rentTime, setRentTime] = useState(`${pad(rentHour)}:${pad(rentMinute)}`);
+  const [returnTime, setReturnTime] = useState(`${pad(returnHour)}:${pad(returnMinute)}`);
+  
   return (
     <>
       <div className={styles.datepicker}>
@@ -57,7 +79,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
             // endDate가 선택되면 닫고 값 전달
             if (update[0] && update[1]) {
               onDateSelect(update);
-              onClose();
+              // onClose();
             }
           }}
           renderCustomHeader={({
@@ -127,7 +149,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
         <div className={styles.result}>
           <div className={styles.resultCont}>
             <span>시작일</span>
-            <span>01월 01일 10 : 00</span>
+            <span> 10 : 00</span>
           </div>
           <FontAwesomeIcon icon={faCarSide} />
           <div className={styles.resultCont}>
@@ -137,7 +159,14 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
         </div>
 
         <div className={styles.button}>
-          <button className={styles.reset}>취소</button>
+          <button
+            className={styles.reset}
+            onClick={() => {
+              onClose();
+            }}
+          >b
+            취소
+          </button>
           <button
             className={styles.submit}
             onClick={() => {

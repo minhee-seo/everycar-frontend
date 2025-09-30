@@ -123,10 +123,9 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
               onClick={handleDatePicker}
               value={
                 dateRange[0] && dateRange[1]
-                  ? `${dateRange[0].toLocaleDateString()} ~ ${dateRange[1].toLocaleDateString()}`
+                  ? `${dateRange[0].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })} ~ ${dateRange[1].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}`
                   : ""
               } />
-            {/* <ReservationDatePicker /> */}
             <span className={styles.totalHoure}>24시간</span>
           </div>
 
