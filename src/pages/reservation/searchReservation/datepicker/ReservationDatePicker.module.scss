@@ -45,7 +45,8 @@
         color: $color-gray-600;
       }
 
-      span{
+      span:last-child{
+        width: 100px;
       }
       
     }

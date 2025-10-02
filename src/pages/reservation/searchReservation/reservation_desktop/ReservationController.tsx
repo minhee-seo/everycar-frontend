@@ -6,28 +6,38 @@ import { faClock, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-soli
 import { ko } from "date-fns/locale";
 import DatePicker from 'react-datepicker';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
+
+import { ReservationInfo } from '../../../../types/reservation.tsx';
+
 interface ReservationControllerProps {
   map: any;
   parkingData: any[];
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   onSearchComplete?: () => void;
+  reservationInfo: ReservationInfo;
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
   dateRange: [Date | null, Date | null];
 }
 
-function ReservationController({ map, parkingData, setKeyword, onSearchComplete, setIsDatePickerOpen, dateRange }: ReservationControllerProps) {
+function ReservationController({ map, parkingData, setKeyword, onSearchComplete, setIsDatePickerOpen, dateRange, reservationInfo }: ReservationControllerProps) {
   const [localKeyword, setLocalKeyword] = useState('');
-  // const [startDate, setStartDate] = useState(new Date());
-  // const [dateRange, setDateRange] = useState([null, null]);
-  // const [startDate, endDate] = dateRange;
   const monthsShown = useMemo(() => 2, []);
-  // const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+
+  console.log(`
+  ${reservationInfo.startDate
+      ? reservationInfo.startDate.toLocaleDateString('ko-KR')
+      : '날짜 미정'} ${reservationInfo.startTime || ''} ~ 
+  ${reservationInfo.endDate
+      ? reservationInfo.endDate.toLocaleDateString('ko-KR')
+      : '날짜 미정'} ${reservationInfo.endTime || ''}
+`);
+
   useEffect(() => {
     if (map) {
       map.panBy(-150, 0);
     }
   }, [map]);
+
 
   const handleSearchClick = () => {
     if (onSearchComplete) {
@@ -106,9 +116,14 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
     handleSearchClick();
   }
 
+  // datepicker 열기
   const handleDatePicker = () => {
     setIsDatePickerOpen(true);
   }
+
+  // datepicker 결과값 리턴
+  const [date, setDate] = useState<ReservationInfo | null>(null)
+
 
   return (
     <>
@@ -121,11 +136,21 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
               placeholder='날짜를 입력하세요'
               readOnly
               onClick={handleDatePicker}
-              value={
-                dateRange[0] && dateRange[1]
-                  ? `${dateRange[0].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })} ~ ${dateRange[1].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}`
-                  : ""
-              } />
+
+              value={`
+  ${reservationInfo.startDate
+                  ? reservationInfo.startDate.toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
+                  : '날짜 미정'} ${reservationInfo.startTime || ''} ~ 
+  ${reservationInfo.endDate
+                  ? reservationInfo.endDate.toLocaleDateString('ko-KR',  { month: '2-digit', day: '2-digit' })
+                  : '날짜 미정'} ${reservationInfo.endTime || ''}
+`}
+            // value={
+            //   dateRange[0] && dateRange[1]
+            //     ? `${dateRange[0].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })} ~ ${dateRange[1].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}`
+            //     : ""
+            // } 
+            />
             <span className={styles.totalHoure}>24시간</span>
           </div>
 

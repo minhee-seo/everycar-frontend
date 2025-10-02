@@ -12,55 +12,47 @@ import CustomSelect from './CustomSelect.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 
+import { getRoundedTime } from './getRoundedTime.tsx';
+
+import { ReservationInfo } from '../../../../types/reservation.tsx';
+
+// interface ReservationInfo{
+//   startDate: Date | null;
+//   endDate: Date | null;
+//   startTime: string;
+//   endTime: string;
+// }
+
 interface ReservationDatePickerProps {
   onClose: () => void; // 달력 닫기
-  onDateSelect: (range: [Date | null, Date | null]) => void; // 선택 값 전달
+  onDateSelect: (reservationInfo: ReservationInfo) => void;
 }
 
-const generateTimes = () => {
-  const times: string[] = [];
-  for (let hour = 0; hour <= 24; hour++) {
-    for (let min of [0, 30]) {
-      if (hour === 24 && min > 0) continue;
-      const h = String(hour).padStart(2, '0');
-      const m = String(min).padStart(2, '0');
-      times.push(`${h}:${m}`);
-    }
-  }
-  return times;
-};
-
 const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, onDateSelect }) => {
+  // 날짜
   const monthsShown = useMemo(() => 2, []);
-
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [startDate, endDate] = dateRange;
+  // 시간
+  const { rentTime, returnTime } = getRoundedTime();
+  const [start, setStart] = useState(rentTime);
+  const [end, setEnd] = useState(returnTime);
 
-  // 현재 시각을 구하고 30분 단위로 끊는 함수
-  const now = new Date();
-  let hour = now.getHours();
-  const minute = now.getMinutes();
-  let roundedMinute = 0; // 30분 단위 반올림
-
-  if (minute < 15) {
-    roundedMinute = 0;
-  } else if (minute < 45) {
-    roundedMinute = 30;
-  } else {
-    roundedMinute = 0;
-    hour = (hour + 1) % 24;
+  // 선택완료 후 파라미터 넘기기
+  const handleSelectComplete = () => {
+    if (startDate && endDate && start && end) {
+      onDateSelect({
+        startDate: startDate,
+        endDate: endDate,
+        startTime: start,
+        endTime: end
+    });
+    } else{
+      alert("날짜와 시간을 입력해주세요");
+    }
+    onClose();
   }
 
-  const pad = (num) => String(num).padStart(2, '0');
-
-  const rentHour = hour;
-  const rentMinute = roundedMinute;
-  const returnHour = (rentHour + 6) % 24;
-  const returnMinute = rentMinute;
-
-  const [rentTime, setRentTime] = useState(`${pad(rentHour)}:${pad(rentMinute)}`);
-  const [returnTime, setReturnTime] = useState(`${pad(returnHour)}:${pad(returnMinute)}`);
-  
   return (
     <>
       <div className={styles.datepicker}>
@@ -76,11 +68,11 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
           onChange={(update: [Date | null, Date | null]) => {
             setDateRange(update);
 
-            // endDate가 선택되면 닫고 값 전달
-            if (update[0] && update[1]) {
-              onDateSelect(update);
-              // onClose();
-            }
+            // // endDate가 선택되면 닫고 값 전달
+            // if (update[0] && update[1]) {
+            //   onDateSelect(update);
+            //   // onClose();
+            // }
           }}
           renderCustomHeader={({
             monthDate,
@@ -139,22 +131,22 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
         />
         <div className={styles.rentTime}>
           <div className={styles.selectTime}>
-            <CustomSelect label="대여 시각" value={rentTime} onChange={setRentTime} />
+            <CustomSelect label="대여 시각" value={start} onChange={setStart} />
           </div>
           <div className={styles.selectTime}>
-            <CustomSelect label="반납 시각" value={returnTime} onChange={setReturnTime} />
+            <CustomSelect label="반납 시각" value={end} onChange={setEnd} />
           </div>
         </div>
 
         <div className={styles.result}>
           <div className={styles.resultCont}>
             <span>시작일</span>
-            <span> 10 : 00</span>
+            <span>{startDate ? startDate.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit' }) : ''} {start}</span>
           </div>
           <FontAwesomeIcon icon={faCarSide} />
           <div className={styles.resultCont}>
             <span>반납일</span>
-            <span> 01월 02일 10 : 00</span>
+            <span>{endDate ? endDate.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit' }) : ''} {end}</span>
           </div>
         </div>
 
@@ -164,20 +156,20 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
             onClick={() => {
               onClose();
             }}
-          >b
+          >
             취소
           </button>
           <button
             className={styles.submit}
             onClick={() => {
-              if (startDate && endDate && rentTime && returnTime) {
+              if (startDate && endDate && start && end) {
                 console.log('예약 정보:', {
                   날짜: [startDate, endDate],
-                  대여시각: rentTime,
-                  반납시각: returnTime,
+                  대여시각: start,
+                  반납시각: end,
                 });
-                onDateSelect([startDate, endDate]); // 필요 시 시간도 전달
-                onClose();
+                handleSelectComplete();
+                // onDateSelect([startDate, endDate]); // 필요 시 시간도 전달
               } else {
                 alert('날짜와 시간을 모두 선택해주세요.');
               }

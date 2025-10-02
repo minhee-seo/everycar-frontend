@@ -9,7 +9,7 @@ import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingG
 import ParkingList from './ParkingList.tsx';
 import SelectList from './SelectList.tsx';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
-
+import { ReservationInfo } from '../../../../types/reservation.tsx';
 
 const Reservation = () => {
   const [parkingData, setParkingData] = useState<any[]>([]);
@@ -20,6 +20,13 @@ const Reservation = () => {
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+
+  const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
+    startDate: null,
+    endDate: null,
+    startTime: "",
+    endTime: "",
+  });
   useEffect(() => {
     fetch('/data/parking.json')
       .then(res => res.json())
@@ -38,6 +45,11 @@ const Reservation = () => {
     setSearchDone(true);
   }
 
+  // onDateSelect 받기
+  const handleDateSelect = (info: ReservationInfo) => {
+    setReservationInfo(info);
+  }
+
   return (
     <>
       <div className={styles.mapContainer}>
@@ -47,6 +59,7 @@ const Reservation = () => {
             parkingData={parkingData}
             setKeyword={setKeyword}
             onSearchComplete={handleSearchComplete}
+            reservationInfo={reservationInfo}
             setIsDatePickerOpen={setIsDatePickerOpen}
             dateRange={dateRange}
           />
@@ -84,9 +97,7 @@ const Reservation = () => {
           <div className={styles.datePickerOverlay}>
             <ReservationDatePicker
               onClose={() => setIsDatePickerOpen(false)}
-              onDateSelect={(range) => {
-                setDateRange(range);
-              }}
+              onDateSelect={handleDateSelect}
             />
           </div>
         )}
