@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
+import FormatKoreanDate from '../../../../utils/dateUtils.ts';
 
 interface ReservationControllerProps {
   map: any;
@@ -23,13 +24,13 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
   const [localKeyword, setLocalKeyword] = useState('');
   const monthsShown = useMemo(() => 2, []);
 
-  console.log(`
-  ${reservationInfo.startDate
-      ? reservationInfo.startDate.toLocaleDateString('ko-KR')
-      : '날짜 미정'} ${reservationInfo.startTime || ''} ~ 
-  ${reservationInfo.endDate
-      ? reservationInfo.endDate.toLocaleDateString('ko-KR')
-      : '날짜 미정'} ${reservationInfo.endTime || ''}
+  console.log(`${reservationInfo.startDate
+      ? reservationInfo.startDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
+      : ''
+    } ${reservationInfo.startTime || ''} ~${reservationInfo.endDate
+      ? reservationInfo.endDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
+      : ''
+    } ${reservationInfo.endTime || ''}
 `);
 
   useEffect(() => {
@@ -136,20 +137,13 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
               placeholder='날짜를 입력하세요'
               readOnly
               onClick={handleDatePicker}
-
-              value={`
-  ${reservationInfo.startDate
-                  ? reservationInfo.startDate.toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })
-                  : '날짜 미정'} ${reservationInfo.startTime || ''} ~ 
-  ${reservationInfo.endDate
-                  ? reservationInfo.endDate.toLocaleDateString('ko-KR',  { month: '2-digit', day: '2-digit' })
-                  : '날짜 미정'} ${reservationInfo.endTime || ''}
-`}
-            // value={
-            //   dateRange[0] && dateRange[1]
-            //     ? `${dateRange[0].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })} ~ ${dateRange[1].toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}`
-            //     : ""
-            // } 
+              value={
+                reservationInfo.startDate ?
+                `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
+                } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
+                } ${reservationInfo.endTime || ''}`
+              :undefined
+              }
             />
             <span className={styles.totalHoure}>24시간</span>
           </div>

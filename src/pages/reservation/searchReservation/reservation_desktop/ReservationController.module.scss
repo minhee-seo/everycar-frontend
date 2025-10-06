@@ -3,6 +3,7 @@
   .dateWrap {
     display: flex;
     align-items: center; // 세로 중앙 정렬
+    justify-content: space-between;
     gap: 10px;
     width: 100%;
     padding: 10px 15px;
@@ -26,9 +27,11 @@
       background: none;
       font-size: $font-md;
       outline: none;
+      flex: 1;
     }
     .totalHoure{
        margin-left: auto;
+       color: $color-gray-600;
     }
   }
 

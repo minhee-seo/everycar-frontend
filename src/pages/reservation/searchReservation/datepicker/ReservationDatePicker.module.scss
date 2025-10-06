@@ -37,18 +37,22 @@
 
     .resultCont {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       width: 100%;
 
-      span:first-child {
+      .title {
         margin-right: 20px;
         color: $color-gray-600;
       }
 
-      span:last-child{
+      .date {
+        flex: 1;
+      }
+
+      .time {
         width: 100px;
       }
-      
+
     }
 
     svg {

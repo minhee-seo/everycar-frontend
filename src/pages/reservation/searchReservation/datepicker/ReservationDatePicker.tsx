@@ -14,7 +14,9 @@ import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 
 import { getRoundedTime } from './getRoundedTime.tsx';
 
+// 날짜, 시간 타입
 import { ReservationInfo } from '../../../../types/reservation.tsx';
+import FormatKoreanDate from '../../../../utils/dateUtils.ts';
 
 // interface ReservationInfo{
 //   startDate: Date | null;
@@ -46,8 +48,8 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
         endDate: endDate,
         startTime: start,
         endTime: end
-    });
-    } else{
+      });
+    } else {
       alert("날짜와 시간을 입력해주세요");
     }
     onClose();
@@ -137,18 +139,20 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
             <CustomSelect label="반납 시각" value={end} onChange={setEnd} />
           </div>
         </div>
-
         <div className={styles.result}>
           <div className={styles.resultCont}>
-            <span>시작일</span>
-            <span>{startDate ? startDate.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit' }) : ''} {start}</span>
+            <span className={styles.title}>시작일</span>
+            <span className={styles.date}>{startDate ? FormatKoreanDate(startDate) : ''}</span>
+            <span className={styles.time}>{start}</span>
           </div>
           <FontAwesomeIcon icon={faCarSide} />
           <div className={styles.resultCont}>
-            <span>반납일</span>
-            <span>{endDate ? endDate.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit' }) : ''} {end}</span>
+            <span className={styles.title}>반납일</span>
+            <span className={styles.date}>{endDate ? FormatKoreanDate(endDate) : ''}</span>
+            <span className={styles.time}>{end}</span>
           </div>
         </div>
+
 
         <div className={styles.button}>
           <button
