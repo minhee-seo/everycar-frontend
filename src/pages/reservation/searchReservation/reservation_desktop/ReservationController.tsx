@@ -24,15 +24,6 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
   const [localKeyword, setLocalKeyword] = useState('');
   const monthsShown = useMemo(() => 2, []);
 
-//   console.log(`${reservationInfo.startDate
-//       ? reservationInfo.startDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
-//       : ''
-//     } ${reservationInfo.startTime || ''} ~${reservationInfo.endDate
-//       ? reservationInfo.endDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
-//       : ''
-//     } ${reservationInfo.endTime || ''}
-// `);
-
   useEffect(() => {
     if (map) {
       map.panBy(-150, 0);
@@ -142,7 +133,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
                 `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
                 } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
                 } ${reservationInfo.endTime || ''}`
-              :undefined
+              :''
               }
             />
             <span className={styles.totalHoure}>{reservationInfo.totalTime}시간</span>

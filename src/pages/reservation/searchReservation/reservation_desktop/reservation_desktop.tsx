@@ -27,8 +27,6 @@ const Reservation = () => {
     totalTime: null,
   });
 
-
-  console.log(reservationInfo.startDate, reservationInfo.endDate, reservationInfo.totalTime);
   useEffect(() => {
     fetch('/data/parking.json')
       .then(res => res.json())

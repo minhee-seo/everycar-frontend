@@ -6,6 +6,8 @@ import SearchTrigger from './components/SearchTrigger.tsx';
 import ParkingList from './components/ParkingList.tsx';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
+import { ReservationInfo } from '../../../../types/reservation.tsx';
+
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
@@ -14,7 +16,16 @@ function ReservationMobile() {
     const [map, setMap] = useState<any>(null);
     const [searchDone, setSearchDone] = useState(false);
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+    // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+
+    //datepicker 파라미터 받기
+    const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
+        startDate: null,
+        endDate: null,
+        totalTime: null
+    });
+
+    
     // 주차장 데이터 로드
     useEffect(() => {
         fetch('/data/parking.json')
@@ -52,6 +63,11 @@ function ReservationMobile() {
     }
 
 
+    // datepicker 파라미터 전달받기 핸들러
+    const handleDateSelect = (info: ReservationInfo) => {
+        setReservationInfo(info);
+    }
+
     return (
         <div className={styles.container}>
             {!isSheetOpen && <SearchTrigger onClick={openSheet} />}
@@ -74,7 +90,8 @@ function ReservationMobile() {
                             onSearchComplete={handleSearchComplete}
                             isDatePickerOpen={isDatePickerOpen}
                             setIsDatePickerOpen={setIsDatePickerOpen}
-                            dateRange={dateRange}
+                            // dateRange={dateRange}
+                            reservationInfo={reservationInfo}
                         />
                     </div>
                     {isDatePickerOpen && (
@@ -82,7 +99,8 @@ function ReservationMobile() {
                             <ReservationDatePicker
                                 onClose={() => setIsDatePickerOpen(false)}
                                 onDateSelect={(range) => {
-                                    setDateRange(range);
+                                    // setDateRange(range);
+                                    handleDateSelect(range);
                                 }}
                             />
                         </div>

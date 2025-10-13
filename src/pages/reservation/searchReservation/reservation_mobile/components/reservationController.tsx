@@ -3,6 +3,8 @@ import styles from './ReservationController.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faAngleRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import ReservationDatePicker from '../../datepicker/ReservationDatePicker.tsx';
+import { ReservationInfo } from '../../../../../types/reservation.tsx';
+import FormatKoreanDate from '../../../../../utils/dateUtils.ts';
 
 declare global {
     interface Window {
@@ -19,10 +21,11 @@ interface ReservationControllerProps {
     onSearchComplete?: () => void;
     isDatePickerOpen: boolean;
     setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    dateRange: [Date | null, Date | null];
+    // dateRange: [Date | null, Date | null];
+    reservationInfo: ReservationInfo;
 }
 
-function ReservationController({ map, closeSheet, keyword, setKeyword, filtered, onSearchComplete, isDatePickerOpen, setIsDatePickerOpen, dateRange }: ReservationControllerProps) {
+function ReservationController({ map, closeSheet, keyword, setKeyword, filtered, onSearchComplete, isDatePickerOpen, setIsDatePickerOpen, reservationInfo }: ReservationControllerProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     // const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -102,13 +105,15 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                             placeholder='이용 기간을 입력해주세요'
                             readOnly
                             value={
-                                dateRange[0] && dateRange[1]
-                                    ? `${dateRange[0].toLocaleDateString()} ~ ${dateRange[1].toLocaleDateString()}`
-                                    : ""
+                                reservationInfo.startDate ?
+                                    `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
+                                    } ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
+                                    } `
+                                    : ''
                             }
                         />
                     </div>
-                    <span className={styles.totalHoure}>24시간</span>
+                    <span className={styles.totalHoure}>{reservationInfo.totalTime} 시간</span>
                 </div>
                 <div className={styles.rentalState}>
                     <FontAwesomeIcon icon={faLocationDot} />
