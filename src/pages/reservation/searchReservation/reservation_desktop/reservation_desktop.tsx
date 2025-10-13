@@ -96,12 +96,15 @@ const Reservation = () => {
           </div>
         </div>
         {isDatePickerOpen && (
-          <div className={styles.datePickerOverlay}>
-            <ReservationDatePicker
-              onClose={() => setIsDatePickerOpen(false)}
-              onDateSelect={handleDateSelect}
-            />
-          </div>
+          <>
+            <div className={styles.datePickerOverlay}>
+              <ReservationDatePicker
+                onClose={() => setIsDatePickerOpen(false)}
+                onDateSelect={handleDateSelect}
+              />
+            </div>
+            <div className={styles.background}></div>
+          </>
         )}
       </div>
       <MapView onMapLoad={setMap} />
