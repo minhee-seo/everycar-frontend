@@ -17,13 +17,7 @@ import { getRoundedTime } from './getRoundedTime.tsx';
 // 날짜, 시간 타입
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
-
-// interface ReservationInfo{
-//   startDate: Date | null;
-//   endDate: Date | null;
-//   startTime: string;
-//   endTime: string;
-// }
+import { TimeCalculator } from '../../../../utils/TimeCalculator.ts';
 
 interface ReservationDatePickerProps {
   onClose: () => void; // 달력 닫기
@@ -34,21 +28,35 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
   // 날짜
   const monthsShown = useMemo(() => 2, []);
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
-  const [startDate, endDate] = dateRange;
+  let [startDate, endDate] = dateRange;
   // 시간
-  const { rentTime, returnTime } = getRoundedTime();
+  const { rentTime, returnTime } = getRoundedTime(); //3=30qns
   const [start, setStart] = useState(rentTime);
   const [end, setEnd] = useState(returnTime);
+  // const [totalTime, setTotalTime] = useState(TimeCalculator(startDate, endDate, start, end));
+
+  // 날짜 + 시간 결합 로직
+  const combineDateAndTime = (date: Date | null, time: string): Date | null => {
+    if (!date || !time) return null;
+
+    const [hours, minutes] = time.split(":").map(Number);
+    const combined = new Date(date);
+    combined.setHours(hours, minutes, 0, 0);
+    return combined;
+  }
 
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
     if (startDate && endDate && start && end) {
+      const combinedStart = combineDateAndTime(startDate, start);
+      const combinedEnd = combineDateAndTime(endDate, end);
+      const totalTime = TimeCalculator(combinedStart, combinedEnd);
       onDateSelect({
-        startDate: startDate,
-        endDate: endDate,
-        startTime: start,
-        endTime: end
+        startDate: combinedStart,
+        endDate: combinedEnd,
+        totalTime
       });
+
     } else {
       alert("날짜와 시간을 입력해주세요");
     }
@@ -70,11 +78,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
           onChange={(update: [Date | null, Date | null]) => {
             setDateRange(update);
 
-            // // endDate가 선택되면 닫고 값 전달
-            // if (update[0] && update[1]) {
-            //   onDateSelect(update);
-            //   // onClose();
-            // }
+            // 시
           }}
           renderCustomHeader={({
             monthDate,
@@ -167,13 +171,10 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
             className={styles.submit}
             onClick={() => {
               if (startDate && endDate && start && end) {
-                console.log('예약 정보:', {
-                  날짜: [startDate, endDate],
-                  대여시각: start,
-                  반납시각: end,
-                });
                 handleSelectComplete();
-                // onDateSelect([startDate, endDate]); // 필요 시 시간도 전달
+                // console.log(
+                //   '예약정보: ', { startDate }, ' ~ ', { endDate }
+                // )
               } else {
                 alert('날짜와 시간을 모두 선택해주세요.');
               }

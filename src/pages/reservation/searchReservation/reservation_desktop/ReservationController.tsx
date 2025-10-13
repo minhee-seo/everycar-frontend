@@ -24,14 +24,14 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
   const [localKeyword, setLocalKeyword] = useState('');
   const monthsShown = useMemo(() => 2, []);
 
-  console.log(`${reservationInfo.startDate
-      ? reservationInfo.startDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
-      : ''
-    } ${reservationInfo.startTime || ''} ~${reservationInfo.endDate
-      ? reservationInfo.endDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
-      : ''
-    } ${reservationInfo.endTime || ''}
-`);
+//   console.log(`${reservationInfo.startDate
+//       ? reservationInfo.startDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
+//       : ''
+//     } ${reservationInfo.startTime || ''} ~${reservationInfo.endDate
+//       ? reservationInfo.endDate.toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })
+//       : ''
+//     } ${reservationInfo.endTime || ''}
+// `);
 
   useEffect(() => {
     if (map) {
@@ -145,7 +145,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
               :undefined
               }
             />
-            <span className={styles.totalHoure}>24시간</span>
+            <span className={styles.totalHoure}>{reservationInfo.totalTime}시간</span>
           </div>
 
           <div className={styles.inputState}>
