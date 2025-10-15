@@ -6,6 +6,11 @@
   border-radius: 10px;
   background: $color-white;
 
+  @include respond-max(mobile-m) {
+    padding: 0;
+    padding-bottom: 20px;
+  }
+
   .inputCont {
     width: 220px;
     border: none;
@@ -21,10 +26,14 @@
     padding-bottom: 10px;
     gap: 5px;
 
+    @include respond-max(mobile-m) {
+      display: block;
+      width: 100%;
+    }
+
     .selectTime {
       position: relative;
       width: 100%;
-
     }
 
   }
@@ -34,6 +43,11 @@
     display: flex;
     align-items: center;
     padding: 10px 85px;
+
+    @include respond-max(mobile-m) {
+      display: none;
+    }
+
 
     .resultCont {
       display: flex;
@@ -69,6 +83,10 @@
     margin-top: 20px;
     border-top: 1px solid $color-gray-200;
 
+    @include respond-max(mobile-m) {
+      width: 100%;
+    }
+
     button {
       padding: 10px 20px;
       border: none;
@@ -76,6 +94,10 @@
       font-size: $font-sm;
       cursor: pointer;
       transition: background-color 0.2s;
+
+      @include respond-max(mobile-m) {
+        width: 100%;
+      }
     }
 
     .reset {
@@ -85,6 +107,10 @@
       &:hover {
         background-color: $color-gray-200;
       }
+
+      @include respond-max(mobile-m) {
+        display: none;
+      }
     }
 
     .submit {
@@ -93,11 +119,13 @@
       &:hover {
         filter: brightness(0.9);
       }
+
     }
   }
 
 }
 
+// datepicker 전역 설정
 :global {
   .react-datepicker {
     border: none;
@@ -114,6 +142,40 @@
   .react-datepicker__month-container {
     width: 300px
   }
+}
 
+
+// mobile
+@include respond-max(mobile-m) {
+
+  .datepicker {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  :global {
+    .react-datepicker {
+      border: none;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .react-datepicker__header {
+      margin: 0 -50px;
+      background: none;
+      border-bottom: 1px solid $primary-color;
+    }
+
+    .react-datepicker__month-container {
+      width: 300px
+    }
+
+
+  }
 
 }

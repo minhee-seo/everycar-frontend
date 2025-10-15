@@ -33,7 +33,14 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
   const { rentTime, returnTime } = getRoundedTime(); //3=30qns
   const [start, setStart] = useState(rentTime);
   const [end, setEnd] = useState(returnTime);
-  // const [totalTime, setTotalTime] = useState(TimeCalculator(startDate, endDate, start, end));
+
+  // width 리사이즈 감지
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // 날짜 + 시간 결합 로직
   const combineDateAndTime = (date: Date | null, time: string): Date | null => {
@@ -105,12 +112,6 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
                   {"<"}
                 </span>
               </button>
-              <span className="react-datepicker__current-month">
-                {monthDate.toLocaleString("KO-US", {
-                  month: "long",
-                  year: "numeric",
-                })}
-              </span>
               <button
                 aria-label="Next Month"
                 className={
@@ -119,7 +120,10 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
                 onClick={increaseMonth}
                 style={{
                   visibility:
-                    customHeaderCount === monthsShown - 1 ? "visible" : "hidden",
+                    (isMobile && customHeaderCount === 0) ||
+                      (!isMobile && customHeaderCount === monthsShown - 1)
+                      ? "visible"
+                      : "hidden",
                 }}
               >
                 <span
@@ -130,6 +134,12 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
                   {">"}
                 </span>
               </button>
+              <span className="react-datepicker__current-month">
+                {monthDate.toLocaleString("KO-US", {
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
             </div>
           )}
           selected={startDate}
@@ -172,9 +182,6 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
             onClick={() => {
               if (startDate && endDate && start && end) {
                 handleSelectComplete();
-                // console.log(
-                //   '예약정보: ', { startDate }, ' ~ ', { endDate }
-                // )
               } else {
                 alert('날짜와 시간을 모두 선택해주세요.');
               }

@@ -5,6 +5,8 @@ import ReservationController from './components/reservationController.tsx';
 import SearchTrigger from './components/SearchTrigger.tsx';
 import ParkingList from './components/ParkingList.tsx';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 
@@ -25,7 +27,7 @@ function ReservationMobile() {
         totalTime: null
     });
 
-    
+
     // 주차장 데이터 로드
     useEffect(() => {
         fetch('/data/parking.json')
@@ -94,25 +96,31 @@ function ReservationMobile() {
                             reservationInfo={reservationInfo}
                         />
                     </div>
-                    {isDatePickerOpen && (
-                        <div className={styles.datePickerOverlay} onClick={(e) => e.stopPropagation()}>
-                            <ReservationDatePicker
-                                onClose={() => setIsDatePickerOpen(false)}
-                                onDateSelect={(range) => {
-                                    // setDateRange(range);
-                                    handleDateSelect(range);
-                                }}
-                            />
-                        </div>
-                    )}
                 </div>
             )}
-            {searchDone &&
+
+            {
+                isDatePickerOpen && (
+                    <div className={styles.datePickerOverlay} onClick={(e) => e.stopPropagation()}>
+                       <div className={styles.delete}>
+                        <FontAwesomeIcon icon={faX} onClick={() => setIsDatePickerOpen(false)} />
+                       </div>
+                        <ReservationDatePicker
+                            onClose={() => setIsDatePickerOpen(false)}
+                            onDateSelect={(range) => {
+                                handleDateSelect(range);
+                            }}
+                        />
+                    </div>
+                )
+            }
+            {
+                searchDone &&
                 <ParkingList
                     filtered={filtered}
                 />
             }
-        </div>
+        </div >
     );
 }
 
