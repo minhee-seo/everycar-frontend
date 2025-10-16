@@ -1,9 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './CustomSelect.module.scss';
 
-const generateTimes = () => {
+const generateTimes = (startDate: Date | null) => {
   const times: string[] = [];
-  for (let hour = 0; hour <= 24; hour++) {
+  let startTime = 0;
+  // 현재시간 이전 선택 불가능
+  const now = new Date();
+  if (now.getDate() == startDate?.getDate()) {
+    startTime = now.getDate();
+  }
+
+  for (let hour = startTime; hour <= 24; hour++) {
     for (let min of [0, 30]) {
       if (hour === 24 && min > 0) continue;
       const h = String(hour).padStart(2, '0');
@@ -11,6 +18,7 @@ const generateTimes = () => {
       times.push(`${h}:${m}`);
     }
   }
+
   return times;
 };
 
@@ -18,11 +26,12 @@ interface CustomSelectProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  startDate: Date | null;
 }
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, startDate }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const options = generateTimes();
+  const options = generateTimes(startDate);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

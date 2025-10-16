@@ -82,6 +82,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
           selectsRange={true} //날짜 연속 선택
           startDate={startDate} //시작일
           endDate={endDate} //종료일
+          minDate={new Date()} //현재날짜 이전 선택 불가능
           onChange={(update: [Date | null, Date | null]) => {
             setDateRange(update);
 
@@ -147,7 +148,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
         />
         <div className={styles.rentTime}>
           <div className={styles.selectTime}>
-            <CustomSelect label="대여 시각" value={start} onChange={setStart} />
+            <CustomSelect label="대여 시각" value={start} onChange={setStart} startDate={startDate} />
           </div>
           <div className={styles.selectTime}>
             <CustomSelect label="반납 시각" value={end} onChange={setEnd} />

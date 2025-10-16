@@ -150,6 +150,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
             />
           </div>
         </div>
+        <button type='submit' className={styles.submit}></button>
       </form>
 
     </>
