@@ -113,7 +113,7 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                             }
                         />
                     </div>
-                    <span className={styles.totalHoure}>{reservationInfo.totalTime} 시간</span>
+                    <span className={styles.totalHoure}>{reservationInfo.totalTime}</span>
                 </div>
                 <div className={styles.rentalState}>
                     <FontAwesomeIcon icon={faLocationDot} />

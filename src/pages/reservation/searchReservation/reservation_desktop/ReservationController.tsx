@@ -136,7 +136,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
               :''
               }
             />
-            <span className={styles.totalHoure}>{reservationInfo.totalTime}시간</span>
+            <span className={styles.totalHoure}>{reservationInfo.totalTime}</span>
           </div>
 
           <div className={styles.inputState}>

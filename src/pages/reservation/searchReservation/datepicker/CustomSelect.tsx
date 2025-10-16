@@ -44,6 +44,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, sta
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // useEffect(() => {
+  //   onChange("");
+  // }, [startDate])
+
   return (
     <div className={styles.selectWrapper} ref={ref}>
       <label className={styles.label}>{label}</label>
