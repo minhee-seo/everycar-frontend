@@ -1,0 +1,104 @@
+@import '../../../styles/global.scss';
+
+section {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 60px;
+}
+
+.mainCont {
+    position: relative;
+    padding: 40px 20px;
+    background-color: $color-white;
+    border-radius: 20px;
+    top: -20px;
+
+    .search {
+        .searchTitle {
+            display: block;
+            font-size: $font-xl;
+            margin-bottom: 60px;
+
+            svg {
+                padding-right: 10px;
+            }
+
+            span {
+                text-decoration: underline;
+                color: $primary-color-text;
+                font-weight: bold;
+                font-size: 32px;
+            }
+        }
+
+        .searchText {
+            color: $color-gray-600;
+        }
+
+        .searchBtn {
+            padding: 14px 32px;
+            margin: 14px 0;
+            background-color: $primary-color;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            color: $color-gray-900;
+            text-align: right;
+
+            svg {
+                padding-left: 10px;
+
+            }
+        }
+    }
+
+    .shortcut {
+        width: 100%;
+        padding: 0 20px;
+        border-radius: 5px;
+        left: 0;
+        background-color: $primary-color-opacity;
+
+
+        ul {
+            display: flex;
+            justify-content: space-around;
+
+            li {
+                padding: 12px 0;
+                width: 100%;
+                text-align: center;
+                font-size: $font-sm;
+                cursor: pointer;
+                list-style: none;
+            }
+
+        }
+    }
+
+    .event {
+
+        .banner {
+            background-color: $color-gray-500;
+            height: 150px;
+            border-radius: 10px;
+        }
+    }
+
+    .boon {
+        h3{
+            margin-bottom: 10px;
+        }
+        .bannerCont{
+            
+            display: flex;
+            
+            .banner {
+                background-color: $color-gray-500;
+                width: 50%;
+                height: 150px;
+                border-radius: 10px;
+            }
+        }
+    }
+}

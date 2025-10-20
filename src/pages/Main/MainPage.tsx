@@ -7,11 +7,13 @@ import CarSlider from './main_commoon/CarSlide.tsx';
 import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
 import Searchbar from './main_mobile/Searchbar.tsx';
 import Footer from '../../components/common/Footer.tsx';
+import MainMobile from './main_mobile/MainMobile.tsx';
+import MainDesktop from './main_desktop/MainDesktop.tsx';
 function MainPage() {
   return (
     <ResponsiveSwitch
-      mobileComponent={<Mobile />}
-      desktopComponent={<Desktop />}
+      mobileComponent={<MainMobile />}
+      desktopComponent={<MainDesktop />}
     />
   )
 }
