@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from './Content.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 function Content() {
   return (
@@ -41,11 +43,12 @@ function Content() {
           </div>
           <div className={styled.rentBtn}>
             <button>
-              <div className='arow'>
+              <FontAwesomeIcon icon={faArrowRight} className={styled.arrow} />
+              {/* <div className='arow'>
                 <svg width="24" height="41" viewBox="0 0 24 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2.5 2L20.5 20.5L2.5 39" stroke="#3c423eff" strokeWidth="4" strokeLinecap="round" />
                 </svg>
-              </div>
+              </div> */}
             </button>
           </div>
         </div>
