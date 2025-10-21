@@ -6,7 +6,7 @@
   position: relative;
   background-color: #252736;
   padding: 20px;
-  min-width: 1280px;
+  min-width: 1200px;
   width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
   color: $color-gray-100;
@@ -17,6 +17,7 @@
 
   // ✅ 모바일 화면일 때
   @include respond-max(mobile-m) {
+    min-width: 0;
     background-color: $color-gray-100;
     color: $color-gray-500;
     padding: 16px 12px 100px 12px;
