@@ -1,7 +1,6 @@
 @import '../../../styles/global.scss';
 
 .serviceShortcut {
-  height: 100vh;
   display: flex;
   color: #2F2F2F;
   text-align: left;
@@ -72,7 +71,12 @@
             position: relative;
             width: 40px;
             right: 0;
+            transition: 0.2s;
           }
+        }
+
+        :hover {
+          color: $color-gray-800;
         }
       }
 
@@ -80,6 +84,7 @@
         .title {
           font-weight: bold;
           font-size: $font-md;
+          transform: 0.2s;
         }
 
         .subscript {

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './MainPage.module.scss';
 import Content from '../../components/common/reservationControl/Content.tsx';
 import Slide from './main_desktop/Slide.tsx';
-import ShortCut from './main_commoon/ShortCut.tsx';
+import ShortCut from './main_desktop/ShortCut.tsx';
 import CarSlider from './main_commoon/CarSlide.tsx';
 import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
 import Searchbar from './main_mobile/Searchbar.tsx';

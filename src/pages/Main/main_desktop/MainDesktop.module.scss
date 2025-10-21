@@ -1,0 +1,90 @@
+@import '../../../styles/global.scss';
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* 세로 정렬 */
+    height: 100vh;
+
+    .bottomMenu {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+        padding: 40px 0;
+        gap: 10px;
+
+        .banner {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+
+            .guide {
+                position: relative;
+                padding: 20px;
+                height: 50%;
+                background-color: $color-gray-200;
+                border: 1px solid $border-color;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+
+
+                p {
+                    color: $color-gray-700;
+                    margin-bottom: 8px;
+                    font-size: $font-sm;
+                    transition: color 0.3s ease;
+                }
+
+                .iconText {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 6px;
+
+                    h5 {
+                        margin: 0;
+                        font-size: $font-lg;
+                        color: $color-gray-900;
+                        transition: color 0.3s ease;
+                    }
+
+                    .icon {
+                        font-size: 1.1rem;
+                        color: $color-gray-700;
+                        transition: color 0.3s ease;
+                    }
+
+                    .arrow {
+                        transition: transform 0.3s ease, color 0.3s ease;
+                    }
+                }
+
+                // ✅ Hover 효과
+                &:hover {
+                    background-color: $primary-color-opacity;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    border-color: $primary-color;
+
+                    p,
+                    h5,
+                    .icon {
+                    }
+
+                    .arrow {
+                        transform: translateX(4px);
+                    }
+                }
+            }
+        }
+
+
+        .event {
+            flex: 2;
+            background-color: $color-gray-500;
+            border-radius: 10px;
+        }
+    }
+}

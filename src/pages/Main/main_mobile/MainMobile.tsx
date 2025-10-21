@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './MainMobile.module.scss';
 
 import Searchbar from './Searchbar.tsx'
-import ShortCut from '../main_commoon/ShortCut.tsx'
+import ShortCut from '../main_desktop/ShortCut.tsx'
 import CarSlider from '../main_commoon/CarSlide.tsx'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
