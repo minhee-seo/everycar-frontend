@@ -6,7 +6,7 @@ import ShortCut from '../main_commoon/ShortCut.tsx'
 import CarSlider from '../main_commoon/CarSlide.tsx'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faMapMarkerAlt, faCheck, faComments, faFile, } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../../../components/common/Footer.tsx';
 
 function MainMobile() {
@@ -15,30 +15,39 @@ function MainMobile() {
             <div className={styles.searchBar}>
                 <Searchbar></Searchbar>
             </div>
+            <section className={styles.searchCont}>
+                <div className={styles.search}>
+                    <span className={styles.searchTitle}>
+                        <span>
+                            <FontAwesomeIcon icon={faMapMarkerAlt} />
+                            현재위치
+                        </span> 에서<br></br>
+                        렌터카를 빠르게 대여하세요
+                    </span>
+                    <p className={styles.searchText}>빠르고 간편하게 만나는 렌터카 서비스</p>
+                    <button className={styles.searchBtn}>
+                        에브리카 예약하기
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </button>
+                </div>
+                <div className={styles.shortcut}>
+                    <ul>
+                        <li>
+                            <FontAwesomeIcon icon={faCheck} />
+                            예약확인
+                        </li>
+                        <li>
+                            <FontAwesomeIcon icon={faComments} />
+                            1 : 1 상담
+                        </li>
+                        <li>
+                            <FontAwesomeIcon icon={faFile} />
+                            견적확인
+                        </li>
+                    </ul>
+                </div>
+            </section>
             <div className={styles.mainCont}>
-                <section className={styles.searchBar}>
-                    <div className={styles.search}>
-                        <span className={styles.searchTitle}>
-                            <span>
-                                <FontAwesomeIcon icon={faMapMarkerAlt} />
-                                현재위치
-                            </span> 에서<br></br>
-                            렌터카를 빠르게 대여하세요
-                        </span>
-                        {/* <p className={styles.searchText}>빠르고 간편하게 만나는 렌터카 서비스</p> */}
-                        <button className={styles.searchBtn}>
-                            에브리카 예약하기
-                            <FontAwesomeIcon icon={faArrowRight} />
-                        </button>
-                    </div>
-                    <div className={styles.shortcut}>
-                        <ul>
-                            <li>예약확인</li>
-                            <li>1 : 1 상담</li>
-                            <li>견적확인</li>
-                        </ul>
-                    </div>
-                </section>
                 <section className={styles.event}>
                     <div className={styles.banner}></div>
                     {/* 슬라이드 추가 */}
@@ -53,7 +62,7 @@ function MainMobile() {
                     {/* 슬라이드 추가 */}
                 </section>
             </div>
-                <Footer />
+            <Footer />
         </div>
     )
 }
