@@ -69,8 +69,7 @@
 
                     p,
                     h5,
-                    .icon {
-                    }
+                    .icon {}
 
                     .arrow {
                         transform: translateX(4px);
@@ -86,4 +85,24 @@
             border-radius: 10px;
         }
     }
+
+}
+
+.datepicker {
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+    background-color: #0000003c;
+
 }
