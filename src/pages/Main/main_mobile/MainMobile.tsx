@@ -47,12 +47,12 @@ function MainMobile() {
                     </ul>
                 </div>
             </section>
-            <div className={styles.mainCont}>
-                <section className={styles.event}>
+            <section className={styles.mainCont}>
+                <div className={styles.event}>
                     <div className={styles.banner}></div>
                     {/* 슬라이드 추가 */}
-                </section>
-                <section className={styles.boon}>
+                </div>
+                <div className={styles.boon}>
                     <h3>에브리카 혜택</h3>
                     <div className={styles.bannerCont}>
                         <div className={styles.banner}></div>
@@ -60,8 +60,8 @@ function MainMobile() {
 
                     </div>
                     {/* 슬라이드 추가 */}
-                </section>
-            </div>
+                </div>
+            </section>
             <Footer />
         </div>
     )

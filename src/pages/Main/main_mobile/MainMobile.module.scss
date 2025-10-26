@@ -1,12 +1,20 @@
 @import '../../../styles/global.scss';
 
-section {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    margin-bottom: 10px;
-    background-color: $color-white;
+.container {
+    .searchCont {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        margin-bottom: 10px;
+        background-color: $color-white;
+    }
+    
+    section > div{
+        padding: 20px;
+        background-color: $color-white;
+        border-radius: 10px;
+    }
 }
 
 .searchCont {
@@ -20,11 +28,11 @@ section {
         .searchTitle {
             display: block;
             font-size: $font-xl;
-            
+
             svg {
                 padding-right: 10px;
             }
-            
+
             span {
                 text-decoration: underline;
                 color: $primary-color-text;
@@ -32,7 +40,7 @@ section {
                 font-size: 32px;
             }
         }
-        
+
         .searchText {
             padding: 10px 0;
             margin-bottom: 60px;
@@ -78,7 +86,7 @@ section {
                 list-style: none;
 
 
-                svg{
+                svg {
                     margin-right: 5px;
                 }
             }
@@ -90,7 +98,7 @@ section {
 
 .mainCont {
     position: relative;
-    padding: 0 20px;
+    padding: 20px;
     border-radius: 20px;
     top: -20px;
 
