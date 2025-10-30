@@ -12,12 +12,13 @@ import CustomSelect from './CustomSelect.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 
-import { getRoundedTime } from './getRoundedTime.tsx';
+import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
 
 // 날짜, 시간 타입
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
 import { TimeCalculator } from '../../../../utils/TimeCalculator.ts';
+import CombineDateAndTime from '../../../../utils/CombineDateAndTime.ts';
 
 interface ReservationDatePickerProps {
   onClose: () => void; // 달력 닫기
@@ -43,20 +44,20 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
   }, []);
 
   // 날짜 + 시간 결합 로직
-  const combineDateAndTime = (date: Date | null, time: string): Date | null => {
-    if (!date || !time) return null;
+  // const combineDateAndTime = (date: Date | null, time: string): Date | null => {
+  //   if (!date || !time) return null;
 
-    const [hours, minutes] = time.split(":").map(Number);
-    const combined = new Date(date);
-    combined.setHours(hours, minutes, 0, 0);
-    return combined;
-  }
+  //   const [hours, minutes] = time.split(":").map(Number);
+  //   const combined = new Date(date);
+  //   combined.setHours(hours, minutes, 0, 0);
+  //   return combined;
+  // }
 
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
     if (startDate && endDate && start && end) {
-      const combinedStart = combineDateAndTime(startDate, start);
-      const combinedEnd = combineDateAndTime(endDate, end);
+      const combinedStart = CombineDateAndTime(startDate, start);
+      const combinedEnd = CombineDateAndTime(endDate, end);
       const totalTime = TimeCalculator(combinedStart, combinedEnd);
       onDateSelect({
         startDate: combinedStart,

@@ -5,19 +5,27 @@ import ShortCut from './ShortCut.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import ReservationDatePicker from '../../reservation/searchReservation/datepicker/ReservationDatePicker.tsx';
+import { ReservationInfo } from '../../../types/reservation.tsx';
 
-
-function MainDesktop() {
+const MainDesktop = () => {
     const [isDatepickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
+    const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
+        startDate: null,
+        endDate: null,
+        totalTime: null,
+    });
 
-    const handleDateSelect = () => {
-
+    const handleDateSelect = (info: ReservationInfo) => {
+        setReservationInfo(info)
     }
 
     return (
         <>
             <div className={styles.container}>
-                <Content></Content>
+                <Content
+                    setIsDatePickerOpen={setIsDatePickerOpen}
+                    reservationInfo={reservationInfo}
+                />
                 <ShortCut></ShortCut>
                 <div className={styles.bottomMenu}>
                     <div className={styles.banner}>
@@ -43,13 +51,19 @@ function MainDesktop() {
                     </div>
                 </div>
             </div>
-            {/* <div className={styles.datepicker}>
-                <ReservationDatePicker
-                    onClose={() => setIsDatePickerOpen(false)}
-                    onDateSelect={handleDateSelect}
-                />
-            </div>
-            <div className={styles.background}></div> */}
+            {
+                isDatepickerOpen && (
+                    <>
+                        <div className={styles.datepicker}>
+                            <ReservationDatePicker
+                                onClose={() => setIsDatePickerOpen(false)}
+                                onDateSelect={handleDateSelect}
+                            />
+                        </div>
+                        <div className={styles.background}></div>
+                    </>
+                )
+            }
         </>
     )
 }

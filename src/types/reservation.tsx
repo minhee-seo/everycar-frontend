@@ -2,7 +2,7 @@
 export interface ReservationInfo {
   startDate: Date | null;
   endDate: Date | null;
-//   startTime: string;
-//   endTime: string;
-  totalTime: string;
+  startTime: string;
+  endTime: string;
+  totalTime: string | null;
 }

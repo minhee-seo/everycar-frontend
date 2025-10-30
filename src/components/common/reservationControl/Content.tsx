@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from './Content.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-function Content() {
+import { ReservationInfo } from '../../../types/reservation.tsx';
+import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
+
+interface ReservationControllerProps {
+  setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  // onDateSelect: (reservationInfo: ReservationInfo) => void;
+  reservationInfo: ReservationInfo;
+}
+
+function Content({ setIsDatePickerOpen, reservationInfo }: ReservationControllerProps) {
+  // datepicker open
+  const handleDatepicker = () => {
+    setIsDatePickerOpen(true);
+  }
+
+  console.log(reservationInfo.startDate?.toLocaleDateString());
+
+ // datepicker 받기
+
+ // 기본 입력값 (현재 날짜 현재시간)
+//  현재날짜 + (현재시간(30분단위끊기작업))
+  const { rentTime, returnTime } = getRoundedTime();
+  const [ start, setStart ] = useState(rentTime);
+  const [ end, setEnd ] = useState(returnTime);
+
   return (
     <>
       <div className={styled.contentContainer} >
@@ -24,7 +48,7 @@ function Content() {
 
           <div style={{ borderRight: "1px solid #EAEAEA", width: "5%", height: "60%" }}></div>
 
-          <div className={styled.rentTime}>
+          <div className={styled.rentTime} onClick={(e) => handleDatepicker()}>
             <h5 className='title'>렌트 기간</h5>
             <div className={styled.content}>
               <svg width="23" style={{ height: "auto" }} viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,11 +56,14 @@ function Content() {
               </svg>
               <div className={styled.period}>
                 <p>
-                  01.01 (수)
+                  {reservationInfo.startDate?.toLocaleDateString()}
+                  {reservationInfo.startDate?.toLocaleTimeString()}
+                  {/* {start} */}
+                  {/* 01.01 (수) */}
                 </p>
                 <p className='period-wave'>~</p>
                 <p>
-                  01.03 (금)
+                  {end}
                 </p>
               </div>
             </div>
@@ -44,11 +71,6 @@ function Content() {
           <div className={styled.rentBtn}>
             <button>
               <FontAwesomeIcon icon={faArrowRight} className={styled.arrow} />
-              {/* <div className='arow'>
-                <svg width="24" height="41" viewBox="0 0 24 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.5 2L20.5 20.5L2.5 39" stroke="#3c423eff" strokeWidth="4" strokeLinecap="round" />
-                </svg>
-              </div> */}
             </button>
           </div>
         </div>

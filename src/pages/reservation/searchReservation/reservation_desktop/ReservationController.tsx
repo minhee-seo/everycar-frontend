@@ -138,7 +138,6 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
             />
             <span className={styles.totalHoure}>{reservationInfo.totalTime}</span>
           </div>
-
           <div className={styles.inputState}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
             <input
