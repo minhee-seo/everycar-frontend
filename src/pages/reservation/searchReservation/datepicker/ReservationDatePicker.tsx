@@ -62,6 +62,8 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
       onDateSelect({
         startDate: combinedStart,
         endDate: combinedEnd,
+        startTime: start ,
+        endTime: end ,
         totalTime
       });
 

@@ -6,19 +6,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import ReservationDatePicker from '../../reservation/searchReservation/datepicker/ReservationDatePicker.tsx';
 import { ReservationInfo } from '../../../types/reservation.tsx';
+import FormatKoreanDate, { FormatTime } from '../../../utils/dateUtils.ts';
+import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../utils/CurrentTime.ts';
+import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
 
 const MainDesktop = () => {
     const [isDatepickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
-    const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
-        startDate: null,
-        endDate: null,
-        totalTime: null,
-    });
+
+const start = getFourHoursLater();
+const end = getSixHoursAfterFourHoursLater();
+
+const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
+  startDate: start,
+  endDate: end,
+  startTime: FormatTime(start),
+  endTime: FormatTime(end),
+  totalTime: null,
+});
 
     const handleDateSelect = (info: ReservationInfo) => {
         setReservationInfo(info)
     }
 
+    console.log("1", getFourHoursLater());
     return (
         <>
             <div className={styles.container}>

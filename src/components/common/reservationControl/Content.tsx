@@ -5,6 +5,7 @@ import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-s
 
 import { ReservationInfo } from '../../../types/reservation.tsx';
 import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
+import FormatKoreanDate from '../../../utils/dateUtils.ts';
 
 interface ReservationControllerProps {
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,15 +19,13 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
     setIsDatePickerOpen(true);
   }
 
-  console.log(reservationInfo.startDate?.toLocaleDateString());
+  console.log(reservationInfo.startTime)
 
- // datepicker 받기
-
- // 기본 입력값 (현재 날짜 현재시간)
-//  현재날짜 + (현재시간(30분단위끊기작업))
+  // 기본 입력값 (현재 날짜 현재시간)
+  // 현재날짜 + (현재시간(30분단위끊기작업))
   const { rentTime, returnTime } = getRoundedTime();
-  const [ start, setStart ] = useState(rentTime);
-  const [ end, setEnd ] = useState(returnTime);
+  const [start, setStart] = useState(rentTime);
+  const [end, setEnd] = useState(returnTime);
 
   return (
     <>
@@ -56,14 +55,13 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
               </svg>
               <div className={styled.period}>
                 <p>
-                  {reservationInfo.startDate?.toLocaleDateString()}
-                  {reservationInfo.startDate?.toLocaleTimeString()}
-                  {/* {start} */}
-                  {/* 01.01 (수) */}
+                  {FormatKoreanDate(reservationInfo.startDate)}
+                  {reservationInfo.startTime}
                 </p>
                 <p className='period-wave'>~</p>
                 <p>
-                  {end}
+                  {FormatKoreanDate(reservationInfo.endDate)}
+                  {reservationInfo.endTime}
                 </p>
               </div>
             </div>

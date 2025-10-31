@@ -1,4 +1,5 @@
-// utils/time.js 또는 필요한 위치에 정의
+// utils/time.js
+// 30분 단위 반올림 로직
 export function getRoundedTime() {
     const now = new Date();
     let hour = now.getHours();
