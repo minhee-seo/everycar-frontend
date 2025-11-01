@@ -28,7 +28,6 @@ const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
         setReservationInfo(info)
     }
 
-    console.log("1", getFourHoursLater());
     return (
         <>
             <div className={styles.container}>

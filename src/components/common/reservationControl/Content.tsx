@@ -6,6 +6,7 @@ import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-s
 import { ReservationInfo } from '../../../types/reservation.tsx';
 import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
 import FormatKoreanDate from '../../../utils/dateUtils.ts';
+import CurrentLocation from '../../../utils/CurrentLocation.tsx';
 
 interface ReservationControllerProps {
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,13 +20,13 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
     setIsDatePickerOpen(true);
   }
 
-  console.log(reservationInfo.startTime)
-
   // 기본 입력값 (현재 날짜 현재시간)
   // 현재날짜 + (현재시간(30분단위끊기작업))
   const { rentTime, returnTime } = getRoundedTime();
   const [start, setStart] = useState(rentTime);
   const [end, setEnd] = useState(returnTime);
+
+  // console.log(CurrentLocation);
 
   return (
     <>
@@ -41,7 +42,8 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
                 <path d="M16.875 8.75C16.875 14.875 9 20.125 9 20.125C9 20.125 1.125 14.875 1.125 8.75C1.125 6.66142 1.95468 4.65838 3.43153 3.18153C4.90838 1.70468 6.91142 0.875 9 0.875C11.0886 0.875 13.0916 1.70468 14.5685 3.18153C16.0453 4.65838 16.875 6.66142 16.875 8.75Z" stroke="#B3B3B3" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M9 11.375C10.4497 11.375 11.625 10.1997 11.625 8.75C11.625 7.30025 10.4497 6.125 9 6.125C7.55025 6.125 6.375 7.30025 6.375 8.75C6.375 10.1997 7.55025 11.375 9 11.375Z" stroke="#B3B3B3" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              서울시 강남구
+              {/* 서울시 강남구 */}
+              <CurrentLocation />
             </div>
           </div>
 
