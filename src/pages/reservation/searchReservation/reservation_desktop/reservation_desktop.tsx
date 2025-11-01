@@ -24,6 +24,8 @@ const Reservation = () => {
   const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
     startDate: null,
     endDate: null,
+    startTime: null,
+    endTime: null,
     totalTime: null,
   });
 

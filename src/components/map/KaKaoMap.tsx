@@ -1,4 +1,6 @@
 // components/map/KakaoMap.tsx
+// 지도 호출
+
 import { useEffect, useRef } from 'react';
 
 declare global {
@@ -33,7 +35,7 @@ const KakaoMap = ({ onMapLoad }: KakaoMapProps) => {
 
     if (!window.kakao) {
       const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false&libraries=clusterer`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=appkey&autoload=false&libraries=clusterer`;
       script.async = true;
 
       script.onload = () => {

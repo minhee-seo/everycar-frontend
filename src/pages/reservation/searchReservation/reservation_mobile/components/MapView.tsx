@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import KakaoMap from '../../../../../components/map/KaKaoMap.tsx';
 import styles from './MapView.module.scss';
+import { loadKakaoMap } from '../../../../../utils/LoadKaKaoMap.tsx';
 
 declare global {
   interface Window {
@@ -9,52 +10,62 @@ declare global {
   }
 }
 
-const MapView = ({ onMapLoad }: { onMapLoad: (map: any) => void }) => {
+interface MapViewProps {
+  onMapLoad?: (map: any) => void;
+}
+
+
+const MapView = ({ onMapLoad }: MapViewProps) => {
   const [parkingData, setParkingData] = useState<any[]>([]);
-  const [mapInstance, setMapInstance] = useState<any>(null);
 
-  // 주차장 데이터 로드
   useEffect(() => {
-    fetch('/data/parking.json')
-      .then(res => res.json())
-      .then(data => setParkingData(data));
-  }, []);
+    const init = async () => {
+      try {
+        const kakao = await loadKakaoMap();
 
-  // 지도 로드 후 콜백
-  const handleMapLoad = (map: any) => {
-    setMapInstance(map);
-    onMapLoad(map);
-  };
+        const container = document.getElementById('map');
+        if (!container) return;
 
-  // 클러스터 및 마커 추가
-  useEffect(() => {
-    if (!mapInstance || parkingData.length === 0) return;
+        const options = {
+          center: new kakao.maps.LatLng(35.95, 128.25),
+          level: 12,
+        };
 
-    const kakao = window.kakao;
+        const map = new kakao.maps.Map(container, options);
 
-    // 클러스터러 생성
-    const clusterer = new kakao.maps.MarkerClusterer({
-      map: mapInstance,
-      averageCenter: true,
-      minLevel: 10, // 클러스터 최소 레벨
-    });
+        // ✅ 여기서 부모에 map 객체 전달
+        if (onMapLoad) onMapLoad(map);
 
-    // 마커 배열 생성
-    const markers = parkingData.map((parking) => {
-      return new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(parking.parking_latitude, parking.parking_longtitude),
-      });
-    });
+        // 주차장 데이터 로드
+        const res = await fetch('/data/parking.json');
+        const data = await res.json();
+        setParkingData(data);
 
-    // 클러스터에 마커 추가
-    clusterer.addMarkers(markers);
-  }, [mapInstance, parkingData]);
+        // 클러스터러 생성
+        const clusterer = new kakao.maps.MarkerClusterer({
+          map,
+          averageCenter: true,
+          minLevel: 10,
+        });
 
-  return (
-    <div className={styles.map}>
-      <KakaoMap onMapLoad={handleMapLoad} />
-    </div>
-  );
+        // 마커 생성 후 클러스터 추가
+        const markers = data.map((parking: any) => {
+          return new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(parking.parking_latitude, parking.parking_longtitude),
+          });
+        });
+
+        clusterer.addMarkers(markers);
+      } catch (error) {
+        console.error('지도 로드 실패:', error);
+      }
+    };
+
+    init();
+  }, [onMapLoad]);
+
+  return <div id="map" className={styles.map} />;
 };
+
 
 export default MapView;
