@@ -13,16 +13,16 @@ import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
 const MainDesktop = () => {
     const [isDatepickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
 
-const start = getFourHoursLater();
-const end = getSixHoursAfterFourHoursLater();
+    const start = getFourHoursLater();
+    const end = getSixHoursAfterFourHoursLater();
 
-const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
-  startDate: start,
-  endDate: end,
-  startTime: FormatTime(start),
-  endTime: FormatTime(end),
-  totalTime: null,
-});
+    const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
+        startDate: start,
+        endDate: end,
+        startTime: getRoundedTime().rentTime,
+        endTime: getRoundedTime().returnTime,
+        totalTime: null,
+    });
 
     const handleDateSelect = (info: ReservationInfo) => {
         setReservationInfo(info)

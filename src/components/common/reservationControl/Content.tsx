@@ -23,9 +23,9 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
 
   // 기본 입력값 (현재 날짜 현재시간)
   // 현재날짜 + (현재시간(30분단위끊기작업))
-  const { rentTime, returnTime } = getRoundedTime();
-  const [start, setStart] = useState(rentTime);
-  const [end, setEnd] = useState(returnTime);
+  // const { rentTime, returnTime } = getRoundedTime();
+  // const [start, setStart] = useState(rentTime);
+  // const [end, setEnd] = useState(returnTime);
 
   // console.log(CurrentLocation);
 
