@@ -19,10 +19,16 @@ const MainDesktop = () => {
     const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
         startDate: start,
         endDate: end,
-        startTime: getRoundedTime().rentTime,
-        endTime: getRoundedTime().returnTime,
+        startTime: getRoundedTime(
+            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+        ).rentTime,
+        endTime: getRoundedTime(
+            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+        ).returnTime,
         totalTime: null,
     });
+
+    console.log(getRoundedTime(start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })));
 
     const handleDateSelect = (info: ReservationInfo) => {
         setReservationInfo(info)

@@ -31,7 +31,8 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   let [startDate, endDate] = dateRange;
   // 시간
-  const { rentTime, returnTime } = getRoundedTime(); //3=30qns
+  const now = new Date();
+  const { rentTime, returnTime } = getRoundedTime(now.toTimeString().slice(0, 5)); //3=30qns
   const [start, setStart] = useState(rentTime);
   const [end, setEnd] = useState(returnTime);
 
@@ -42,16 +43,6 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // 날짜 + 시간 결합 로직
-  // const combineDateAndTime = (date: Date | null, time: string): Date | null => {
-  //   if (!date || !time) return null;
-
-  //   const [hours, minutes] = time.split(":").map(Number);
-  //   const combined = new Date(date);
-  //   combined.setHours(hours, minutes, 0, 0);
-  //   return combined;
-  // }
 
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
