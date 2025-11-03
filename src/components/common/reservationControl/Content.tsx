@@ -7,6 +7,7 @@ import { ReservationInfo } from '../../../types/reservation.tsx';
 import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
 import FormatKoreanDate from '../../../utils/dateUtils.ts';
 import CurrentLocation from '../../../utils/CurrentLocation.tsx';
+import { useCurrentLocation } from '../../../utils/useCurrentLocation.ts';
 
 interface ReservationControllerProps {
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +29,10 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
 
   // console.log(CurrentLocation);
 
+  const { address, error } = useCurrentLocation();
+
+  console.log(address);
+
   return (
     <>
       <div className={styled.contentContainer} >
@@ -43,7 +48,8 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
                 <path d="M9 11.375C10.4497 11.375 11.625 10.1997 11.625 8.75C11.625 7.30025 10.4497 6.125 9 6.125C7.55025 6.125 6.375 7.30025 6.375 8.75C6.375 10.1997 7.55025 11.375 9 11.375Z" stroke="#B3B3B3" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {/* 서울시 강남구 */}
-              <CurrentLocation />
+              {/* <CurrentLocation /> */}
+
             </div>
           </div>
 
