@@ -8,7 +8,7 @@ export const loadKakaoMap = (): Promise<typeof window.kakao> => {
     }
 
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false&libraries=clusterer`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=1fc1193a647e2229d02c81559ac53d9e&autoload=false&libraries=services,clusterer`;
     script.async = true;
 
     script.onload = () => {
