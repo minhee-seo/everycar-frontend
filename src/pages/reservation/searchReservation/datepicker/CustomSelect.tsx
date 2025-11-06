@@ -20,7 +20,7 @@ export const generateTimes = (startDate: Date | null) => {
     startTime = now.getHours() + 4;
   }
 
-  for (let hour = startTime; hour <= 24; hour++) {
+  for (let hour = startTime; hour < 24; hour++) {
     for (let min of [0, 30]) {
       if (hour === 24 && min > 0) continue;
       const h = String(hour % 24).padStart(2, '0');

@@ -18,16 +18,18 @@
 
     .date {
       display: flex;
-      justify-content: space-around;
+      flex: 2;
+      justify-content: flex-start;
       align-items: center;
       gap: 10px;
 
-      .inputCont{
+      .inputCont {
         cursor: pointer;
         border: none;
         background: none;
         font-size: $font-md;
         outline: none;
+        width: 100%;
       }
     }
 
@@ -58,15 +60,16 @@
     width: 100%;
     height: 52px;
     padding: 0 15px;
-     background-color: $color-gray-100;
+    background-color: $color-gray-100;
     border: 1px solid $color-gray-200;
     align-items: center;
     margin-bottom: 15px;
+
     &::placeholder {
       color: $color-gray-400;
     }
 
-    svg{
+    svg {
       color: $color-gray-700;
     }
 

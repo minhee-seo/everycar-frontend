@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
+import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
+import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -21,10 +23,19 @@ function ReservationMobile() {
     // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
     //datepicker 파라미터 받기
+    const start = getFourHoursLater();
+    const end = getSixHoursAfterFourHoursLater();
+
     const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
-        startDate: null,
-        endDate: null,
-        totalTime: null
+        startDate: start,
+        endDate: end,
+        startTime: getRoundedTime(
+            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+        ).rentTime,
+        endTime: getRoundedTime(
+            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+        ).returnTime,
+        totalTime: null,
     });
 
 
@@ -102,14 +113,13 @@ function ReservationMobile() {
             {
                 isDatePickerOpen && (
                     <div className={styles.datePickerOverlay} onClick={(e) => e.stopPropagation()}>
-                       <div className={styles.delete}>
-                        <FontAwesomeIcon icon={faX} onClick={() => setIsDatePickerOpen(false)} />
-                       </div>
+                        <div className={styles.delete}>
+                            <FontAwesomeIcon icon={faX} onClick={() => setIsDatePickerOpen(false)} />
+                        </div>
                         <ReservationDatePicker
+                            reservationInfo={reservationInfo}
+                            setReservationInfo={setReservationInfo}
                             onClose={() => setIsDatePickerOpen(false)}
-                            onDateSelect={(range) => {
-                                handleDateSelect(range);
-                            }}
                         />
                     </div>
                 )

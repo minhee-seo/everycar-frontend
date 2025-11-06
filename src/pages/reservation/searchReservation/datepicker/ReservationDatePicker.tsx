@@ -72,7 +72,6 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
     onClose();
   }
 
-  console.log(reservationInfo);
   return (
     <>
       <div className={styles.datepicker}>

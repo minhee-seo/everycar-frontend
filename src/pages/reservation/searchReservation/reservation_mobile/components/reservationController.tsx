@@ -107,8 +107,8 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                             value={
                                 reservationInfo.startDate ?
                                     `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
-                                    } ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
-                                    } `
+                                    } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
+                                    } ${reservationInfo.endTime || ''}`
                                     : ''
                             }
                         />
