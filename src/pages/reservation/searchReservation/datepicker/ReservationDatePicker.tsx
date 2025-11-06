@@ -21,14 +21,18 @@ import { TimeCalculator } from '../../../../utils/TimeCalculator.ts';
 import CombineDateAndTime from '../../../../utils/CombineDateAndTime.ts';
 
 interface ReservationDatePickerProps {
-  onClose: () => void; // 달력 닫기
-  onDateSelect: (reservationInfo: ReservationInfo) => void;
+  reservationInfo: ReservationInfo;
+  setReservationInfo: React.Dispatch<React.SetStateAction<ReservationInfo>>;
+  onClose: () => void;
 }
 
-const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, onDateSelect }) => {
+const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservationInfo, setReservationInfo, onClose }) => {
   // 날짜
   const monthsShown = useMemo(() => 2, []);
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    reservationInfo.startDate,
+    reservationInfo.endDate,
+  ]);
   let [startDate, endDate] = dateRange;
   // 시간
   const now = new Date();
@@ -46,15 +50,19 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
 
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
+    const [startDate, endDate] = dateRange;
+    const { startTime, endTime } = reservationInfo;
+
     if (startDate && endDate && start && end) {
       const combinedStart = CombineDateAndTime(startDate, start);
       const combinedEnd = CombineDateAndTime(endDate, end);
       const totalTime = TimeCalculator(combinedStart, combinedEnd);
-      onDateSelect({
+
+      setReservationInfo({
         startDate: combinedStart,
         endDate: combinedEnd,
-        startTime: start ,
-        endTime: end ,
+        startTime: start,
+        endTime: end,
         totalTime
       });
 
@@ -64,6 +72,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
     onClose();
   }
 
+  console.log(reservationInfo);
   return (
     <>
       <div className={styles.datepicker}>
@@ -142,10 +151,24 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ onClose, 
         />
         <div className={styles.rentTime}>
           <div className={styles.selectTime}>
-            <CustomSelect label="대여 시각" value={start} onChange={setStart} startDate={startDate} />
+            <CustomSelect
+              label="대여 시각"
+              value={reservationInfo.startTime ?? ""}
+              onChange={(value) =>
+                setReservationInfo((prev) => ({ ...prev, startTime: value }))
+              }
+              startDate={reservationInfo.startDate}
+            />
           </div>
           <div className={styles.selectTime}>
-            <CustomSelect label="반납 시각" value={end} onChange={setEnd} />
+            <CustomSelect
+              label="반납 시각"
+              value={reservationInfo.endTime ?? ""}
+              onChange={(value) =>
+                setReservationInfo((prev) => ({ ...prev, endTime: value }))
+              }
+              startDate={reservationInfo.startDate}
+            />
           </div>
         </div>
         <div className={styles.result}>

@@ -1,19 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './CustomSelect.module.scss';
+import { ReservationInfo } from '../../../../types/reservation';
 
-const generateTimes = (startDate: Date | null) => {
+
+interface CustomSelectProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  startDate: Date | null;
+}
+
+export const generateTimes = (startDate: Date | null) => {
   const times: string[] = [];
-  let startTime = 0;
-  // 현재시간 이전 선택 불가능
   const now = new Date();
-  if (now.getDate() == startDate?.getDate()) {
-    startTime = now.getDate();
+  let startTime = 0;
+
+  // 오늘이면 현재시간 + 4시간 이후부터 가능
+  if (startDate && now.toDateString() === startDate.toDateString()) {
+    startTime = now.getHours() + 4;
   }
 
   for (let hour = startTime; hour <= 24; hour++) {
     for (let min of [0, 30]) {
       if (hour === 24 && min > 0) continue;
-      const h = String(hour).padStart(2, '0');
+      const h = String(hour % 24).padStart(2, '0');
       const m = String(min).padStart(2, '0');
       times.push(`${h}:${m}`);
     }
@@ -22,12 +32,6 @@ const generateTimes = (startDate: Date | null) => {
   return times;
 };
 
-interface CustomSelectProps {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  startDate: Date | null;
-}
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, startDate }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,10 +47,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, sta
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  // useEffect(() => {
-  //   onChange("");
-  // }, [startDate])
 
   return (
     <div className={styles.selectWrapper} ref={ref}>

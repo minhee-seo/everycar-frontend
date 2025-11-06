@@ -31,8 +31,6 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
 
   const { address, error } = useCurrentLocation();
 
-  console.log(address);
-
   return (
     <>
       <div className={styled.contentContainer} >

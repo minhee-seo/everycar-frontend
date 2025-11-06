@@ -16,6 +16,7 @@ const MainDesktop = () => {
     const start = getFourHoursLater();
     const end = getSixHoursAfterFourHoursLater();
 
+    // 기본 시간값
     const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
         startDate: start,
         endDate: end,
@@ -27,8 +28,6 @@ const MainDesktop = () => {
         ).returnTime,
         totalTime: null,
     });
-
-    console.log(getRoundedTime(start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })));
 
     const handleDateSelect = (info: ReservationInfo) => {
         setReservationInfo(info)
@@ -71,8 +70,9 @@ const MainDesktop = () => {
                     <>
                         <div className={styles.datepicker}>
                             <ReservationDatePicker
+                                reservationInfo={reservationInfo}
+                                setReservationInfo={setReservationInfo}
                                 onClose={() => setIsDatePickerOpen(false)}
-                                onDateSelect={handleDateSelect}
                             />
                         </div>
                         <div className={styles.background}></div>
