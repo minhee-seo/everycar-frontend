@@ -8,8 +8,12 @@ import CarSlider from '../main_commoon/CarSlide.tsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faMapMarkerAlt, faCheck, faComments, faFile, } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../../../components/common/Footer.tsx';
+import { useCurrentLocation } from '../../../utils/useCurrentLocation.ts';
+import { Link } from 'react-router-dom';
 
 function MainMobile() {
+    const { address, error } = useCurrentLocation();
+
     return (
         <div className={styles.container}>
             <div className={styles.searchBar}>
@@ -20,15 +24,17 @@ function MainMobile() {
                     <span className={styles.searchTitle}>
                         <span>
                             <FontAwesomeIcon icon={faMapMarkerAlt} />
-                            현재위치
+                            {address}
                         </span> 에서<br></br>
                         렌터카를 빠르게 대여하세요
                     </span>
                     <p className={styles.searchText}>빠르고 간편하게 만나는 렌터카 서비스</p>
-                    <button className={styles.searchBtn}>
-                        에브리카 예약하기
-                        <FontAwesomeIcon icon={faArrowRight} />
-                    </button>
+                    <Link to="/reservation">
+                        <button className={styles.searchBtn}>
+                            에브리카 예약하기
+                            <FontAwesomeIcon icon={faArrowRight} />
+                        </button>
+                    </Link>
                 </div>
                 <div className={styles.shortcut}>
                     <ul>
