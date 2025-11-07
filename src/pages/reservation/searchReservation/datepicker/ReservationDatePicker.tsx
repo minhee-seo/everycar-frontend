@@ -174,13 +174,13 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           <div className={styles.resultCont}>
             <span className={styles.title}>시작일</span>
             <span className={styles.date}>{startDate ? FormatKoreanDate(startDate) : ''}</span>
-            <span className={styles.time}>{start}</span>
+            <span className={styles.time}>{reservationInfo.startTime}</span>
           </div>
           <FontAwesomeIcon icon={faCarSide} />
           <div className={styles.resultCont}>
             <span className={styles.title}>반납일</span>
             <span className={styles.date}>{endDate ? FormatKoreanDate(endDate) : ''}</span>
-            <span className={styles.time}>{end}</span>
+            <span className={styles.time}>{reservationInfo.endTime}</span>
           </div>
         </div>
 
