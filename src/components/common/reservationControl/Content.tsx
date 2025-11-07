@@ -8,6 +8,7 @@ import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
 import FormatKoreanDate from '../../../utils/dateUtils.ts';
 import CurrentLocation from '../../../utils/CurrentLocation.tsx';
 import { useCurrentLocation } from '../../../utils/useCurrentLocation.ts';
+import { Link } from 'react-router-dom';
 
 interface ReservationControllerProps {
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,14 +21,6 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
   const handleDatepicker = () => {
     setIsDatePickerOpen(true);
   }
-
-  // 기본 입력값 (현재 날짜 현재시간)
-  // 현재날짜 + (현재시간(30분단위끊기작업))
-  // const { rentTime, returnTime } = getRoundedTime();
-  // const [start, setStart] = useState(rentTime);
-  // const [end, setEnd] = useState(returnTime);
-
-  // console.log(CurrentLocation);
 
   const { address, error } = useCurrentLocation();
 
@@ -72,7 +65,14 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
           </div>
           <div className={styled.rentBtn}>
             <button>
-              <FontAwesomeIcon icon={faArrowRight} className={styled.arrow} />
+              <Link
+                to="/reservation"
+                state={{
+                  address,
+                  reservationInfo,
+                }}>
+                <FontAwesomeIcon icon={faArrowRight} className={styled.arrow} />
+              </Link>
             </button>
           </div>
         </div>

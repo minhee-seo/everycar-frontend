@@ -12,31 +12,47 @@ import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
 import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
+import { useLocation } from 'react-router-dom';
+
+interface DesktopProps {
+  address?: string;
+  reservationInfo?: ReservationInfo;
+}
 
 const Reservation = () => {
+  // 메인페이지 -> 예약페이지로 넘어왔을때 지역 파라미터
+  const location = useLocation();
+  const state = location.state as { address?: string; reservationInfo?: ReservationInfo } | null;
+  const address = state?.address || "";
+
+  // 지도
   const [parkingData, setParkingData] = useState<any[]>([]);
   const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState('');
   const [searchDone, setSearchDone] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
 
+  // datepicker
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
+  // 기본 시간
   const start = getFourHoursLater();
   const end = getSixHoursAfterFourHoursLater();
 
-  const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
-    startDate: start,
-    endDate: end,
-    startTime: getRoundedTime(
-      start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-    ).rentTime,
-    endTime: getRoundedTime(
-      start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-    ).returnTime,
-    totalTime: null,
-  });
+  const [reservationInfo, setReservationInfo] = useState<ReservationInfo>(
+    state?.reservationInfo || {
+      startDate: start,
+      endDate: end,
+      startTime: getRoundedTime(
+        start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+      ).rentTime,
+      endTime: getRoundedTime(
+        start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+      ).returnTime,
+      totalTime: null,
+    }
+  );
 
   useEffect(() => {
     fetch('/data/parking.json')
