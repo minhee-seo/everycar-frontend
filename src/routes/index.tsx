@@ -12,6 +12,7 @@ import '../layouts/layout.scss';
 import CarList from '../pages/carList/CarList.tsx';
 import CarDetail from '../pages/carDetail/CarDetail.tsx';
 import Payment from '../pages/payment/Payment.tsx';
+import Login from '../pages/Auth/Login.tsx';
 
 const AppRoutes = () => (
   <>
@@ -23,6 +24,7 @@ const AppRoutes = () => (
           <Route path="/reservation/carList" element={<CarList />} />
           <Route path="/reservation/carDetail" element={<CarDetail />} />
           <Route path="/reservation/payment" element={<Payment />} />
+          <Route path="/auth/login" element={<Login />} />
         </Route>
       </Routes>
       
