@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from './Login.module.scss';
+import { Link } from "react-router-dom";
 // import useLogin from "../../components/hooks/useLogin";
 // import styles from "../../css/routes/authorization/login.module.scss";
 
@@ -52,7 +53,9 @@ const Login = () => {
               />
             </label>
             <br />
-
+            <p className={styles.text_s}>
+              <Link to="auth/Signup">회원가입</Link>
+            </p>
             <button type="submit" className={styles.button}>로그인</button>
           </form>
 

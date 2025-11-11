@@ -63,7 +63,15 @@
                 margin-top: -1px;
                 border-radius:  0 0 10px 10px;
             }
-
+            .text_s{
+              a{
+                color: $color-gray-600;
+                font-size: $font-sm;
+              }
+              :hover{
+                color: $color-gray-800;
+              }
+            }
             .button{
                 width: 100%;
                 padding: 1rem 0;
