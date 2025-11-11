@@ -13,6 +13,7 @@ import CarList from '../pages/carList/CarList.tsx';
 import CarDetail from '../pages/carDetail/CarDetail.tsx';
 import Payment from '../pages/payment/Payment.tsx';
 import Login from '../pages/Auth/Login.tsx';
+import SignConditions from '../pages/Auth/SignupConditions.tsx';
 
 const AppRoutes = () => (
   <>
@@ -25,6 +26,7 @@ const AppRoutes = () => (
           <Route path="/reservation/carDetail" element={<CarDetail />} />
           <Route path="/reservation/payment" element={<Payment />} />
           <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/SignConditions" element={<SignConditions />} />
         </Route>
       </Routes>
       

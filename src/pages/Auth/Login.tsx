@@ -54,7 +54,7 @@ const Login = () => {
             </label>
             <br />
             <p className={styles.text_s}>
-              <Link to="auth/Signup">회원가입</Link>
+              <Link to="/auth/SignConditions">회원가입</Link>
             </p>
             <button type="submit" className={styles.button}>로그인</button>
           </form>

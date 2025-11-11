@@ -1,0 +1,77 @@
+@import '../../styles/global.scss';
+.progressCont {
+    width: 100%;
+  max-width: 600px;
+  margin: 40px auto;
+  position: relative;
+    .progressList {
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #aaa;
+      font-size: 14px;
+      position: relative;
+      transition: color 0.3s ease;
+
+      .circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #999;
+        transition: all 0.3s ease;
+      }
+
+      &.active {
+        color: #222;
+
+        .circle {
+          border-color: $primary-color;
+          background-color: $primary-color;
+          color: $text-color;
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .label {
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .line {
+      width: 100%;
+      height: 3px;
+      background-color: #eee;
+      border-radius: 2px;
+      position: absolute;
+      top: 22px;
+      left: 0;
+      z-index: 1;
+      overflow: hidden;
+
+      .fill {
+        height: 100%;
+        background-color: $primary-color;
+        border-radius: 2px;
+        width: 0;
+        transition: width 0.4s ease;
+      }
+    }
+  }
