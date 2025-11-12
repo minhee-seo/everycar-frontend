@@ -50,6 +50,11 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
+    '/auth/SignConditions': {
+    title: '약관동의',
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
+  },
       '/auth/signup': {
     title: '회원가입',
     leftIcon: faArrowLeft,

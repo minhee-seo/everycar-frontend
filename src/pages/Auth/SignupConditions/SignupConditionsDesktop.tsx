@@ -1,9 +1,9 @@
 import style from "./SignConditions.module.scss";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // useNavigate 임포트
-import SignupProgress from "./SignupProgress.tsx";
+import SignupProgress from "../SignupProgress/SignupProgress.tsx";
 
-function SignConditions() {
+function SignupConditionsDesktop() {
   const [isTermsChecked, setIsTermsChecked] = useState(false);
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -172,4 +172,4 @@ function SignConditions() {
   );
 }
 
-export default SignConditions;
+export default SignupConditionsDesktop;

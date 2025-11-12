@@ -1,4 +1,4 @@
-@import '../../styles/global.scss';
+@import '../../../styles/global.scss';
 
 .container {
   padding: 100px 0;
@@ -33,6 +33,7 @@
 
       .detailConditions {
         padding: 10px 20px;
+        height: 300px;
         margin-bottom: 20px;
         overflow-y: scroll;
         background-color: #f3f3f3;
