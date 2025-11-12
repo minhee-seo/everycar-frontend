@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import style from './Signup.module.scss';
+import SignupProgress from "./SignupProgress.tsx";
 
 const Signup = () => {
   const [id, setId] = useState('');
@@ -75,7 +76,7 @@ const Signup = () => {
     if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
       calculatedAge--;
     }
-    
+
     setBirth(e.target.value);
 
     if (calculatedAge < 26) {
@@ -102,128 +103,132 @@ const Signup = () => {
   };
 
   return (
-    <form className={style.container} onSubmit={handleSubmit}>
-      <h2 className={style.title}>회원가입</h2>
+    <>
 
-      {/* 아이디 */}
-      <div className={style.formGroup}>
-        <label htmlFor="id" className={style.label}>아이디</label>
-        <input
-          type="text"
-          id="id"
-          className={style.input}
-          placeholder="6~20자의 영문 또는 숫자"
-          value={id}
-          onChange={onChangeId}
-        />
-        {id.length > 0 && <p className={`${style.message} ${isId ? style.success : style.error}`}>{idMessage}</p>}
-      </div>
+      <form className={style.container} onSubmit={handleSubmit}>
+        <SignupProgress step={2}/>
+        <h2 className={style.title}>회원가입</h2>
 
-      {/* 비밀번호 */}
-      <div className={style.formGroup}>
-        <label htmlFor="password" className={style.label}>비밀번호</label>
-        <input
-          type="password"
-          id="password"
-          className={style.input}
-          placeholder="8~12자의 영문, 숫자, 특수문자 포함"
-          value={password}
-          onChange={onChangePassword}
-        />
-        {password.length > 0 && <p className={`${style.message} ${isPassword ? style.success : style.error}`}>{passwordMessage}</p>}
-      </div>
-
-      {/* 비밀번호 확인 */}
-      <div className={style.formGroup}>
-        <label htmlFor="passwordCheck" className={style.label}>비밀번호 확인</label>
-        <input
-          type="password"
-          id="passwordCheck"
-          className={style.input}
-          placeholder="비밀번호를 다시 입력하세요"
-          value={passwordCheck}
-          onChange={onChangePasswordCheck}
-        />
-        {passwordCheck.length > 0 && <p className={`${style.message} ${isPasswordCheck ? style.success : style.error}`}>{passwordCheckMessage}</p>}
-      </div>
-
-      {/* 이메일 */}
-      <div className={style.formGroup}>
-        <label htmlFor="email" className={style.label}>이메일</label>
-        <input
-          type="email"
-          id="email"
-          className={style.input}
-          placeholder="example@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-
-      {/* 전화번호 + 인증 */}
-      <div className={style.formGroup}>
-        <label htmlFor="phone" className={style.label}>전화번호</label>
-        <div className={style.phoneRow}>
-          <input
-            type="tel"
-            id="phone"
-            className={style.input}
-            placeholder="010-1234-5678"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <button type="button" className={style.verifyButton}>
-            인증번호 받기
-          </button>
-        </div>
-
-        {/* 인증번호 입력 필드 */}
-        <div className={style.verifyRow}>
+        {/* 아이디 */}
+        <div className={style.formGroup}>
+          <label htmlFor="id" className={style.label}>아이디</label>
           <input
             type="text"
-            id="verificationCode"
+            id="id"
             className={style.input}
-            placeholder="인증번호 입력"
+            placeholder="6~20자의 영문 또는 숫자"
+            value={id}
+            onChange={onChangeId}
           />
-          <button type="button" className={style.confirmButton}>
-            확인
-          </button>
+          {id.length > 0 && <p className={`${style.message} ${isId ? style.success : style.error}`}>{idMessage}</p>}
         </div>
-      </div>
 
-      {/* 생년월일 */}
-      <div className={style.formGroup}>
-        <label htmlFor="birth" className={style.label}>생년월일</label>        
-        <input
-          type="date"
-          id="birth"
-          className={style.input}
-          value={birth}
-          onChange={onChangeBirth}
-        />
-        {birth.length > 0 && <p className={`${style.message} ${isBirth ? style.success : style.error}`}>{birthMessage}</p>}
-      </div>
-
-      {/* 성별 */}
-      <div className={style.formGroup}>
-        <label className={style.label}>성별</label>
-        <div className={style.genderGroup}>
-          <label className={style.genderLabel}>
-            <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)} />
-            남성
-          </label>
-          <label className={style.genderLabel}>
-            <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)} />
-            여성
-          </label>
+        {/* 비밀번호 */}
+        <div className={style.formGroup}>
+          <label htmlFor="password" className={style.label}>비밀번호</label>
+          <input
+            type="password"
+            id="password"
+            className={style.input}
+            placeholder="8~12자의 영문, 숫자, 특수문자 포함"
+            value={password}
+            onChange={onChangePassword}
+          />
+          {password.length > 0 && <p className={`${style.message} ${isPassword ? style.success : style.error}`}>{passwordMessage}</p>}
         </div>
-      </div>
 
-      {/* 제출 버튼 */}
-      <button type="submit" className={style.submitButton}>
-        가입하기
-      </button>
-    </form>
+        {/* 비밀번호 확인 */}
+        <div className={style.formGroup}>
+          <label htmlFor="passwordCheck" className={style.label}>비밀번호 확인</label>
+          <input
+            type="password"
+            id="passwordCheck"
+            className={style.input}
+            placeholder="비밀번호를 다시 입력하세요"
+            value={passwordCheck}
+            onChange={onChangePasswordCheck}
+          />
+          {passwordCheck.length > 0 && <p className={`${style.message} ${isPasswordCheck ? style.success : style.error}`}>{passwordCheckMessage}</p>}
+        </div>
+
+        {/* 이메일 */}
+        <div className={style.formGroup}>
+          <label htmlFor="email" className={style.label}>이메일</label>
+          <input
+            type="email"
+            id="email"
+            className={style.input}
+            placeholder="example@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        {/* 전화번호 + 인증 */}
+        <div className={style.formGroup}>
+          <label htmlFor="phone" className={style.label}>전화번호</label>
+          <div className={style.phoneRow}>
+            <input
+              type="tel"
+              id="phone"
+              className={style.input}
+              placeholder="010-1234-5678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            <button type="button" className={style.verifyButton}>
+              인증번호 받기
+            </button>
+          </div>
+
+          {/* 인증번호 입력 필드 */}
+          <div className={style.verifyRow}>
+            <input
+              type="text"
+              id="verificationCode"
+              className={style.input}
+              placeholder="인증번호 입력"
+            />
+            <button type="button" className={style.confirmButton}>
+              확인
+            </button>
+          </div>
+        </div>
+
+        {/* 생년월일 */}
+        <div className={style.formGroup}>
+          <label htmlFor="birth" className={style.label}>생년월일</label>
+          <input
+            type="date"
+            id="birth"
+            className={style.input}
+            value={birth}
+            onChange={onChangeBirth}
+          />
+          {birth.length > 0 && <p className={`${style.message} ${isBirth ? style.success : style.error}`}>{birthMessage}</p>}
+        </div>
+
+        {/* 성별 */}
+        <div className={style.formGroup}>
+          <label className={style.label}>성별</label>
+          <div className={style.genderGroup}>
+            <label className={style.genderLabel}>
+              <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)} />
+              남성
+            </label>
+            <label className={style.genderLabel}>
+              <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)} />
+              여성
+            </label>
+          </div>
+        </div>
+
+        {/* 제출 버튼 */}
+        <button type="submit" className={style.submitButton}>
+          가입하기
+        </button>
+      </form>
+    </>
   );
 };
 

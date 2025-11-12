@@ -2,11 +2,13 @@
 import { useState } from "react";
 import styles from "./SignupProgress.module.scss";
 
+interface SignupProgressProps {
+  step: number; // 현재 단계 (1, 2, 3)
+}
 
+export default function SignupProgress({ step }: SignupProgressProps) {
 
-export default function SignupProgress() {
-
-  const [step, setStep] = useState(1);
+  // const [step, setStep] = useState(1);
   
   return (
     <div className={styles.progressCont}>

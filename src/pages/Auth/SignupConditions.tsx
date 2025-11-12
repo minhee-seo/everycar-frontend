@@ -39,7 +39,7 @@ function SignConditions() {
 
   return (
     <div className={style.container}>
-      <SignupProgress />
+      <SignupProgress step={1}/>
       <div className={style.conditionsCont}>
         <h2>회원가입 약관</h2>
         <p>에브리카를 찾아주셔서 감사합니다.<br></br>
