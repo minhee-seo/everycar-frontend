@@ -24,7 +24,7 @@ function SignConditions() {
     if (!isTermsChecked || !isPrivacyChecked) {
       alert('이용 약관과 개인정보 수집 동의에 모두 동의해야 합니다.');
     } else {
-      navigate('/auth/register');  // 페이지 이동
+      navigate('/auth/signup');  // 페이지 이동
     }
   };
 

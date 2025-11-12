@@ -6,7 +6,7 @@ import styles from "./SignupProgress.module.scss";
 
 export default function SignupProgress() {
 
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   
   return (
     <div className={styles.progressCont}>
