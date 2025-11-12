@@ -1,237 +1,108 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import style from './Signup.module.scss';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
-    userId: "",
-    userPassword: "",
-    userPasswordConfirm: "", // 비밀번호 확인 필드 추가
-    userName: "",
-    userEmail: "",
-    userPhone: "",
-    userGender: 1, // 기본값: 여성
-    userBirth: "",
-    userAddress: "",
-    userAddressDetail: "", // 상세주소 추가
-  });
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [birth, setBirth] = useState('');
+  const [gender, setGender] = useState('');
 
-  const [isFormValid, setIsFormValid] = useState(false); // 버튼 활성화 여부
-  const [isUserIdAvailable, setIsUserIdAvailable] = useState(false); // 아이디 중복 여부
-  const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지
-  const [successMessage, setSuccessMessage] = useState(""); // 아이디 사용 가능 메시지
-  const [passwordError, setPasswordError] = useState(""); // 비밀번호 일치 오류 메시지
-  const [userIdError, setUserIdError] = useState(""); // 아이디 유효성 오류 메시지
-  const [passwordStrengthError, setPasswordStrengthError] = useState(""); // 비밀번호 유효성 오류 메시지
-  const [isUserIdValid, setIsUserIdValid] = useState(false);
-  const [birthError, setBirthError] = useState(""); // 생년월일 오류 메시지
+  const [idMessage, setIdMessage] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
+  const [birthMessage, setBirthMessage] = useState('');
+
+  const [isId, setIsId] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordCheck, setIsPasswordCheck] = useState(false);
+  const [isBirth, setIsBirth] = useState(false);
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // 카카오 우편번호 API 스크립트 로드
-    const script = document.createElement("script");
-    script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
-    script.async = true;
-    script.onload = () => {
-      // 스크립트 로드 완료 후 daum.Postcode 사용 가능
-      window.daum = window.daum || {};  // daum이 정의되지 않은 경우 방어
-    };
-    document.body.appendChild(script);
+  const onChangeId = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const idRegex = /^[a-zA-Z0-9]{6,20}$/;
+    const idCurrent = e.target.value;
+    setId(idCurrent);
+
+    if (!idRegex.test(idCurrent)) {
+      setIdMessage('6~20자의 영문 또는 숫자로 입력해주세요.');
+      setIsId(false);
+    } else {
+      setIdMessage('올바른 아이디 형식입니다.');
+      setIsId(true);
+    }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/;
+    const passwordCurrent = e.target.value;
+    setPassword(passwordCurrent);
 
-  // 아이디 유효성 검사
-  useEffect(() => {
-    const idPattern = /^[A-Za-z0-9]{6,20}$/;
-
-    if (formData.userId === "") {
-      setUserIdError(""); // 입력이 없을 경우 오류 메시지 초기화
-      setIsUserIdValid(false);
-    } else if (!idPattern.test(formData.userId)) {
-      setUserIdError("아이디는 6~20자의 영문과 숫자로만 입력할 수 있습니다.");
-      setIsUserIdValid(false);
+    if (!passwordRegex.test(passwordCurrent)) {
+      setPasswordMessage('8~12자의 영문, 숫자, 특수문자를 포함해주세요.');
+      setIsPassword(false);
     } else {
-      setUserIdError("");
-      setIsUserIdValid(true);
+      setPasswordMessage('안전한 비밀번호입니다.');
+      setIsPassword(true);
     }
-  }, [formData.userId]);
+  }, []);
 
-  // 비밀번호 유효성 검사
-  useEffect(() => {
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,12}$/;
-    if (!passwordPattern.test(formData.userPassword)) {
+  const onChangePasswordCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordCheckCurrent = e.target.value;
+    setPasswordCheck(passwordCheckCurrent);
+
+    if (password === passwordCheckCurrent) {
+      setPasswordCheckMessage('비밀번호가 일치합니다.');
+      setIsPasswordCheck(true);
     } else {
-      setPasswordStrengthError("");
+      setPasswordCheckMessage('비밀번호가 일치하지 않습니다.');
+      setIsPasswordCheck(false);
     }
-  }, [formData.userPassword]);
+  }, [password]);
 
-  // 비밀번호 일치 여부 확인
-  useEffect(() => {
-    if (formData.userPassword !== formData.userPasswordConfirm) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
+  const onChangeBirth = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const birthDate = new Date(e.target.value);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    const dayDifference = today.getDate() - birthDate.getDate();
+
+    let calculatedAge = age;
+    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+      calculatedAge--;
+    }
+    
+    setBirth(e.target.value);
+
+    if (calculatedAge < 26) {
+      setBirthMessage('만 26세 이상만 가입 가능합니다.');
+      setIsBirth(false);
     } else {
-      setPasswordError("");
+      setBirthMessage('');
+      setIsBirth(true);
     }
-  }, [formData.userPassword, formData.userPasswordConfirm]);
+  }, []);
 
-  // 아이디 중복 확인 함수
-  const checkUserIdAvailability = async () => {
-    const { userId } = formData;
-    if (userId.length > 0) {
-      try {
-        const response = await fetch(`http://localhost:8080/api/auth/check-user-id?userId=${userId}`);
-        const data = await response.json();
-        if (data.isDuplicate) {
-          setIsUserIdAvailable(false);
-          setErrorMessage("이미 사용 중인 아이디입니다.");
-          setSuccessMessage(""); // 중복된 경우 사용 가능 메시지를 지운다
-        } else {
-          setIsUserIdAvailable(true);
-          setErrorMessage(""); // 중복되지 않으면 에러 메시지 지운다
-          setSuccessMessage("사용 가능한 아이디입니다."); // 사용 가능한 아이디 메시지 추가
-        }
-      } catch (error) {
-        console.error("아이디 중복 확인 오류:", error);
-      }
-    } else {
-      setIsUserIdAvailable(false); // 아이디가 비어 있으면 중복 체크 안 함
-      setErrorMessage("");
-      setSuccessMessage(""); // 아이디가 비어있으면 사용 가능 메시지 지운다
-    }
-  };
-
-  useEffect(() => {
-    // 생년월일 유효성 검사 (만 26세 이상)
-    const calculateAge = (birthDate) => {
-      const today = new Date();
-      const birth = new Date(birthDate);
-      const age = today.getFullYear() - birth.getFullYear();
-      const month = today.getMonth() - birth.getMonth();
-      const day = today.getDate() - birth.getDate();
-
-      if (month < 0 || (month === 0 && day < 0)) {
-        return age - 1;
-      }
-      return age;
-    };
-
-    if (formData.userBirth) {
-      const age = calculateAge(formData.userBirth);
-      if (age < 26) {
-        setBirthError("만 26세 이상만 가입할 수 있습니다.");
-        setFormData({ ...formData, userBirth: "" });
-      } else {
-        setBirthError("");
-      }
-    }
-  }, [formData.userBirth]);
-
-  useEffect(() => {
-    // 모든 필드가 비어있지 않은지 확인
-    const isValid =
-      formData.userId &&
-      formData.userPassword &&
-      formData.userPasswordConfirm &&
-      formData.userName &&
-      formData.userEmail &&
-      formData.userPhone &&
-      formData.userGender &&
-      formData.userBirth &&
-      formData.userAddress &&
-      formData.userAddressDetail &&
-      passwordError === "" &&  // 비밀번호가 일치하는 경우만 활성화
-      isUserIdAvailable; // 아이디 중복 확인이 통과되었을 때만 활성화
-
-    setIsFormValid(isValid); // 아이디 중복 확인과 비밀번호 일치를 모두 만족할 때만 활성화
-  }, [formData, isUserIdAvailable, passwordError]); // formData, isUserIdAvailable, passwordError가 변경될 때마다 유효성 검사
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const idRegex = /^[a-zA-Z0-9]{6,20}$/; // 아이디 유효성 검사 정규식
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/; // 비밀번호 유효성 검사 정규식
-
-    // 아이디 유효성 검사
-    if (!idRegex.test(formData.userId)) {
-      alert("아이디는 6~20자의 영문 또는 숫자로만 입력해야 합니다.");
+    if (!id || !password || !passwordCheck || !email || !phone || !birth || !gender) {
+      alert('모든 필드를 입력해주세요.');
       return;
     }
-
-    // 비밀번호 유효성 검사
-    if (!passwordRegex.test(formData.userPassword)) {
-      alert("비밀번호는 8~12자의 영문, 숫자, 특수문자를 포함해야 합니다.");
-      return;
+    if (isId && isPassword && isPasswordCheck && isBirth) {
+      alert('회원가입이 완료되었습니다.');
+      navigate('/login');
+    } else {
+      alert('입력 정보를 다시 확인해주세요.');
     }
-
-    // 비밀번호 확인 일치 여부
-    if (formData.userPassword !== formData.userPasswordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    // 아이디 중복 확인 여부
-    if (!isUserIdAvailable) {
-      alert("이미 사용 중인 아이디입니다. 다른 아이디를 선택해주세요.");
-      return;
-    }
-
-    // 모든 필드가 채워졌는지 확인
-    if (
-      !formData.userName ||
-      !formData.userEmail ||
-      !formData.userPhone ||
-      !formData.userBirth ||
-      !formData.userAddress ||
-      !formData.userAddressDetail
-    ) {
-      alert("모든 정보를 입력해주세요.");
-      return;
-    }
-
-    // 주소 합치기
-    const fullAddress = formData.userAddress + " " + formData.userAddressDetail;
-
-    try {
-      const response = await fetch("http://localhost:8080/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          userAddress: fullAddress, // 합쳐진 주소 전송
-        }),
-      });
-
-      if (response.ok) {
-        alert("회원가입 성공! 로그인 페이지로 이동합니다.");
-        navigate("/auth/login");
-      } else {
-        alert("회원가입 실패! 다시 시도해주세요.");
-      }
-    } catch (error) {
-      console.error("회원가입 오류:", error);
-      alert("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
-    }
-  };
-
-  // 카카오 우편번호 서비스 호출을 위한 함수
-  const openPostcode = () => {
-    new window.daum.Postcode({
-      oncomplete: function (data) {
-        // 우편번호와 주소가 완성된 후 처리
-        setFormData({
-          ...formData,
-          userAddress: data.roadAddress, // 도로명 주소
-        });
-      },
-    }).open();
   };
 
   return (
-    <form className={style.container}>
+    <form className={style.container} onSubmit={handleSubmit}>
       <h2 className={style.title}>회원가입</h2>
 
       {/* 아이디 */}
@@ -241,8 +112,11 @@ const Signup = () => {
           type="text"
           id="id"
           className={style.input}
-          placeholder="아이디를 입력하세요"
+          placeholder="6~20자의 영문 또는 숫자"
+          value={id}
+          onChange={onChangeId}
         />
+        {id.length > 0 && <p className={`${style.message} ${isId ? style.success : style.error}`}>{idMessage}</p>}
       </div>
 
       {/* 비밀번호 */}
@@ -252,8 +126,11 @@ const Signup = () => {
           type="password"
           id="password"
           className={style.input}
-          placeholder="비밀번호를 입력하세요"
+          placeholder="8~12자의 영문, 숫자, 특수문자 포함"
+          value={password}
+          onChange={onChangePassword}
         />
+        {password.length > 0 && <p className={`${style.message} ${isPassword ? style.success : style.error}`}>{passwordMessage}</p>}
       </div>
 
       {/* 비밀번호 확인 */}
@@ -264,7 +141,10 @@ const Signup = () => {
           id="passwordCheck"
           className={style.input}
           placeholder="비밀번호를 다시 입력하세요"
+          value={passwordCheck}
+          onChange={onChangePasswordCheck}
         />
+        {passwordCheck.length > 0 && <p className={`${style.message} ${isPasswordCheck ? style.success : style.error}`}>{passwordCheckMessage}</p>}
       </div>
 
       {/* 이메일 */}
@@ -275,6 +155,8 @@ const Signup = () => {
           id="email"
           className={style.input}
           placeholder="example@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
@@ -287,6 +169,8 @@ const Signup = () => {
             id="phone"
             className={style.input}
             placeholder="010-1234-5678"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <button type="button" className={style.verifyButton}>
             인증번호 받기
@@ -309,12 +193,15 @@ const Signup = () => {
 
       {/* 생년월일 */}
       <div className={style.formGroup}>
-        <label htmlFor="birth" className={style.label}>생년월일</label>
+        <label htmlFor="birth" className={style.label}>생년월일</label>        
         <input
           type="date"
           id="birth"
           className={style.input}
+          value={birth}
+          onChange={onChangeBirth}
         />
+        {birth.length > 0 && <p className={`${style.message} ${isBirth ? style.success : style.error}`}>{birthMessage}</p>}
       </div>
 
       {/* 성별 */}
@@ -322,11 +209,11 @@ const Signup = () => {
         <label className={style.label}>성별</label>
         <div className={style.genderGroup}>
           <label className={style.genderLabel}>
-            <input type="radio" name="gender" value="male" />
+            <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)} />
             남성
           </label>
           <label className={style.genderLabel}>
-            <input type="radio" name="gender" value="female" />
+            <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)} />
             여성
           </label>
         </div>

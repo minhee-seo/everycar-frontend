@@ -130,6 +130,19 @@
   }
 }
 
+.message {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.success {
+  color: #28a745;
+}
+
+.error {
+  color: #dc3545;
+}
+
 /* ✅ 모바일 전용 스타일 */
 @include respond-max(mobile-m) {
   .container {
