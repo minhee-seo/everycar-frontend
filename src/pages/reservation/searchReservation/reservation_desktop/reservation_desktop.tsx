@@ -12,11 +12,15 @@ import { ReservationInfo } from '../../../../types/reservation.tsx';
 import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
 import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
 import { useLocation } from 'react-router-dom';
+import { calculateDistance, formatDistance } from '../utils/haversine';
+import { ParkingData } from '../../../../types/Parking.ts';
+import { UserLocation } from '../../../../types/UserLocation.ts';
 
 interface DesktopProps {
   address?: string;
   reservationInfo?: ReservationInfo;
 }
+
 
 const Reservation = () => {
   // 메인페이지 -> 예약페이지로 넘어왔을때 지역 파라미터
@@ -26,6 +30,7 @@ const Reservation = () => {
 
   // 지도
   const [parkingData, setParkingData] = useState<ParkingData[]>([]);
+  const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState('');
   const [searchDone, setSearchDone] = useState(false);
@@ -54,10 +59,23 @@ const Reservation = () => {
   );
 
   useEffect(() => {
-    fetch('/data/parking.json')
-      .then(res => res.json())
-      .then(data => setParkingData(data))
-  }, []);
+    // Geolocation API 호출은 컴포넌트 라이프사이클에서 한 번만 실행되도록 관리
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setUserLocation({
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            });
+            },
+            (error) => {
+                console.warn("사용자 위치 획득 실패:", error.message);
+                // 위치 획득 실패 시 (예: 사용자가 거부), 서울 시청 등으로 기본값 설정 고려
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
+    }
+  }, []); // 빈 배열: 최초 마운트 시 한 번만 실행
 
   const filtered = parkingData;
   const handleSearchComplete = (data: ParkingData[]) => { // 검색 완료 시 데이터 받도록 수정
@@ -98,7 +116,12 @@ const Reservation = () => {
                         <ul className={styles.collapsed}>
                           {
                             filtered.map((parking, index) => (
-                              <ParkingList key={index} parking={parking} map={map} />
+                              <ParkingList 
+                                key={index} 
+                                parking={parking} 
+                                map={map}
+                                userLocation={userLocation}
+                              />
                             ))
                           }
                         </ul>

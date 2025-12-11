@@ -4,7 +4,7 @@ export interface ParkingData {
   parking_name: string;
   parking_address: string;
   parking_latitude: number;
-  parking_longitude: number; // longtitude 대신 longitude로 수정 (API 응답 예시 기준)
+  parking_longitude: number;
   parking_province: string;
   parking_district: string;
 }
