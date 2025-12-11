@@ -59,14 +59,7 @@ const Reservation = () => {
       .then(data => setParkingData(data))
   }, []);
 
-  const filtered = parkingData.filter(
-    p =>
-      p.parking_id.toString().includes(keyword) ||
-      p.parking_province.includes(keyword) ||
-      p.parking_district.includes(keyword) ||
-      p.parking_name.includes(keyword)
-  );
-
+  const filtered = parkingData;
   const handleSearchComplete = (data: ParkingData[]) => { // 검색 완료 시 데이터 받도록 수정
     setParkingData(data); // 검색 결과로 parkingData 업데이트
     setSearchDone(true);
