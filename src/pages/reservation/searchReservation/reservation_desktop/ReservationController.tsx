@@ -34,7 +34,6 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
 
   const handleSearchClick = (data: ParkingData[]) => { // 검색 결과를 받도록 수정
     if (onSearchComplete) {
-      console.log("검색 실행됨");
       onSearchComplete(data); // 검색 결과 데이터 전달
     }
   }
@@ -54,7 +53,7 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
         // LatLng 지도 중심좌표
         const position = new window.kakao.maps.LatLng(
           parking.parking_latitude,
-          parking.parking_longitude // parking_longtitude -> parking_longitude (타입 통일)
+          parking.parking_longitude
         );
 
         // 마커 생성
@@ -101,7 +100,6 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
       map.setBounds(expandedBounds);
     } else {
       // 검색 결과가 없을 경우
-      console.log("검색 결과 없음");
     }
     handleSearchClick(filtered);
   }

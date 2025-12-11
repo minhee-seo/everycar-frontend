@@ -11,6 +11,7 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
 import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
+import { ParkingData } from '../../../../types/Parking.ts';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -46,12 +47,7 @@ function ReservationMobile() {
             .then(data => setParkingData(data));
     }, []);
 
-    const filtered = parkingData.filter(
-        p =>
-            p.parking_province.includes(keyword) ||
-            p.parking_district.includes(keyword) ||
-            p.parking_name.includes(keyword)
-    );
+    const filtered = parkingData;
 
 
     const openSheet = () => {
@@ -69,10 +65,9 @@ function ReservationMobile() {
     };
 
     // 검색 완료 핸들러
-    const handleSearchComplete = () => {
+    const handleSearchComplete = (data: ParkingData[]) => {
+        setParkingData(data);
         setSearchDone(true);
-        closeSheet();
-
     }
 
 

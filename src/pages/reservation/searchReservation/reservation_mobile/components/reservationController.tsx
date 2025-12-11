@@ -5,6 +5,8 @@ import { faClock, faAngleRight, faLocationDot } from '@fortawesome/free-solid-sv
 import ReservationDatePicker from '../../datepicker/ReservationDatePicker.tsx';
 import { ReservationInfo } from '../../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../../utils/dateUtils.ts';
+import { ParkingData } from '../../../../../types/Parking.ts';
+import { fetchParkingData } from '../../../../../api/parking.ts';
 
 declare global {
     interface Window {
@@ -18,7 +20,7 @@ interface ReservationControllerProps {
     keyword: string;
     setKeyword: React.Dispatch<React.SetStateAction<string>>;
     filtered: any[];
-    onSearchComplete?: () => void;
+    onSearchComplete: (data: ParkingData[]) => void;
     isDatePickerOpen: boolean;
     setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     // dateRange: [Date | null, Date | null];
@@ -26,6 +28,7 @@ interface ReservationControllerProps {
 }
 
 function ReservationController({ map, closeSheet, keyword, setKeyword, filtered, onSearchComplete, isDatePickerOpen, setIsDatePickerOpen, reservationInfo }: ReservationControllerProps) {
+    const [localKeyword, setLocalKeyword] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     // const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -33,15 +36,21 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
         inputRef.current?.focus();
     }, []);
 
-    const searchParking = (e: React.FormEvent) => {
+    const searchParking = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!map) return;
 
+        setKeyword(localKeyword);
+        const filtered = await fetchParkingData(localKeyword); // API 호출
         if (filtered.length > 0) {
             const bounds = new window.kakao.maps.LatLngBounds();
 
-            filtered.forEach((parking) => {
-                const position = new window.kakao.maps.LatLng(parking.parking_latitude, parking.parking_longtitude);
+            filtered.forEach(parking => {
+                // LatLng 지도 중심좌표
+                const position = new window.kakao.maps.LatLng(
+                    parking.parking_latitude,
+                    parking.parking_longitude
+                );
 
                 const marker = new window.kakao.maps.Marker({
                     map,
@@ -78,16 +87,14 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
         }
 
         closeSheet();
-        handleSearchClick();
+        handleSearchClick(filtered);
     };
 
-    const handleSearchClick = () => {
+    const handleSearchClick = (data: ParkingData[]) => { // 검색 결과를 받도록 수정
         if (onSearchComplete) {
-            console.log('검색실행됨');
-            onSearchComplete();
+            onSearchComplete(data); // 검색 결과 데이터 전달
         }
-    };
-
+    }
 
     const openDatePicker = () => {
         setIsDatePickerOpen(true);
@@ -121,8 +128,8 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                         type="text"
                         className={styles.inputState}
                         placeholder="렌트 지역을 입력해주세요"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
+                        value={localKeyword}
+                        onChange={(e) => setLocalKeyword(e.target.value)}
                         ref={inputRef}
                     />
                 </div>
