@@ -11,7 +11,7 @@ interface ParkingListProps {
         parking_name: string,
         parking_address: string,
         parking_latitude: number,
-        parking_longtitude: number
+        parking_longitude: number
     }
     map: any;
 }
@@ -22,7 +22,7 @@ const ParkingList: React.FC<ParkingListProps> = ({ parking, map }) => {
 
         const position = new window.kakao.maps.LatLng(
             parking.parking_latitude,
-            parking.parking_longtitude
+            parking.parking_longitude // parking_longtitude -> parking_longitude (타입 통일)
         );
 
         map.panTo(position); // 부드럽게 이동

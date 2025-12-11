@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styles from './reservation_desktop.module.scss';
-import Content from '../../../components/common/reservationControl/Content.tsx';
 import MapView from '../reservation_mobile/components/MapView.tsx';
 import ReservationController from './ReservationController.tsx';
 
@@ -26,7 +25,7 @@ const Reservation = () => {
   const address = state?.address || "";
 
   // 지도
-  const [parkingData, setParkingData] = useState<any[]>([]);
+  const [parkingData, setParkingData] = useState<ParkingData[]>([]);
   const [map, setMap] = useState<any>(null);
   const [keyword, setKeyword] = useState('');
   const [searchDone, setSearchDone] = useState(false);
@@ -68,7 +67,8 @@ const Reservation = () => {
       p.parking_name.includes(keyword)
   );
 
-  const handleSearchComplete = () => {
+  const handleSearchComplete = (data: ParkingData[]) => { // 검색 완료 시 데이터 받도록 수정
+    setParkingData(data); // 검색 결과로 parkingData 업데이트
     setSearchDone(true);
   }
 
@@ -83,9 +83,8 @@ const Reservation = () => {
         <div className={styles.search}>
           <ReservationController
             map={map}
-            parkingData={parkingData}
             setKeyword={setKeyword}
-            onSearchComplete={handleSearchComplete}
+            onSearchComplete={handleSearchComplete} // 함수 시그니처 변경
             reservationInfo={reservationInfo}
             setIsDatePickerOpen={setIsDatePickerOpen}
             dateRange={dateRange}
@@ -115,7 +114,9 @@ const Reservation = () => {
                   }
                 </div>
               ) : (
-                <SelectList />
+                <p className={styles.defaultContent}>
+                  출발하실 지역을 검색하세요
+                </p>
               )
             }
           </div>

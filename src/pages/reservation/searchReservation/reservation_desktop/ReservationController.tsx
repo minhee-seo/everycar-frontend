@@ -9,18 +9,19 @@ import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
+import { ParkingData } from '../../../../types/Parking.ts';
+import { fetchParkingData } from '../../../../api/parking.ts';
 
 interface ReservationControllerProps {
   map: any;
-  parkingData: any[];
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  onSearchComplete?: () => void;
+  onSearchComplete: (data: ParkingData[]) => void; // 데이터 전달하도록 타입 변경
   reservationInfo: ReservationInfo;
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
   dateRange: [Date | null, Date | null];
 }
 
-function ReservationController({ map, parkingData, setKeyword, onSearchComplete, setIsDatePickerOpen, dateRange, reservationInfo }: ReservationControllerProps) {
+function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePickerOpen, dateRange, reservationInfo }: ReservationControllerProps) {
   const [localKeyword, setLocalKeyword] = useState('');
   const monthsShown = useMemo(() => 2, []);
 
@@ -31,25 +32,19 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
   }, [map]);
 
 
-  const handleSearchClick = () => {
+  const handleSearchClick = (data: ParkingData[]) => { // 검색 결과를 받도록 수정
     if (onSearchComplete) {
-      console.log("검색실행됨");
-      onSearchComplete();
+      console.log("검색 실행됨");
+      onSearchComplete(data); // 검색 결과 데이터 전달
     }
   }
 
-  const searchParking = (e: React.FormEvent) => {
+  const searchParking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!map) return;
 
     setKeyword(localKeyword);
-
-    const filtered = parkingData.filter(
-      p =>
-        p.parking_province.includes(localKeyword) ||
-        p.parking_district.includes(localKeyword) ||
-        p.parking_name.includes(localKeyword)
-    );
+    const filtered = await fetchParkingData(localKeyword); // API 호출
 
     if (filtered.length > 0) {
       // LatLngBounds 지도 재설정 범위 정보 객체
@@ -59,7 +54,7 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
         // LatLng 지도 중심좌표
         const position = new window.kakao.maps.LatLng(
           parking.parking_latitude,
-          parking.parking_longtitude
+          parking.parking_longitude // parking_longtitude -> parking_longitude (타입 통일)
         );
 
         // 마커 생성
@@ -104,8 +99,11 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
       const expandedBounds = new window.kakao.maps.LatLngBounds(newSw, newNe);
 
       map.setBounds(expandedBounds);
+    } else {
+      // 검색 결과가 없을 경우
+      console.log("검색 결과 없음");
     }
-    handleSearchClick();
+    handleSearchClick(filtered);
   }
 
   // datepicker 열기
@@ -130,10 +128,10 @@ function ReservationController({ map, parkingData, setKeyword, onSearchComplete,
               onClick={handleDatePicker}
               value={
                 reservationInfo.startDate ?
-                `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
-                } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
-                } ${reservationInfo.endTime || ''}`
-              :''
+                  `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
+                  } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
+                  } ${reservationInfo.endTime || ''}`
+                  : ''
               }
             />
             {/* <span className={styles.totalHoure}>{reservationInfo.totalTime}</span> */}
