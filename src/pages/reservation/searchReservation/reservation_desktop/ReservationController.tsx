@@ -9,7 +9,7 @@ import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
-import { ParkingData } from '../../../../types/Parking.ts';
+import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
 import { fetchParkingData } from '../../../../api/parking.ts';
 
 interface ReservationControllerProps {
@@ -126,9 +126,7 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
               onClick={handleDatePicker}
               value={
                 reservationInfo.startDate ?
-                  `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
-                  } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
-                  } ${reservationInfo.endTime || ''}`
+                  `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''}`
                   : ''
               }
             />

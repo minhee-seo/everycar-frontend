@@ -9,11 +9,10 @@ import ParkingList from './ParkingList.tsx';
 import SelectList from './SelectList.tsx';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 import { ReservationInfo } from '../../../../types/reservation.tsx';
-import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
-import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
+import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
+import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
 import { useLocation } from 'react-router-dom';
-import { calculateDistance, formatDistance } from '../utils/haversine';
-import { ParkingData } from '../../../../types/Parking.ts';
+import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
 import { UserLocation } from '../../../../types/UserLocation.ts';
 
 interface DesktopProps {
@@ -41,22 +40,25 @@ const Reservation = () => {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
   // 기본 시간
-  const start = getFourHoursLater();
+  const start = getFourHoursLaterRounded();
   const end = getSixHoursAfterFourHoursLater();
+  console.log(start);
 
   const [reservationInfo, setReservationInfo] = useState<ReservationInfo>(
     state?.reservationInfo || {
       startDate: start,
       endDate: end,
-      startTime: getRoundedTime(
-        start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
-      ).rentTime,
-      endTime: getRoundedTime(
-        start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
-      ).returnTime,
+      // startTime: getRoundedDate(
+      //   start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+      // ).rentTime,
+      // endTime: getRoundedDate(
+      //   start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+      // ).returnTime,
       totalTime: null,
     }
   );
+
+  console.log(reservationInfo.startDate);
 
   useEffect(() => {
     // Geolocation API 호출은 컴포넌트 라이프사이클에서 한 번만 실행되도록 관리
@@ -95,7 +97,7 @@ const Reservation = () => {
           <ReservationController
             map={map}
             setKeyword={setKeyword}
-            onSearchComplete={handleSearchComplete} // 함수 시그니처 변경
+            onSearchComplete={handleSearchComplete}
             reservationInfo={reservationInfo}
             setIsDatePickerOpen={setIsDatePickerOpen}
             dateRange={dateRange}
@@ -121,6 +123,8 @@ const Reservation = () => {
                                 parking={parking} 
                                 map={map}
                                 userLocation={userLocation}
+                                // rentalDatetime={reservationInfo.startDate}
+                                // returnDatetime={}
                               />
                             ))
                           }

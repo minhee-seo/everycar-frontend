@@ -12,13 +12,14 @@ import CustomSelect from './CustomSelect.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 
-import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
+import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
 
 // 날짜, 시간 타입
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
 import { TimeCalculator } from '../../../../utils/TimeCalculator.ts';
 import CombineDateAndTime from '../../../../utils/CombineDateAndTime.ts';
+import { formatTimeFromDate } from '../../../../types/formatTimeFromDate.ts';
 
 interface ReservationDatePickerProps {
   reservationInfo: ReservationInfo;
@@ -36,7 +37,15 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
   let [startDate, endDate] = dateRange;
   // 시간
   const now = new Date();
-  const { rentTime, returnTime } = getRoundedTime(now.toTimeString().slice(0, 5)); //3=30qns
+  const initialRentDate = getRoundedDate();
+
+  // 2. 초기 반납 시점 (대여 시작 시점 + 6시간)
+  const initialReturnDate = new Date(initialRentDate.getTime() + 6 * 60 * 60 * 1000);
+
+  // 3. HH:mm 문자열로 변환
+  const pad = (num: number) => String(num).padStart(2, '0');
+  const rentTime = `${pad(initialRentDate.getHours())}:${pad(initialRentDate.getMinutes())}`;
+  const returnTime = `${pad(initialReturnDate.getHours())}:${pad(initialReturnDate.getMinutes())}`;
   const [start, setStart] = useState(rentTime);
   const [end, setEnd] = useState(returnTime);
 
@@ -51,7 +60,7 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
     const [startDate, endDate] = dateRange;
-    const { startTime, endTime } = reservationInfo;
+    // const { startTime, endTime } = reservationInfo;
 
     if (startDate && endDate && start && end) {
       const combinedStart = CombineDateAndTime(startDate, start);
@@ -61,8 +70,8 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
       setReservationInfo({
         startDate: combinedStart,
         endDate: combinedEnd,
-        startTime: start,
-        endTime: end,
+        // startTime: start,
+        // endTime: end,
         totalTime
       });
 
@@ -71,6 +80,27 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
     }
     onClose();
   }
+
+  const updateDateWithNewTime = (originalDate: Date, newTimeStr: string): Date => {
+    if (!(originalDate instanceof Date) || isNaN(originalDate.getTime())) {
+        // 유효하지 않은 Date 객체인 경우, 에러 처리하거나 현재 시각을 반환할 수 있습니다.
+        // 여기서는 유효하지 않은 날짜를 반환하지 않도록 주의합니다.
+        throw new Error("유효한 원본 Date 객체가 필요합니다.");
+    }
+    
+    const [hours, minutes] = newTimeStr.split(':').map(Number);
+
+    // 기존 날짜를 복사하여 새로운 Date 객체를 만듭니다.
+    const newDate = new Date(originalDate);
+    
+    // 시간과 분을 설정하고, 초/밀리초는 0으로 초기화합니다.
+    newDate.setHours(hours);
+    newDate.setMinutes(minutes);
+    newDate.setSeconds(0);
+    newDate.setMilliseconds(0);
+    
+    return newDate;
+}
 
   return (
     <>
@@ -152,10 +182,13 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           <div className={styles.selectTime}>
             <CustomSelect
               label="대여 시각"
-              value={reservationInfo.startTime ?? ""}
-              onChange={(value) =>
-                setReservationInfo((prev) => ({ ...prev, startTime: value }))
+              // ✅ 수정된 부분: startDate가 있을 경우에만 시간 부분을 추출하여 value로 사용합니다.
+              value={
+                reservationInfo.startDate
+                  ? formatTimeFromDate(reservationInfo.startDate)
+                  : ""
               }
+              onChange={updateDateWithNewTime}
               startDate={reservationInfo.startDate}
             />
           </div>
@@ -174,13 +207,11 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           <div className={styles.resultCont}>
             <span className={styles.title}>시작일</span>
             <span className={styles.date}>{startDate ? FormatKoreanDate(startDate) : ''}</span>
-            <span className={styles.time}>{start}</span>
           </div>
           <FontAwesomeIcon icon={faCarSide} />
           <div className={styles.resultCont}>
             <span className={styles.title}>반납일</span>
             <span className={styles.date}>{endDate ? FormatKoreanDate(endDate) : ''}</span>
-            <span className={styles.time}>{end}</span>
           </div>
         </div>
 

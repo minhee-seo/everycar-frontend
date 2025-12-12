@@ -5,7 +5,7 @@ import { faClock, faAngleRight, faLocationDot } from '@fortawesome/free-solid-sv
 import ReservationDatePicker from '../../datepicker/ReservationDatePicker.tsx';
 import { ReservationInfo } from '../../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../../utils/dateUtils.ts';
-import { ParkingData } from '../../../../../types/Parking.ts';
+import { ParkingData } from '../../../../../types/dto/ParkingDTO.ts';
 import { fetchParkingData } from '../../../../../api/parking.ts';
 
 declare global {

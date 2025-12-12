@@ -7,25 +7,25 @@ import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-s
 import ReservationDatePicker from '../../reservation/searchReservation/datepicker/ReservationDatePicker.tsx';
 import { ReservationInfo } from '../../../types/reservation.tsx';
 import FormatKoreanDate, { FormatTime } from '../../../utils/dateUtils.ts';
-import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../utils/CurrentTime.ts';
-import { getRoundedTime } from '../../../utils/getRoundedTime.tsx';
+import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../utils/CurrentTime.ts';
+import { getRoundedDate } from '../../../utils/getRoundedTime.tsx';
 
 const MainDesktop = () => {
     const [isDatepickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
 
-    const start = getFourHoursLater();
+    const start = getFourHoursLaterRounded();
     const end = getSixHoursAfterFourHoursLater();
 
     // 기본 시간값
     const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
         startDate: start,
         endDate: end,
-        startTime: getRoundedTime(
-            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-        ).rentTime,
-        endTime: getRoundedTime(
-            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-        ).returnTime,
+        // startTime: getRoundedTime(
+        //     start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+        // ).rentTime,
+        // endTime: getRoundedTime(
+        //     start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+        // ).returnTime,
         totalTime: null,
     });
 

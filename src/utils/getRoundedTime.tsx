@@ -1,38 +1,27 @@
 // utils/time.js
 // 30분 단위 반올림 로직
-export function getRoundedTime(timeStr?: string | null) {
-    let hour = 0;
-    let minute = 0;
-
-    if (timeStr) {
-        const [h, m] = timeStr.split(':').map(Number);
-        hour = h;
-        minute = m;
-    } else {
-        const now = new Date();
-        hour = now.getHours();
-        minute = now.getMinutes();
-    }
-
-    let roundedMinute = 0;
+export function getRoundedDate(dateObj?: Date): Date {
+    const now = dateObj || new Date();
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+    
+    // 현재 시각을 기준으로 밀리초를 계산
+    let timeInMs = now.getTime();
+    
+    // 30분 단위 반올림/올림 로직
     if (minute < 15) {
-        roundedMinute = 0;
+        // 00분으로 조정
+        const minutesToSubtract = minute;
+        timeInMs -= minutesToSubtract * 60 * 1000;
     } else if (minute < 45) {
-        roundedMinute = 30;
+        // 30분으로 조정
+        const minutesToAdjust = 30 - minute;
+        timeInMs += minutesToAdjust * 60 * 1000;
     } else {
-        roundedMinute = 0;
-        hour = (hour + 1) % 24;
+        // 다음 시간 00분으로 조정 (Hour + 1)
+        const minutesToNextHour = 60 - minute;
+        timeInMs += minutesToNextHour * 60 * 1000;
     }
 
-    const pad = (num: number) => String(num).padStart(2, '0');
-
-    const rentHour = hour;
-    const rentMinute = roundedMinute;
-    const returnHour = (rentHour + 6) % 24;
-    const returnMinute = rentMinute;
-
-    return {
-        rentTime: `${pad(rentHour)}:${pad(rentMinute)}`,
-        returnTime: `${pad(returnHour)}:${pad(returnMinute)}`,
-    };
+    return new Date(timeInMs);
 }

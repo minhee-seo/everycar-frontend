@@ -3,7 +3,7 @@ import styles from './ParkingList.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationCrosshairs, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserLocation } from '../../../../types/UserLocation.ts';
 import { calculateDistance, formatDistance } from '../../../../utils/haversine.ts';
 
@@ -18,15 +18,16 @@ interface ParkingListProps {
     }
     map: any;
     userLocation: UserLocation | null;
+    rentalDatetime: string;
+    returnDatetime: string;
 }
 
-const ParkingList: React.FC<ParkingListProps> = ({ parking, map, userLocation }) => {
+const ParkingList: React.FC<ParkingListProps> = ({ parking, map, userLocation, rentalDatetime, returnDatetime }) => {
     const [distanceString, setDistanceString] = useState<string>('위치 확인 중...');
+    const navigate = useNavigate();
 
-    // ✨ 2. userLocation 또는 parking 위치가 업데이트될 때만 거리 계산
     useEffect(() => {
         if (userLocation) {
-            // 하버사인 공식으로 거리 계산 (미터 단위)
             const distanceMeters = calculateDistance(
                 userLocation.lat,
                 userLocation.lon,
@@ -34,10 +35,8 @@ const ParkingList: React.FC<ParkingListProps> = ({ parking, map, userLocation })
                 parking.parking_longitude
             );
 
-            // 포맷하여 상태 업데이트
             setDistanceString(formatDistance(distanceMeters));
         } else {
-            // userLocation이 아직 null인 경우 (위치 획득 중이거나 거부된 경우)
             setDistanceString('위치 정보 없음');
         }
     }, [userLocation, parking.parking_latitude, parking.parking_longitude]);
@@ -48,11 +47,27 @@ const ParkingList: React.FC<ParkingListProps> = ({ parking, map, userLocation })
 
         const position = new window.kakao.maps.LatLng(
             parking.parking_latitude,
-            parking.parking_longitude // parking_longtitude -> parking_longitude (타입 통일)
+            parking.parking_longitude
         );
 
         map.panTo(position); // 부드럽게 이동
         map.setLevel(3); // 필요 시 확대
+    };
+
+    const handleViewCars = () => {
+        if (!parking.parking_id || !rentalDatetime || !returnDatetime) {
+            console.error('필수 파라미터(주차장 ID, 대여 시간)가 누락되었습니다.');
+            alert('대여 기간을 먼저 선택해주세요.');
+            return;
+        }
+
+        const queryParams = new URLSearchParams({
+            parkingId: parking.parking_id.toString(),
+            rentalDatetime: rentalDatetime,// 'YYYY-MM-DD HH:mm:ss'
+            returnDatetime: returnDatetime,
+        }).toString();
+
+        navigate(`/reservation/carList?${queryParams}`);
     };
 
     return (
@@ -68,11 +83,9 @@ const ParkingList: React.FC<ParkingListProps> = ({ parking, map, userLocation })
                     <p className={styles.parkingAddr}>{parking.parking_address}</p>
                 </div>
             </div>
-            <Link to='/reservation/carList'>
-                <div className={styles.viewCarsButton} >
-                    이용 가능 차량 보기
-                </div>
-            </Link>
+            <div className={styles.viewCarsButton} onClick={handleViewCars} >
+                이용 가능 차량 보기
+            </div>
         </li >
     );
 };

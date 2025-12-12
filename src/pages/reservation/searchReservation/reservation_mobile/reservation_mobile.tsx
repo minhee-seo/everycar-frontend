@@ -9,9 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
-import { getFourHoursLater, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
-import { getRoundedTime } from '../../../../utils/getRoundedTime.tsx';
-import { ParkingData } from '../../../../types/Parking.ts';
+import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
+import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
+import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -24,18 +24,18 @@ function ReservationMobile() {
     // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
     //datepicker 파라미터 받기
-    const start = getFourHoursLater();
+    const start = getFourHoursLaterRounded();
     const end = getSixHoursAfterFourHoursLater();
 
     const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
         startDate: start,
         endDate: end,
-        startTime: getRoundedTime(
-            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-        ).rentTime,
-        endTime: getRoundedTime(
-            start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-        ).returnTime,
+        // startTime: getRoundedTime(
+        //     start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+        // ).rentTime,
+        // endTime: getRoundedTime(
+        //     start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+        // ).returnTime,
         totalTime: null,
     });
 
