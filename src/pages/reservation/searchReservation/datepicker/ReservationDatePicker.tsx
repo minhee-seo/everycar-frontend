@@ -62,7 +62,6 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
 
     if (reservationInfo.startDate && reservationInfo.endDate) {
       const totalTime = TimeCalculator(reservationInfo.startDate, reservationInfo.endDate);
-
       setReservationInfo({
         startDate: reservationInfo.startDate,
         endDate: reservationInfo.endDate,
@@ -149,7 +148,35 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           endDate={endDate} //종료일
           minDate={new Date()} //현재날짜 이전 선택 불가능
           onChange={(update: [Date | null, Date | null]) => {
+            const [newStartDate, newEndDate] = update;
             setDateRange(update);
+
+            setReservationInfo((prev) => {
+              const currentStartTime = prev.startDate ? formatTimeFromDate(prev.startDate) : rentTime;
+              const updatedStartDate = newStartDate
+                ? updateDateWithNewTime(newStartDate, currentStartTime)
+                : null;
+
+              const currentEndTime = prev.endDate ? formatTimeFromDate(prev.endDate) : returnTime;
+              const updatedEndDate = newEndDate
+                ? updateDateWithNewTime(newEndDate, currentEndTime)
+                : null;
+
+              if (updatedStartDate && updatedEndDate && updatedEndDate.getTime() <= updatedStartDate.getTime()) {
+                const autoCorrectedEndDate = new Date(updatedStartDate.getTime() + 6 * 60 * 60 * 1000);
+                return {
+                  ...prev,
+                  startDate: updatedStartDate,
+                  endDate: autoCorrectedEndDate,
+                };
+              }
+
+              return {
+                ...prev,
+                startDate: updatedStartDate,
+                endDate: updatedEndDate,
+              };
+            });
           }}
           renderCustomHeader={({
             monthDate,

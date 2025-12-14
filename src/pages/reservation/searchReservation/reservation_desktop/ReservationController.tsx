@@ -109,10 +109,6 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
     setIsDatePickerOpen(true);
   }
 
-  // datepicker 결과값 리턴
-  const [date, setDate] = useState<ReservationInfo | null>(null)
-
-
   return (
     <>
       <form onSubmit={searchParking}>
