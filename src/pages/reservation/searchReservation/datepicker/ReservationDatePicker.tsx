@@ -39,10 +39,9 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
   const now = new Date();
   const initialRentDate = getRoundedDate();
 
-  // 2. 초기 반납 시점 (대여 시작 시점 + 6시간)
+  // 초기 반납 시점 (대여 시작 시점 + 6시간)
   const initialReturnDate = new Date(initialRentDate.getTime() + 6 * 60 * 60 * 1000);
 
-  // 3. HH:mm 문자열로 변환
   const pad = (num: number) => String(num).padStart(2, '0');
   const rentTime = `${pad(initialRentDate.getHours())}:${pad(initialRentDate.getMinutes())}`;
   const returnTime = `${pad(initialReturnDate.getHours())}:${pad(initialReturnDate.getMinutes())}`;
@@ -60,18 +59,13 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
     const [startDate, endDate] = dateRange;
-    // const { startTime, endTime } = reservationInfo;
 
-    if (startDate && endDate && start && end) {
-      const combinedStart = CombineDateAndTime(startDate, start);
-      const combinedEnd = CombineDateAndTime(endDate, end);
-      const totalTime = TimeCalculator(combinedStart, combinedEnd);
+    if (reservationInfo.startDate && reservationInfo.endDate) {
+      const totalTime = TimeCalculator(reservationInfo.startDate, reservationInfo.endDate);
 
       setReservationInfo({
-        startDate: combinedStart,
-        endDate: combinedEnd,
-        // startTime: start,
-        // endTime: end,
+        startDate: reservationInfo.startDate,
+        endDate: reservationInfo.endDate,
         totalTime
       });
 
@@ -83,25 +77,65 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
 
   const updateDateWithNewTime = (originalDate: Date, newTimeStr: string): Date => {
     if (!(originalDate instanceof Date) || isNaN(originalDate.getTime())) {
-        // 유효하지 않은 Date 객체인 경우, 에러 처리하거나 현재 시각을 반환할 수 있습니다.
-        // 여기서는 유효하지 않은 날짜를 반환하지 않도록 주의합니다.
-        throw new Error("유효한 원본 Date 객체가 필요합니다.");
+      throw new Error("유효한 원본 Date 객체가 필요합니다.");
     }
-    
+
     const [hours, minutes] = newTimeStr.split(':').map(Number);
 
-    // 기존 날짜를 복사하여 새로운 Date 객체를 만듭니다.
     const newDate = new Date(originalDate);
-    
-    // 시간과 분을 설정하고, 초/밀리초는 0으로 초기화합니다.
+
     newDate.setHours(hours);
     newDate.setMinutes(minutes);
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
-    
-    return newDate;
-}
 
+    return newDate;
+  }
+
+  // 대여 시각 변경 핸들러
+  const handleStartTimeChange = (newTimeStr: string) => {
+    setReservationInfo((prev) => {
+      if (!prev.startDate) return prev;
+
+      try {
+        const newStartDate = updateDateWithNewTime(prev.startDate, newTimeStr);
+
+        if (prev.endDate && newStartDate.getTime() >= prev.endDate.getTime()) {
+          alert("대여 시각은 반납 시각보다 빨라야 합니다.");
+          return prev;
+        }
+
+        return { ...prev, startDate: newStartDate };
+
+      } catch (error) {
+        console.error("시각 업데이트 중 오류 발생:", error);
+        return prev;
+      }
+    });
+  };
+
+  // 반납 시각 변경 핸들러
+  const handleEndTimeChange = (newTimeStr: string) => {
+    setReservationInfo((prev) => {
+      if (!prev.endDate) return prev;
+
+      try {
+        const newEndDate = updateDateWithNewTime(prev.endDate, newTimeStr);
+
+        if (prev.startDate && newEndDate.getTime() <= prev.startDate.getTime()) {
+          alert("반납 시각은 대여 시각보다 늦어야 합니다.");
+          return prev;
+        }
+
+        // endDate 업데이트
+        return { ...prev, endDate: newEndDate };
+
+      } catch (error) {
+        console.error("반납 시각 업데이트 중 오류 발생:", error);
+        return prev;
+      }
+    });
+  };
   return (
     <>
       <div className={styles.datepicker}>
@@ -110,15 +144,12 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           className={styles.inputCont}
           locale={ko} // 한글화
           inline // 인라인 창
-          // 날짜 관련 속성
           selectsRange={true} //날짜 연속 선택
           startDate={startDate} //시작일
           endDate={endDate} //종료일
           minDate={new Date()} //현재날짜 이전 선택 불가능
           onChange={(update: [Date | null, Date | null]) => {
             setDateRange(update);
-
-            // 시
           }}
           renderCustomHeader={({
             monthDate,
@@ -182,36 +213,41 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           <div className={styles.selectTime}>
             <CustomSelect
               label="대여 시각"
-              // ✅ 수정된 부분: startDate가 있을 경우에만 시간 부분을 추출하여 value로 사용합니다.
               value={
                 reservationInfo.startDate
                   ? formatTimeFromDate(reservationInfo.startDate)
-                  : ""
+                  : formatTimeFromDate(initialRentDate) // 초기값 반영
               }
-              onChange={updateDateWithNewTime}
+              onChange={handleStartTimeChange}
               startDate={reservationInfo.startDate}
+              endDate={reservationInfo.endDate} // 반납 시각 계산을 위해 넘겨줍니다.
+              isEnd={false}
             />
           </div>
           <div className={styles.selectTime}>
             <CustomSelect
               label="반납 시각"
-              value={reservationInfo.endTime ?? ""}
-              onChange={(value) =>
-                setReservationInfo((prev) => ({ ...prev, endTime: value }))
+              value={
+                reservationInfo.endDate
+                  ? formatTimeFromDate(reservationInfo.endDate)
+                  : formatTimeFromDate(initialReturnDate)
               }
+              onChange={handleEndTimeChange}
               startDate={reservationInfo.startDate}
+              endDate={reservationInfo.endDate}
+              isEnd={true}
             />
           </div>
         </div>
         <div className={styles.result}>
           <div className={styles.resultCont}>
             <span className={styles.title}>시작일</span>
-            <span className={styles.date}>{startDate ? FormatKoreanDate(startDate) : ''}</span>
+            <span className={styles.date}>{reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''}</span>
           </div>
           <FontAwesomeIcon icon={faCarSide} />
           <div className={styles.resultCont}>
             <span className={styles.title}>반납일</span>
-            <span className={styles.date}>{endDate ? FormatKoreanDate(endDate) : ''}</span>
+            <span className={styles.date}>{reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''}</span>
           </div>
         </div>
 

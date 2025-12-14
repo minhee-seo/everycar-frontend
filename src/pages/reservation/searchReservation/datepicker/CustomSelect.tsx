@@ -2,15 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './CustomSelect.module.scss';
 import { ReservationInfo } from '../../../../types/reservation';
 
-
 interface CustomSelectProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
   startDate: Date | null;
+  endDate?: Date | null;
+  isEnd: boolean;
 }
 
-export const generateTimes = (startDate: Date | null) => {
+export const generateTimes = (startDate: Date | null, endDate: Date | null | undefined, isEnd: boolean) => {
   const times: string[] = [];
   const now = new Date();
   let startTime = 0;
@@ -33,9 +34,9 @@ export const generateTimes = (startDate: Date | null) => {
 };
 
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, startDate }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, startDate, endDate, isEnd }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const options = generateTimes(startDate);
+  const options = generateTimes(startDate, endDate, isEnd);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
