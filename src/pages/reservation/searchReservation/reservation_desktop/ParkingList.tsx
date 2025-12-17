@@ -6,16 +6,16 @@ import { faLocationCrosshairs, faLocationDot, faCar, faMagnifyingGlass } from '@
 import { Link, useNavigate } from 'react-router-dom';
 import { UserLocation } from '../../../../types/UserLocation.ts';
 import { calculateDistance, formatDistance } from '../../../../utils/haversine.ts';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
+import { ModelDTO } from '../../../../types/dto/ModelDTO.ts';
+import { CarDTO } from '../../../../types/dto/CarDTO.ts';
 
+export type ParkingInfoResponse = ParkingDTO;
+export type ModelInfoResponse = ModelDTO;
+export type CarInfoResponse = CarDTO;
 
 interface ParkingListProps {
-    parking: {
-        parking_id: number,
-        parking_name: string,
-        parking_address: string,
-        parking_latitude: number,
-        parking_longitude: number
-    }
+    parking: ParkingInfoResponse;
     map: any;
     userLocation: UserLocation | null;
     rentalDatetime: string;
@@ -25,7 +25,6 @@ interface ParkingListProps {
 const ParkingList: React.FC<ParkingListProps> = ({ parking, map, userLocation, rentalDatetime, returnDatetime }) => {
     const [distanceString, setDistanceString] = useState<string>('위치 확인 중...');
     const navigate = useNavigate();
-
     useEffect(() => {
         if (userLocation) {
             const distanceMeters = calculateDistance(

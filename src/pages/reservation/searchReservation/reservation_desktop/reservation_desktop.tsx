@@ -42,40 +42,31 @@ const Reservation = () => {
   // 기본 시간
   const start = getFourHoursLaterRounded();
   const end = getSixHoursAfterFourHoursLater();
-  console.log(start);
 
   const [reservationInfo, setReservationInfo] = useState<ReservationInfo>(
     state?.reservationInfo || {
       startDate: start,
       endDate: end,
-      // startTime: getRoundedDate(
-      //   start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
-      // ).rentTime,
-      // endTime: getRoundedDate(
-      //   start.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
-      // ).returnTime,
       totalTime: null,
     }
   );
 
-  console.log(reservationInfo.startDate);
-
   useEffect(() => {
     // Geolocation API 호출은 컴포넌트 라이프사이클에서 한 번만 실행되도록 관리
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setUserLocation({
-              lat: position.coords.latitude,
-              lon: position.coords.longitude,
-            });
-            },
-            (error) => {
-                console.warn("사용자 위치 획득 실패:", error.message);
-                // 위치 획득 실패 시 (예: 사용자가 거부), 서울 시청 등으로 기본값 설정 고려
-            },
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-        );
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.warn("사용자 위치 획득 실패:", error.message);
+          // 위치 획득 실패 시 (예: 사용자가 거부), 서울 시청 등으로 기본값 설정 고려
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
     }
   }, []); // 빈 배열: 최초 마운트 시 한 번만 실행
 
@@ -89,6 +80,21 @@ const Reservation = () => {
   const handleDateSelect = (info: ReservationInfo) => {
     setReservationInfo(info);
   }
+
+  const formatDateTimeForServer = (date: Date | null): string => {
+    if (date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+
+      // YYYY-MM-DD HH:mm:ss 포맷 반환
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+    return "";
+  };
 
   return (
     <>
@@ -118,13 +124,13 @@ const Reservation = () => {
                         <ul className={styles.collapsed}>
                           {
                             filtered.map((parking, index) => (
-                              <ParkingList 
-                                key={index} 
-                                parking={parking} 
+                              <ParkingList
+                                key={index}
+                                parking={parking}
                                 map={map}
                                 userLocation={userLocation}
-                                // rentalDatetime={reservationInfo.startDate}
-                                // returnDatetime={}
+                                rentalDatetime={formatDateTimeForServer(reservationInfo.startDate)}
+                                returnDatetime={formatDateTimeForServer(reservationInfo.endDate)} 
                               />
                             ))
                           }
