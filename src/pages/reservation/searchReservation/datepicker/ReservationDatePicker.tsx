@@ -27,8 +27,7 @@ interface ReservationDatePickerProps {
   onClose: () => void;
 }
 
-const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservationInfo, setReservationInfo, onClose }) => {
-  // 날짜
+const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservationInfo, setReservationInfo, onClose }) => { // 날짜
   const monthsShown = useMemo(() => 2, []);
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
     reservationInfo.startDate,
@@ -60,18 +59,13 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
   // 선택완료 후 파라미터 넘기기
   const handleSelectComplete = () => {
     const [startDate, endDate] = dateRange;
-    // const { startTime, endTime } = reservationInfo;
 
-    if (startDate && endDate && start && end) {
-      const combinedStart = CombineDateAndTime(startDate, start);
-      const combinedEnd = CombineDateAndTime(endDate, end);
-      const totalTime = TimeCalculator(combinedStart, combinedEnd);
+    if (reservationInfo.startDate && reservationInfo.endDate) {
+      const totalTime = TimeCalculator(reservationInfo.startDate, reservationInfo.endDate);
 
       setReservationInfo({
-        startDate: combinedStart,
-        endDate: combinedEnd,
-        // startTime: start,
-        // endTime: end,
+        startDate: reservationInfo.startDate,
+        endDate: reservationInfo.endDate,
         totalTime
       });
 
@@ -83,24 +77,41 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
 
   const updateDateWithNewTime = (originalDate: Date, newTimeStr: string): Date => {
     if (!(originalDate instanceof Date) || isNaN(originalDate.getTime())) {
-        // 유효하지 않은 Date 객체인 경우, 에러 처리하거나 현재 시각을 반환할 수 있습니다.
-        // 여기서는 유효하지 않은 날짜를 반환하지 않도록 주의합니다.
-        throw new Error("유효한 원본 Date 객체가 필요합니다.");
+      throw new Error("유효한 원본 Date 객체가 필요합니다.");
     }
-    
+
     const [hours, minutes] = newTimeStr.split(':').map(Number);
 
-    // 기존 날짜를 복사하여 새로운 Date 객체를 만듭니다.
     const newDate = new Date(originalDate);
-    
-    // 시간과 분을 설정하고, 초/밀리초는 0으로 초기화합니다.
     newDate.setHours(hours);
     newDate.setMinutes(minutes);
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
-    
+
     return newDate;
-}
+  }
+
+  const handleStartTimeChange = (newTimeStr: string) => {
+    setReservationInfo((prev) => {
+      if (!prev.startDate) return prev; // startDate가 없으면 업데이트 불가
+
+      try {
+        const newStartDate = updateDateWithNewTime(prev.startDate, newTimeStr);
+
+        // [검증] 새로운 시작 시간이 종료 시간보다 늦거나 같은지 확인
+        if (prev.endDate && newStartDate.getTime() >= prev.endDate.getTime()) {
+          alert("대여 시각은 반납 시각보다 빨라야 합니다.");
+          return prev;
+        }
+
+        return { ...prev, startDate: newStartDate };
+
+      } catch (error) {
+        console.error("시각 업데이트 중 오류 발생:", error);
+        return prev;
+      }
+    });
+  };
 
   return (
     <>
@@ -182,14 +193,17 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           <div className={styles.selectTime}>
             <CustomSelect
               label="대여 시각"
-              // ✅ 수정된 부분: startDate가 있을 경우에만 시간 부분을 추출하여 value로 사용합니다.
+              // value는 reservationInfo.startDate의 시간 부분을 사용
               value={
                 reservationInfo.startDate
                   ? formatTimeFromDate(reservationInfo.startDate)
-                  : ""
+                  : formatTimeFromDate(initialRentDate) // 초기값 반영
               }
-              onChange={updateDateWithNewTime}
+              // ✅ 수정된 부분: handleStartTimeChange 연결
+              onChange={handleStartTimeChange}
               startDate={reservationInfo.startDate}
+              endDate={reservationInfo.endDate} // 반납 시각 계산을 위해 넘겨줍니다.
+              isEnd={false}
             />
           </div>
           <div className={styles.selectTime}>

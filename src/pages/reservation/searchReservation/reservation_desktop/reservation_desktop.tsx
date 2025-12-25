@@ -42,7 +42,6 @@ const Reservation = () => {
   // 기본 시간
   const start = getFourHoursLaterRounded();
   const end = getSixHoursAfterFourHoursLater();
-  console.log(start);
 
   const [reservationInfo, setReservationInfo] = useState<ReservationInfo>(
     state?.reservationInfo || {
@@ -57,8 +56,6 @@ const Reservation = () => {
       totalTime: null,
     }
   );
-
-  console.log(reservationInfo.startDate);
 
   useEffect(() => {
     // Geolocation API 호출은 컴포넌트 라이프사이클에서 한 번만 실행되도록 관리
