@@ -32,23 +32,33 @@ function CarListMobile() {
     const returnDatetime = queryParams.get('returnDatetime');
 
     useEffect(() => {
-        if (!parkingId || !rentalDatetime || !returnDatetime) {
+        // 1. useEffect 내부에서 최신 파라미터를 다시 추출합니다.
+        const queryParams = new URLSearchParams(location.search);
+        const pId = queryParams.get('parkingId');
+        const rentTime = queryParams.get('rentalDatetime');
+        const returnTime = queryParams.get('returnDatetime');
+
+        // 파라미터가 하나라도 없으면 실행하지 않음
+        if (!pId || !rentTime || !returnTime) {
             setIsLoading(false);
             return;
         }
 
         const fetchCars = async () => {
+            setIsLoading(true); // 재검색 시 로딩 표시를 위해 추가
             try {
-                const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
+                const cars = await getAvailableCars(pId, rentTime, returnTime);
                 setCarListData(cars);
+
             } catch (error) {
                 console.error('데이터 로드 실패', error);
             } finally {
                 setIsLoading(false);
             }
         };
+
         fetchCars();
-    }, [parkingId, rentalDatetime, returnDatetime]);
+    }, [location.search]); // 2. URL 쿼리 스트링 전체가 변할 때마다 실행
 
     if (isLoading) return <main className={styles.container}>로딩 중...</main>;
 
@@ -82,22 +92,6 @@ function CarListMobile() {
             </div>
 
             <div className={styles.contentWrapper}>
-                <aside className={styles.filterSidebar}>
-                    <Swiper
-                        slidesPerView={4} // 모바일은 4개 정도가 적당합니다.
-                        spaceBetween={10}
-                        freeMode={true}
-                        modules={[FreeMode, Pagination]}
-                        className="option"
-                    >
-                        {/* 필터 항목들은 정적으로 유지하거나 데이터에 따라 맵핑 가능 */}
-                        <SwiperSlide><li><label><input type="checkbox" /> Premium</label></li></SwiperSlide>
-                        <SwiperSlide><li><label><input type="checkbox" /> Standard</label></li></SwiperSlide>
-                        <SwiperSlide><li><label><input type="checkbox" /> 경차</label></li></SwiperSlide>
-                        <SwiperSlide><li><label><input type="checkbox" /> SUV</label></li></SwiperSlide>
-                    </Swiper>
-                </aside>
-
                 <section className={styles.carListSection}>
                     <ul className={styles.carList}>
                         {carListData.length === 0 ? (

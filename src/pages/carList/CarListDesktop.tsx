@@ -69,7 +69,6 @@ function CarListDesktop() {
         fetchCars();
     }, [parkingId, rentalDatetime, returnDatetime]);
 
-    console.log(carListData);
     if (isLoading) {
         return <main className={styles.container}>로딩 중...</main>;
     }
@@ -79,7 +78,6 @@ function CarListDesktop() {
         return price.toLocaleString('ko-KR');
     };
 
-    console.log(carListData);
     return (
         <main className={styles.container}>
             <div className={styles.searchHeader}>

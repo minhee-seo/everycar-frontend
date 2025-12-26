@@ -5,45 +5,86 @@
 }
 
 .searchHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  margin-top: 4rem; // 모바일 헤더 높이에 따라 조정
+  background-color: $color-white;
+  border: none;
+  margin-bottom: 0;
+
+  .searchOption {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
-    border: none;
-    margin: 0;
+    gap: 1rem;
+    width: 100%;
 
-    .searchOption {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-        width: 100%;
+    .locationCont {
+      margin-right: 0;
+      width: 100%;
 
-        .locationCont {
-            margin-right: 0;
+      p {
+        display: none; // '대여장소' 텍스트 숨김
+      }
 
-            p {
-                display: none;
-            }
+      .inputCont {
+        display: flex;
+        justify-content: space-between; // 아이콘 - 텍스트 - 돋보기 분산 배치
+        align-items: center;
+        background-color: $color-gray-100;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $color-gray-800;
 
-            .inputCont {
-                display: flex;
-                justify-content: space-between;
-                font-size: 1rem;
-                padding-left: 0;
-                background-color: $color-gray-100;
-                padding: 0.75rem 1rem;
-                border-radius: 8px;
-                align-items: center;
-
-                .faX {
-                    display: block;
-                    margin: 0;
-                }
-            }
+        // 위치 아이콘
+        & > svg:first-child {
+          color: $primary-color;
+          margin-right: 0.5rem;
+          font-size: 1rem;
         }
-    }
 
-    .researchButton {
-        display: none;
+        .locationTextGroup {
+          flex: 1; // 가운데 영역이 남은 공간 차지
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          overflow: hidden;
+
+          .location {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px; // 장소명이 너무 길면 잘림 방지
+          }
+
+          .date {
+            font-size: 0.8rem;
+            color: $color-gray-500;
+            font-weight: 400;
+            white-space: nowrap;
+            border-left: 1px solid $color-gray-300;
+            padding-left: 0.5rem;
+          }
+        }
+
+        .faX {
+          display: block; // 돋보기 아이콘 노출
+          margin: 0;
+          color: $color-gray-500;
+          font-size: 0.9rem;
+        }
+      }
     }
+  }
+
+  .researchButton {
+    display: none; // 버튼 숨김
+  }
 }
 
 .contentWrapper {

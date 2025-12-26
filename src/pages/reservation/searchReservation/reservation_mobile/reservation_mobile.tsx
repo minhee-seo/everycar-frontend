@@ -16,39 +16,25 @@ import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
-    const [parkingData, setParkingData] = useState<any[]>([]);
+    // any[] 대신 정확한 타입을 할당합니다.
+    const [parkingData, setParkingData] = useState<ParkingData[]>([]);
     const [keyword, setKeyword] = useState('');
     const [map, setMap] = useState<any>(null);
     const [searchDone, setSearchDone] = useState(false);
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-    // const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
 
-    //datepicker 파라미터 받기
     const start = getFourHoursLaterRounded();
     const end = getSixHoursAfterFourHoursLater();
 
     const [reservationInfo, setReservationInfo] = useState<ReservationInfo>({
         startDate: start,
         endDate: end,
-        // startTime: getRoundedTime(
-        //     start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-        // ).rentTime,
-        // endTime: getRoundedTime(
-        //     start.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
-        // ).returnTime,
         totalTime: null,
     });
 
-
-    // 주차장 데이터 로드
-    useEffect(() => {
-        fetch('/data/parking.json')
-            .then(res => res.json())
-            .then(data => setParkingData(data));
-    }, []);
-
+    // 핵심 변경: 더미 로드 제거
+    // 초기 렌더링 시에는 데이터가 없고, 검색 성공 시에만 데이터를 세팅합니다.
     const filtered = parkingData;
-
 
     const openSheet = () => {
         setIsClosing(false);
@@ -64,14 +50,12 @@ function ReservationMobile() {
         }, 300);
     };
 
-    // 검색 완료 핸들러
+    // 검색 완료 핸들러: Controller에서 fetchParkingData가 호출된 후 이쪽으로 데이터가 들어옵니다.
     const handleSearchComplete = (data: ParkingData[]) => {
         setParkingData(data);
         setSearchDone(true);
-    }
+    };
 
-
-    // datepicker 파라미터 전달받기 핸들러
     const handleDateSelect = (info: ReservationInfo) => {
         setReservationInfo(info);
     }
@@ -94,38 +78,37 @@ function ReservationMobile() {
                             closeSheet={closeSheet}
                             keyword={keyword}
                             setKeyword={setKeyword}
-                            filtered={filtered}
-                            onSearchComplete={handleSearchComplete}
+                            filtered={filtered} // 현재 상태 전달
+                            onSearchComplete={handleSearchComplete} // 결과 콜백 전달
                             isDatePickerOpen={isDatePickerOpen}
                             setIsDatePickerOpen={setIsDatePickerOpen}
-                            // dateRange={dateRange}
                             reservationInfo={reservationInfo}
                         />
                     </div>
                 </div>
             )}
 
-            {
-                isDatePickerOpen && (
-                    <div className={styles.datePickerOverlay} onClick={(e) => e.stopPropagation()}>
-                        <div className={styles.delete}>
-                            <FontAwesomeIcon icon={faX} onClick={() => setIsDatePickerOpen(false)} />
-                        </div>
-                        <ReservationDatePicker
-                            reservationInfo={reservationInfo}
-                            setReservationInfo={setReservationInfo}
-                            onClose={() => setIsDatePickerOpen(false)}
-                        />
+            {isDatePickerOpen && (
+                <div className={styles.datePickerOverlay} onClick={(e) => e.stopPropagation()}>
+                    <div className={styles.delete}>
+                        <FontAwesomeIcon icon={faX} onClick={() => setIsDatePickerOpen(false)} />
                     </div>
-                )
-            }
-            {
-                searchDone &&
+                    <ReservationDatePicker
+                        reservationInfo={reservationInfo}
+                        setReservationInfo={setReservationInfo}
+                        onClose={() => setIsDatePickerOpen(false)}
+                    />
+                </div>
+            )}
+
+            {/* 검색이 완료되었을 때만 주차장 리스트 노출 */}
+            {searchDone && (
                 <ParkingList
                     filtered={filtered}
+                    reservationInfo={reservationInfo} // 예약 날짜 정보를 함께 넘겨야 다음 페이지 이동 가능
                 />
-            }
-        </div >
+            )}
+        </div>
     );
 }
 
