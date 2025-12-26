@@ -95,7 +95,13 @@ function CarListMobile() {
                     <ul className={styles.carList}>
                         {carListData.length === 0 ? (
                             <div className={styles.emptyCarList}>
-                                <p>이용 가능한 차량이 없습니다.</p>
+                                <div className={styles.emptyIconBox}>
+                                    <FontAwesomeIcon icon={faCarSide} className={styles.emptyIcon} />
+                                    <div className={styles.ghostCircle}></div>
+                                </div>
+                                <h3>이용 가능한 차량이 없어요</h3>
+                                <p>선택하신 시간에는 모든 차량이 대여 중입니다.<br />시간이나 장소를 변경해 보세요.</p>
+                                <Link to="/reservation" className={styles.resetBtn}>다른 주차장 찾기</Link>
                             </div>
                         ) : (
                             carListData.map((car) => (
