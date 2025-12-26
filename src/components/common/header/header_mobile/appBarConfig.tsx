@@ -25,7 +25,12 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     rightIcon: faBars,
     customClass: 'reservationAppBar',
   },
-  
+  '/reservation/contract': {
+    title: '예약하기',
+    leftIcon: faArrowLeft,
+    rightIcon: faBars,
+    customClass: 'reservationAppBar',
+  },
   '/reservation/payment': {
     title: '결제',
     leftIcon: faArrowLeft,

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo, faChair, faMapSigns, faLocationDot, faClock } from '@fortawesome/free-solid-svg-icons';
 import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
 import { CarDetailResponse, getCarDetail } from '../../api/carDetail.ts';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface SubComponentProps {
     data: CarDetailResponse;
@@ -115,7 +115,9 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                             {displayPrice ? Number(displayPrice).toLocaleString() : '0'}원
                         </p>
                     </div>
-                    <button className={styles.reservationButton}>예약하기</button>
+                    <Link to='/reservation/contract'>
+                        <button className={styles.reservationButton}>예약하기</button>
+                    </Link>
                 </div>
             </section>
 

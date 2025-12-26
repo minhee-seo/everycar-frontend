@@ -1,0 +1,175 @@
+@import '../../styles/global.scss'; // 경로에 맞게 수정
+
+
+
+.container {
+    padding: $spacing-lg;
+}
+
+.section {
+    margin-bottom: $spacing-xl;
+
+    .sectionTitle {
+        font-size: $font-md;
+        font-weight: 700;
+        margin-bottom: $spacing-md;
+        color: $color-gray-800;
+    }
+}
+
+.carInfoCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md;
+    background-color: $color-gray-100;
+    border-radius: 12px;
+
+    .carText {
+        .carBrand {
+            font-size: $font-xs;
+            color: $text-muted;
+        }
+
+        h4 {
+            font-size: $font-md;
+            margin: 4px 0;
+        }
+
+        .rentalPeriod,
+        .location {
+            font-size: $font-sm;
+            color: $color-gray-600;
+            margin-top: 4px;
+        }
+    }
+
+    .carImg {
+        width: 100px;
+        height: auto;
+    }
+}
+
+.infoBox {
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    padding: $spacing-md;
+
+    .infoRow {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $spacing-sm;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        span {
+            color: $text-muted;
+            font-size: $font-sm;
+        }
+
+        p {
+            font-weight: 500;
+            font-size: $font-sm;
+        }
+    }
+}
+
+.paymentMethods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-sm;
+
+    .methodBtn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: $spacing-md;
+        border: 1px solid $color-gray-300;
+        border-radius: 12px;
+        gap: 8px;
+        color: $color-gray-500;
+
+        &.active {
+            border-color: $color-black;
+            background-color: $color-gray-900;
+            color: $color-white;
+        }
+
+        svg {
+            font-size: $font-lg;
+        }
+
+        span {
+            font-size: $font-sm;
+            font-weight: 500;
+        }
+    }
+}
+
+.priceRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-sm;
+
+    span {
+        color: $color-gray-600;
+    }
+
+    &.totalPrice {
+        margin-top: $spacing-md;
+
+        span {
+            font-weight: 700;
+            color: $color-black;
+        }
+
+        p {
+            font-size: $font-lg;
+            font-weight: 800;
+            color: $color-black;
+        }
+    }
+}
+
+.footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: $spacing-md;
+    border-top: 1px solid $border-color;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+
+    .agreeText {
+        text-align: center;
+        font-size: $font-xs;
+        color: $text-muted;
+        margin-bottom: $spacing-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+
+        .checkIcon {
+            color: $primary-color-text;
+        }
+    }
+
+    .submitBtn {
+        width: 100%;
+        height: 56px;
+        background-color: $primary-color;
+        color: $color-gray-900;
+        font-size: $font-md;
+        font-weight: 700;
+        border-radius: 12px;
+        transition: 0.2s;
+
+        &:active {
+            transform: scale(0.98);
+            background-color: $primary-hover;
+        }
+    }
+}
