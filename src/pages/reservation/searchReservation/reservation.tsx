@@ -5,17 +5,37 @@ import ResponsiveSwitch from '../../../components/responsive/ResponsiveSwitch.ts
 import Mobile from './reservation_mobile/reservation_mobile.tsx';
 import Desktop from './reservation_desktop/reservation_desktop.tsx';
 import { useLocation } from 'react-router-dom';
+import { ReservationInfo } from '../../../types/reservation.tsx';
+
+interface LocationState {
+    address?: string;
+    reservationInfo?: ReservationInfo;
+}
 
 export default function Reservation() {
     const location = useLocation();
-    const { address, reservationInfo: passedReservationInfo } = location.state || {};
+
+    const state = location.state as LocationState | null;
+
+    const address = state?.address;
+    const passedReservationInfo = state?.reservationInfo;
 
     return (
         <>
             <ResponsiveSwitch
-                mobileComponent={<Mobile />}
-                desktopComponent={<Desktop address={address} reservationInfo={passedReservationInfo} />}
+                mobileComponent={
+                    <Mobile
+                        // address={address}
+                        // reservationInfo={passedReservationInfo}
+                    />
+                }
+                desktopComponent={
+                    <Desktop
+                        // address={address}
+                        // reservationInfo={passedReservationInfo}
+                    />
+                }
             />
         </>
-    )
+    );
 }

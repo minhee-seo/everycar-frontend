@@ -12,8 +12,9 @@ import { ReservationInfo } from '../../../../types/reservation.tsx';
 import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
 import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
 import { useLocation } from 'react-router-dom';
-import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
 import { UserLocation } from '../../../../types/UserLocation.ts';
+import { fetchParkingData } from '../../../../api/parking.ts';
 
 interface DesktopProps {
   address?: string;
@@ -28,10 +29,10 @@ const Reservation = () => {
   const address = state?.address || "";
 
   // 지도
-  const [parkingData, setParkingData] = useState<ParkingData[]>([]);
+  const [parkingData, setParkingData] = useState<ParkingDTO[]>([]);
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [map, setMap] = useState<any>(null);
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(state?.address || '');
   const [searchDone, setSearchDone] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -51,6 +52,31 @@ const Reservation = () => {
     }
   );
 
+  // 메인에서 address를 가지고 넘어왔을 때 자동 검색 실행
+  useEffect(() => {
+    if (state?.address && map) {
+      const targetAddress = state.address; 
+
+      const autoSearch = async () => {
+        const filtered = await fetchParkingData(targetAddress); 
+        setParkingData(filtered);
+        setSearchDone(true);
+        setKeyword(targetAddress);
+
+        if (filtered.length > 0) {
+          const bounds = new window.kakao.maps.LatLngBounds();
+          filtered.forEach(parking => {
+            const position = new window.kakao.maps.LatLng(parking.parking_latitude, parking.parking_longitude);
+            new window.kakao.maps.Marker({ map, position });
+            bounds.extend(position);
+          });
+          map.setBounds(bounds);
+        }
+      };
+      autoSearch();
+    }
+  }, [map, state?.address]);
+
   useEffect(() => {
     // Geolocation API 호출은 컴포넌트 라이프사이클에서 한 번만 실행되도록 관리
     if (navigator.geolocation) {
@@ -68,10 +94,10 @@ const Reservation = () => {
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
       );
     }
-  }, []); // 빈 배열: 최초 마운트 시 한 번만 실행
+  }, []);
 
   const filtered = parkingData;
-  const handleSearchComplete = (data: ParkingData[]) => { // 검색 완료 시 데이터 받도록 수정
+  const handleSearchComplete = (data: ParkingDTO[]) => { // 검색 완료 시 데이터 받도록 수정
     setParkingData(data); // 검색 결과로 parkingData 업데이트
     setSearchDone(true);
   }
@@ -102,6 +128,7 @@ const Reservation = () => {
         <div className={styles.search}>
           <ReservationController
             map={map}
+            initialKeyword={state?.address || ''}
             setKeyword={setKeyword}
             onSearchComplete={handleSearchComplete}
             reservationInfo={reservationInfo}
@@ -130,7 +157,7 @@ const Reservation = () => {
                                 map={map}
                                 userLocation={userLocation}
                                 rentalDatetime={formatDateTimeForServer(reservationInfo.startDate)}
-                                returnDatetime={formatDateTimeForServer(reservationInfo.endDate)} 
+                                returnDatetime={formatDateTimeForServer(reservationInfo.endDate)}
                               />
                             ))
                           }

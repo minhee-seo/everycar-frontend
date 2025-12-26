@@ -11,13 +11,13 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
 import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
-import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
     // any[] 대신 정확한 타입을 할당합니다.
-    const [parkingData, setParkingData] = useState<ParkingData[]>([]);
+    const [parkingData, setParkingData] = useState<ParkingDTO[]>([]);
     const [keyword, setKeyword] = useState('');
     const [map, setMap] = useState<any>(null);
     const [searchDone, setSearchDone] = useState(false);
@@ -51,7 +51,7 @@ function ReservationMobile() {
     };
 
     // 검색 완료 핸들러: Controller에서 fetchParkingData가 호출된 후 이쪽으로 데이터가 들어옵니다.
-    const handleSearchComplete = (data: ParkingData[]) => {
+    const handleSearchComplete = (data: ParkingDTO[]) => {
         setParkingData(data);
         setSearchDone(true);
     };
