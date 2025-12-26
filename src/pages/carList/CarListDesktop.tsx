@@ -14,11 +14,10 @@ export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_add
 export type ModelInfoResponse = ModelDTO;
 export type CarInfoResponse = CarDTO;
 
-interface CarDetail {
+interface CarDetail extends Omit<CarDTO, 'parking'> {
     totalPrice: number;
     model: ModelInfoResponse;
     parking: ParkingInfoResponse;
-    car: CarInfoResponse;
 }
 
 function CarListDesktop() {
@@ -33,7 +32,7 @@ function CarListDesktop() {
     const parkingId = queryParams.get('parkingId');
     const rentalDatetime = queryParams.get('rentalDatetime');
     const returnDatetime = queryParams.get('returnDatetime');
-
+    const [displayParkingName, setDisplayParkingName] = useState('정보를 불러오는 중...');
 
     useEffect(() => {
         if (!parkingId || !rentalDatetime || !returnDatetime) {
@@ -53,6 +52,7 @@ function CarListDesktop() {
                     setParkingName('선택된 대여소');
                 }
 
+
                 const startDisplay = rentalDatetime;
                 const endDisplay = returnDatetime;
                 setRentalPeriod(`${startDisplay} ~ ${endDisplay}`);
@@ -69,6 +69,7 @@ function CarListDesktop() {
         fetchCars();
     }, [parkingId, rentalDatetime, returnDatetime]);
 
+    console.log(carListData);
     if (isLoading) {
         return <main className={styles.container}>로딩 중...</main>;
     }
@@ -78,6 +79,7 @@ function CarListDesktop() {
         return price.toLocaleString('ko-KR');
     };
 
+    console.log(carListData);
     return (
         <main className={styles.container}>
             <div className={styles.searchHeader}>
@@ -86,20 +88,25 @@ function CarListDesktop() {
                         <p>대여장소</p>
                         <div className={styles.inputCont}>
                             <FontAwesomeIcon icon={faLocationDot} />
-                            <div className={styles.location}>강남역지하주차장</div>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className={styles.faX} />
+                            {/* 파라미터로 받은 주차장 이름 출력 */}
+                            <div className={styles.location}>
+                                {carListData?.[0]?.parking?.parking_name}
+                            </div>
                         </div>
                     </div>
                     <div className={styles.locationCont}>
                         <p>대여기간</p>
                         <div className={`${styles.inputCont} ${styles.date}`}>
-                            01.01 (월) 10:00
+                            {/* 파라미터로 받은 날짜 출력 */}
+                            {rentalDatetime}
                             <FontAwesomeIcon icon={faCarSide} className={styles.carSide} />
-                            01.02 (화) 10:00
+                            {returnDatetime}
                         </div>
                     </div>
                 </div>
-                <button className={styles.researchButton}>주차장 재검색</button>
+                <Link to="/reservation">
+                    <button className={styles.researchButton}>주차장 재검색</button>
+                </Link>
             </div>
 
             <div className={styles.contentWrapper}>
