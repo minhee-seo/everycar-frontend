@@ -14,15 +14,24 @@ interface ParkingListProps {
 function ParkingList({ filtered, reservationInfo }: ParkingListProps) {
     const [isExpanded, setIsExpanded] = useState(true);
 
-    // 날짜 포맷팅 (API 요청 규격에 맞게 변환: 예 2025-12-26T14:00)
-    const formatDateTime = (date: Date | null, time: string | null) => {
-        if (!date || !time) return '';
-        const datePart = date.toISOString().split('T')[0];
-        return `${datePart}T${time}`;
-    };
+      const formatDateTimeForServer = (date: Date | null): string => {
+    if (date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
 
-    const rentalDatetime = formatDateTime(reservationInfo.startDate, reservationInfo.startTime);
-    const returnDatetime = formatDateTime(reservationInfo.endDate, reservationInfo.endTime);
+      // YYYY-MM-DD HH:mm:ss 포맷 반환
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+    return "";
+  };
+
+
+    const rentalDatetime = formatDateTimeForServer(reservationInfo.startDate);
+    const returnDatetime = formatDateTimeForServer(reservationInfo.endDate);
 
     return (
         <div className={`${styles.parkingList} ${!isExpanded ? styles.collapsedContainer : ''}`}>

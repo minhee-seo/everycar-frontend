@@ -30,16 +30,13 @@ function CarListMobile() {
     const parkingId = queryParams.get('parkingId');
     const rentalDatetime = queryParams.get('rentalDatetime');
     const returnDatetime = queryParams.get('returnDatetime');
+    const [displayParkingName, setDisplayParkingName] = useState('정보를 불러오는 중...');
 
+    console.log(returnDatetime)
     useEffect(() => {
         // 1. useEffect 내부에서 최신 파라미터를 다시 추출합니다.
-        const queryParams = new URLSearchParams(location.search);
-        const pId = queryParams.get('parkingId');
-        const rentTime = queryParams.get('rentalDatetime');
-        const returnTime = queryParams.get('returnDatetime');
-
-        // 파라미터가 하나라도 없으면 실행하지 않음
-        if (!pId || !rentTime || !returnTime) {
+        if (!parkingId || !rentalDatetime || !returnDatetime) {
+            console.error('필수 예약 파라미터가 누락되었습니다.');
             setIsLoading(false);
             return;
         }
@@ -47,7 +44,7 @@ function CarListMobile() {
         const fetchCars = async () => {
             setIsLoading(true); // 재검색 시 로딩 표시를 위해 추가
             try {
-                const cars = await getAvailableCars(pId, rentTime, returnTime);
+                const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
                 setCarListData(cars);
 
             } catch (error) {
@@ -76,12 +73,14 @@ function CarListMobile() {
                                 <div className={styles.location}>
                                     {carListData?.[0]?.parking?.parking_name || "장소 선택"}
                                 </div>
-                                <div className={styles.date}>
-                                    {/* 2025-12-26T19:30:27 -> 12.26 19:30 형식 */}
-                                    {rentalDatetime?.slice(5, 16).replace('-', '.').replace('T', ' ')}
-                                    {" ~ "}
-                                    {returnDatetime?.slice(5, 16).replace('-', '.').replace('T', ' ')}
-                                </div>
+                                <Link to="/reservation">
+                                    <div className={styles.date}>
+                                        {/* 2025-12-26T19:30:27 -> 12.26 19:30 형식 */}
+                                        {rentalDatetime?.slice(5, 16).replace('-', '.').replace('T', ' ')}
+                                        {" ~ "}
+                                        {returnDatetime?.slice(5, 16).replace('-', '.').replace('T', ' ')}
+                                    </div>
+                                </Link>
                             </div>
 
                             {/* 오른쪽 검색 아이콘 */}
