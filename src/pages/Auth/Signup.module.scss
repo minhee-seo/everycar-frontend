@@ -1,0 +1,203 @@
+@import '../../styles/global.scss';
+
+.container {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+  padding-top: 100px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-hover;
+  }
+}
+
+.phoneRow {
+  display: flex;
+  gap: 8px;
+
+  .input {
+    flex: 1;
+  }
+}
+
+.verifyButton {
+  background-color: $primary-color;
+  color: $text-color;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  padding: 0 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+  }
+}
+
+.verifyRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+
+  .input {
+    flex: 1;
+  }
+
+  .confirmButton {
+    background-color: $primary-color;
+    color: $text-color;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    padding: 0 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+}
+
+.genderGroup {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.genderLabel {
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  input[type="radio"] {
+    cursor: pointer;
+  }
+}
+
+.submitButton {
+  background-color: $primary-color;
+  color: $text-color;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+  }
+}
+
+.message {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.success {
+  color: #28a745;
+}
+
+.error {
+  color: #dc3545;
+}
+
+/* ✅ 모바일 전용 스타일 */
+@include respond-max(mobile-m) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: none;
+    gap: 14px;
+  }
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+
+  .input {
+    font-size: 13px;
+    padding: 9px 10px;
+  }
+
+  .phoneRow {
+    flex-direction: column;
+    gap: 6px;
+
+    .verifyButton {
+      width: 100%;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+  }
+
+  .genderGroup {
+    gap: 12px;
+  }
+
+  .submitButton {
+    font-size: 14px;
+    padding: 11px 0;
+    margin-top: 6px;
+  }
+
+  .verifyRow {
+    flex-direction: column;
+    gap: 6px;
+
+    .confirmButton {
+      width: 100%;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+  }
+}

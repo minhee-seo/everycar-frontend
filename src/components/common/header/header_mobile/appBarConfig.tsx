@@ -25,12 +25,6 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     rightIcon: faBars,
     customClass: 'reservationAppBar',
   },
-  '/reservation/contract': {
-    title: '예약하기',
-    leftIcon: faArrowLeft,
-    rightIcon: faBars,
-    customClass: 'reservationAppBar',
-  },
   '/reservation/payment': {
     title: '결제',
     leftIcon: faArrowLeft,
@@ -49,6 +43,21 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     title: '내 정보',
     leftIcon: faHome,
     rightIcon: faBars,
+    customClass: 'myPageAppBar',
+  },
+    '/auth/login': {
+    title: '로그인',
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
+  },
+    '/auth/SignConditions': {
+    title: '약관동의',
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
+  },
+      '/auth/signup': {
+    title: '회원가입',
+    leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
 };
