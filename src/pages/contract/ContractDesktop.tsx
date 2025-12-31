@@ -1,12 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styles from './ContractDesktop.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCreditCard, faMobileScreenButton, faWallet, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { reservationService } from '../../api/reservationService.ts';
 
 function ContractDesktop() {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState('card');
+
+  const [contractData, setContractData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        // 테스트용 파라미터
+        const data = await reservationService.getContractDetails({
+          carId: 402,
+          userNum: 1,
+          parkingId: 14
+        });
+        setContractData(data);
+      } catch (error) {
+        console.error("데이터 로드 중 오류 발생:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  if (loading) return <div>로딩 중...</div>;
+  if (!contractData) return <div>데이터가 없습니다.</div>;
+
+  const { carDto, totalPrice } = contractData;
 
   return (
     <div className={styles.pageWrapper}>
@@ -24,20 +54,13 @@ function ContractDesktop() {
             <div className={styles.carInfoDetail}>
               <img src="/sample-car.png" alt="car" className={styles.carImg} />
               <div className={styles.carText}>
-                <span className={styles.badge}>전기차</span>
-                <h4>아이오닉 5</h4>
+                <span className={styles.badge}>{carDto.car_fuel}</span>
+                <h4>{carDto.model.model_brand} {carDto.model.model_name}</h4>
                 <div className={styles.gridInfo}>
-                  <div>
-                    <span>대여 일시</span>
-                    <p>2025.12.26 (금) 14:00</p>
-                  </div>
-                  <div>
-                    <span>반납 일시</span>
-                    <p>2025.12.27 (토) 14:00</p>
-                  </div>
+                  {/* 날짜는 필요시 포맷팅 함수 사용 */}
                   <div className={styles.fullWidth}>
                     <span>대여 및 반납 장소</span>
-                    <p>서울특별시 강남구 테헤란로 123 에브리카 강남역점</p>
+                    <p>{carDto.parking.parking_name} ({carDto.parking.parking_address})</p>
                   </div>
                 </div>
               </div>
