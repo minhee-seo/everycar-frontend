@@ -78,7 +78,7 @@ const DesktopGnb: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <li><Link to="/auth/login">로그인</Link></li>
+                  <li><Link to="/login">로그인</Link></li>
                   <li>
                     <div className={`btn btn--primary ${styles.signUp}`}>
                       <Link to="/auth/registerConditions">회원가입</Link>
