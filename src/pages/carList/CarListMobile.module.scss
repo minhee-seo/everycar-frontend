@@ -1,252 +1,366 @@
-@import '../../styles/global.scss';
+ @import '../../styles/global.scss';
 
-.container {
-    padding: 1.25rem 1.5rem;
-}
+ .container {
+   padding: 1.25rem 1.5rem;
+ }
 
-.searchHeader {
-    flex-direction: column;
-    align-items: stretch;
-    border: none;
-    margin: 0;
+ .searchHeader {
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   width: 100%;
+   border: 1px solid $border-color;
+   border-radius: 3px;
+   margin-bottom: 0;
 
-    .searchOption {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-        width: 100%;
+   .searchOption {
+     display: flex;
+     flex-direction: column;
+     align-items: stretch;
+     gap: 1rem;
+     width: 100%;
 
-        .locationCont {
-            margin-right: 0;
+     .locationCont {
+       margin-right: 0;
+       width: 100%;
 
-            p {
-                display: none;
-            }
+       p {
+         display: none; // '대여장소' 텍스트 숨김
+       }
 
-            .inputCont {
-                display: flex;
-                justify-content: space-between;
-                font-size: 1rem;
-                padding-left: 0;
-                background-color: $color-gray-100;
-                padding: 0.75rem 1rem;
-                border-radius: 8px;
-                align-items: center;
+       .inputCont {
+         display: flex;
+         justify-content: space-between; // 아이콘 - 텍스트 - 돋보기 분산 배치
+         align-items: center;
+         background-color: $color-gray-100;
+         padding: 0.75rem 1rem;
+         border-radius: 8px;
+         font-size: 0.95rem;
+         font-weight: 600;
+         color: $color-gray-800;
 
-                .faX {
-                    display: block;
-                    margin: 0;
-                }
-            }
-        }
-    }
+         // 위치 아이콘
+         &>svg:first-child {
+           color: $primary-color;
+           margin-right: 0.5rem;
+           font-size: 1rem;
+         }
 
-    .researchButton {
-        display: none;
-    }
-}
+         .locationTextGroup {
+           flex: 1; // 가운데 영역이 남은 공간 차지
+           display: flex;
+           align-items: center;
+           gap: 0.5rem;
+           overflow: hidden;
 
-.contentWrapper {
-    grid-template-columns: 1fr;
-}
+           .location {
+             white-space: nowrap;
+             overflow: hidden;
+             text-overflow: ellipsis;
+             max-width: 100px; // 장소명이 너무 길면 잘림 방지
+           }
 
-.filterSidebar {
-    margin-top: 10px;
-    border: none;
-    background-color: transparent;
-    min-width: 0; // Prevent grid item from expanding
+           .date {
+             font-size: 0.8rem;
+             color: $color-gray-500;
+             font-weight: 400;
+             white-space: nowrap;
+             border-left: 1px solid $color-gray-300;
+             padding-left: 0.5rem;
+           }
+         }
 
-}
+         .faX {
+           display: block; // 돋보기 아이콘 노출
+           margin: 0;
+           color: $color-gray-500;
+           font-size: 0.9rem;
+         }
+       }
+     }
+   }
 
+   .researchButton {
+     display: none; // 버튼 숨김
+   }
+ }
 
-.checkboxGroup {
-    display: flex;
-    flex-wrap: nowrap; // Changed from wrap
-    width: 100%;
-    overflow-x: auto; // Changed from scroll to auto
-    gap: 0.75rem;
-    padding-bottom: 1rem; // Added padding
+ .contentWrapper {
+   grid-template-columns: 1fr;
+ }
 
-    // Hide scrollbar
-    &::-webkit-scrollbar {
-        display: none;
-    }
+ .filterSidebar {
+   margin-top: 10px;
+   border: none;
+   background-color: transparent;
+   min-width: 0; // Prevent grid item from expanding
 
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    li {
-        list-style: none;
-        margin-bottom: 0;
-        flex-shrink: 0; // Added flex-shrink
-
-        label {
-            display: block;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid $color-gray-300;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            background-color: $color-white;
-            color: $color-gray-800;
-            font-weight: 500;
-            white-space: nowrap; // Prevent text wrapping in labels
-
-            &:hover {
-                border-color: $primary-color;
-            }
-
-            &:has(input:checked) {
-                background-color: $primary-color;
-                color: $color-white;
-                border-color: $primary-color;
-                font-weight: 600;
-            }
-        }
-
-    }
-
-    input[type="checkbox"] {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
-}
+ }
 
 
-// slide
-:global(.option .swiper-slide) {
-  li {
-    text-align: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+ .checkboxGroup {
+   display: flex;
+   flex-wrap: nowrap; // Changed from wrap
+   width: 100%;
+   overflow-x: auto; // Changed from scroll to auto
+   gap: 0.75rem;
+   padding-bottom: 1rem; // Added padding
 
-  label {
-    display: block;
-    padding: 0.75rem 1.25rem;
-    border: 1px solid $color-gray-300;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    background-color: $color-white;
-    color: $color-gray-500;
-    font-weight: 500;
-    white-space: nowrap;
+   // Hide scrollbar
+   &::-webkit-scrollbar {
+     display: none;
+   }
 
-  }
+   -ms-overflow-style: none;
+   scrollbar-width: none;
 
-  // Style for the "on" state
-  label:has(input:checked) {
-    background-color: $primary-color;
-    border-color: $primary-color;
-    color: $color-gray-800;
-    font-weight: 600;
-  }
+   li {
+     list-style: none;
+     margin-bottom: 0;
+     flex-shrink: 0; // Added flex-shrink
 
-  // Hide the actual checkbox
-  input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-}
+     label {
+       display: block;
+       padding: 0.6rem 1.2rem;
+       border: 1px solid $color-gray-300;
+       border-radius: 20px;
+       cursor: pointer;
+       transition: all 0.2s ease-in-out;
+       background-color: $color-white;
+       color: $color-gray-800;
+       font-weight: 500;
+       white-space: nowrap; // Prevent text wrapping in labels
 
-.carListSection {
-  padding-top: 1.5rem;
-}
+       &:hover {
+         border-color: $primary-color;
+       }
 
-.carList {
-  display: grid;
-  gap: 1rem;
-  list-style: none;
-}
+       &:has(input:checked) {
+         background-color: $primary-color;
+         color: $color-white;
+         border-color: $primary-color;
+         font-weight: 600;
+       }
+     }
 
-.carCard {
-  display: grid;
-  grid-template-columns: 120px 1fr; // Image column, content column
-  grid-template-rows: auto 1fr auto; // Header, details, price
-  grid-template-areas:
-    "image header"
-    "image details"
-    "image price";
-  gap: 0 1rem; // No row gap, 1rem column gap
-  background-color: $color-white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
+   }
 
-.carImage {
-  grid-area: image;
-  height: 100%; // Make image take full height of the card
-  background-color: #e9ecef;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
+   input[type="checkbox"] {
+     position: absolute;
+     opacity: 0;
+     cursor: pointer;
+     height: 0;
+     width: 0;
+   }
+ }
 
-.cardHeader {
-  grid-area: header;
-  padding: 1rem 1rem 0.5rem 0; // Adjust padding
-  h4 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-  }
-  p {
-    font-size: 0.8rem;
-    color: $color-gray-600;
-    margin: 0;
-  }
-}
 
-.carDetails {
-  grid-area: details;
-  padding: 0.5rem 1rem 0.5rem 0;
-  border-top: none;
-  align-self: start; // Align to the top of its grid area
-}
+ // slide
+ :global(.option .swiper-slide) {
+   li {
+     text-align: center;
+     list-style: none;
+     margin: 0;
+     padding: 0;
+   }
 
-.optionList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  font-size: 0.8rem;
-  color: $color-gray-700;
+   label {
+     display: block;
+     padding: 0.75rem 1.25rem;
+     border: 1px solid $color-gray-300;
+     border-radius: 25px;
+     cursor: pointer;
+     transition: all 0.2s ease-in-out;
+     background-color: $color-white;
+     color: $color-gray-500;
+     font-weight: 500;
+     white-space: nowrap;
 
-  li {
-    display: flex;
-    align-items: center;
-    svg {
-      width: 14px;
-      margin-right: 0.4rem;
-      color: $color-gray-500;
-    }
-  }
-}
+   }
 
-.priceSection {
-  grid-area: price;
-  padding: 0.5rem 1rem 1rem 0;
-  background-color: transparent;
-  text-align: right;
-  align-self: end; // Align to the bottom of its grid area
-  p {
-    font-size: 1rem;
-    font-weight: 500;
-    color: $color-gray-600;
-  }
-  span {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: $color-gray-800;
-  }
-}
+   // Style for the "on" state
+   label:has(input:checked) {
+     background-color: $primary-color;
+     border-color: $primary-color;
+     color: $color-gray-800;
+     font-weight: 600;
+   }
+
+   // Hide the actual checkbox
+   input[type="checkbox"] {
+     position: absolute;
+     opacity: 0;
+     cursor: pointer;
+     height: 0;
+     width: 0;
+   }
+ }
+
+ .carListSection {
+   padding-top: 1.5rem;
+
+
+ }
+
+ .carList {
+   display: grid;
+   gap: 1rem;
+   list-style: none;
+
+   .emptyCarList {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     padding: 5rem 2rem;
+     text-align: center;
+     background-color: #fafafa; // 아주 연한 회색 배경
+     border-radius: 16px;
+     margin: 2rem 1rem;
+
+     .emptyIconBox {
+       position: relative;
+       margin-bottom: 1.5rem;
+
+       .emptyIcon {
+         font-size: 4rem;
+         color: $color-gray-300; // 또는 프로젝트 메인 컬러의 연한 버전
+         z-index: 2;
+         position: relative;
+       }
+
+       .ghostCircle {
+         position: absolute;
+         bottom: -5px;
+         left: 50%;
+         transform: translateX(-50%);
+         width: 60px;
+         height: 20px;
+         background: rgba(0, 0, 0, 0.05);
+         filter: blur(5px);
+         border-radius: 50%;
+         z-index: 1;
+       }
+     }
+
+     h3 {
+       font-size: 1.25rem;
+       font-weight: 700;
+       color: $color-gray-800;
+       margin-bottom: 0.75rem;
+     }
+
+     p {
+       font-size: 0.95rem;
+       color: $color-gray-500;
+       line-height: 1.6;
+       margin-bottom: 2rem;
+     }
+
+     .resetBtn {
+       display: inline-block;
+       padding: 0.8rem 1.5rem;
+       background-color: $primary-color; // 프로젝트 메인 컬러 (예: 파란색)
+       border-radius: 50px;
+       font-weight: 600;
+       font-size: 0.9rem;
+       text-decoration: none;
+       box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+       transition: transform 0.2s;
+
+       &:active {
+         transform: scale(0.95);
+       }
+     }
+   }
+ }
+
+ .carCard {
+   display: grid;
+   grid-template-columns: 120px 1fr; // Image column, content column
+   grid-template-rows: auto 1fr auto; // Header, details, price
+   grid-template-areas:
+     "image header"
+     "image details"
+     "image price";
+   gap: 0 1rem; // No row gap, 1rem column gap
+   background-color: $color-white;
+   border-radius: 12px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+   overflow: hidden;
+ }
+
+ .carImage {
+   grid-area: image;
+   height: 100%; // Make image take full height of the card
+   background-color: #e9ecef;
+
+   img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+   }
+ }
+
+ .cardHeader {
+   grid-area: header;
+   padding: 1rem 1rem 0.5rem 0; // Adjust padding
+
+   h4 {
+     font-size: 1.2rem;
+     font-weight: 700;
+     margin-bottom: 0.25rem;
+   }
+
+   p {
+     font-size: 0.8rem;
+     color: $color-gray-600;
+     margin: 0;
+   }
+ }
+
+ .carDetails {
+   grid-area: details;
+   padding: 0.5rem 1rem 0.5rem 0;
+   border-top: none;
+   align-self: start; // Align to the top of its grid area
+ }
+
+ .optionList {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 0.5rem 1rem;
+   font-size: 0.8rem;
+   color: $color-gray-700;
+
+   li {
+     display: flex;
+     align-items: center;
+
+     svg {
+       width: 14px;
+       margin-right: 0.4rem;
+       color: $color-gray-500;
+     }
+   }
+ }
+
+ .priceSection {
+   grid-area: price;
+   padding: 0.5rem 1rem 1rem 0;
+   background-color: transparent;
+   text-align: right;
+   align-self: end; // Align to the bottom of its grid area
+
+   p {
+     font-size: 1rem;
+     font-weight: 500;
+     color: $color-gray-600;
+   }
+
+   span {
+     font-size: 1.3rem;
+     font-weight: 700;
+     color: $color-gray-800;
+   }
+ }

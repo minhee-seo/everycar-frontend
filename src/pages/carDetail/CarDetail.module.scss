@@ -6,12 +6,20 @@ section {
 }
 
 .ContentSection_article {
-    padding: 2rem;
+  padding: 2rem;
   margin-top: 20px;
   background-color: $color-white;
   border-radius: 10px;
-  border-color: $border-color;
+  border: 1px solid $border-color;
 }
+.ContentSection_article:first-child{
+  margin-top: 140px;
+}
+
+.ContentSection_article:last-child{
+  margin-bottom: 40px;
+}
+
 
 //  예약기간 섹션
 .rentalTime {
@@ -19,6 +27,7 @@ section {
   align-items: center;
   justify-content: space-between;
 }
+
 
 // 차량정보 섹션
 .infoSection {
@@ -64,7 +73,7 @@ section {
   align-items: center;
   width: 100%;
   padding-top: 1.5rem;
-  margin-top: 1.5rem; 
+  margin-top: 1.5rem;
   border-top: 1px solid $color-gray-200;
 }
 
@@ -95,6 +104,7 @@ section {
 
   cursor: pointer;
   transition: background-color 0.2s;
+
   &:hover {
     background-color: darken($primary-color, 10%);
   }
@@ -174,7 +184,7 @@ section {
 
   .locationCont {
     display: flex;
-    align-items: flex-start; 
+    align-items: flex-start;
     gap: 1.5rem;
 
     .iconCont {
@@ -184,7 +194,7 @@ section {
       width: 50px;
       height: 50px;
       flex-shrink: 0;
-      background-color: lighten($primary-color, 40%); 
+      background-color: lighten($primary-color, 40%);
       border-radius: 50%;
 
       svg {
@@ -199,6 +209,7 @@ section {
         font-weight: 600;
         margin: 0 0 0.5rem;
       }
+
       p {
         font-size: 1rem;
         color: $color-gray-700;
@@ -223,6 +234,7 @@ section {
   // Responsive
   @media (max-width: 992px) {
     flex-direction: column;
+
     .map {
       width: 100%;
     }
@@ -230,14 +242,15 @@ section {
 }
 
 @include respond-max(mobile-m) {
-  section{
+  section {
     margin-top: 0
   }
-  .ContentSection_article{
+
+  .ContentSection_article {
     background: none;
   }
 
-  .ContentSection_article:first-child{
+  .ContentSection_article:first-child {
     display: none;
   }
 
@@ -249,9 +262,10 @@ section {
       height: auto;
       aspect-ratio: 16 / 9;
     }
+
     .carInfo {
       margin-top: 1.5rem;
-      background: $color-white;      
+      background: $color-white;
       border-radius: 10px;
       padding: 1.5rem;
     }
@@ -273,7 +287,7 @@ section {
     }
   }
 
-  .locationSection{
+  .locationSection {
     background: $color-white;
     border-radius: 10px;
     padding: 1.5rem;

@@ -52,12 +52,10 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
               <div className={styled.period}>
                 <p>
                   {FormatKoreanDate(reservationInfo.startDate)}
-                  {reservationInfo.startTime}
                 </p>
                 <p className='period-wave'>~</p>
                 <p>
                   {FormatKoreanDate(reservationInfo.endDate)}
-                  {reservationInfo.endTime}
                 </p>
               </div>
             </div>

@@ -1,25 +1,83 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './CarList.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faLocationDot, faCarSide, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { faCar, faLocationDot, faCarSide, faMagnifyingGlass, faFaceFrown } from '@fortawesome/free-solid-svg-icons';
+import { Link, useLocation } from 'react-router-dom';
+import { ModelDTO } from '../../types/dto/ModelDTO.ts';
+import { CarDTO } from '../../types/dto/CarDTO.ts';
+import { ParkingDTO } from '../../types/dto/ParkingDTO.ts';
 
+import { getAvailableCars } from '../../api/reservationApi.ts';
+
+export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;
+export type ModelInfoResponse = ModelDTO;
+export type CarInfoResponse = CarDTO;
+
+interface CarDetail extends Omit<CarDTO, 'parking'> {
+    totalPrice: number;
+    model: ModelInfoResponse;
+    parking: ParkingInfoResponse;
+}
 
 function CarListDesktop() {
-    const carListData = [
-        {
-            model: 'EV6',
-            year: '2020년형',
-            grade: 'Premium',
-            imageUrl: '',
-            type: '중형차 SUV',
-            seats: '5인승',
-            fuel: '전기',
-            transmission: '오토',
-            price: '500,000',
-        },
-    ];
+    const location = useLocation();
+    const [carListData, setCarListData] = useState<CarDetail[]>([]);
+    const [parkingName, setParkingName] = useState('로딩 중...');
+    const [rentalPeriod, setRentalPeriod] = useState('정보 없음');
+    const [isLoading, setIsLoading] = useState(true);
+
+    // URL 쿼리 파라미터 추출
+    const queryParams = new URLSearchParams(location.search);
+    const parkingId = queryParams.get('parkingId');
+    const rentalDatetime = queryParams.get('rentalDatetime');
+    const returnDatetime = queryParams.get('returnDatetime');
+    const [displayParkingName, setDisplayParkingName] = useState('정보를 불러오는 중...');
+
+    useEffect(() => {
+        if (!parkingId || !rentalDatetime || !returnDatetime) {
+            console.error('필수 예약 파라미터가 누락되었습니다.');
+            setIsLoading(false);
+            return;
+        }
+
+        const fetchCars = async () => {
+            try {
+                const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
+                setCarListData(cars);
+
+                if (cars.length > 0) {
+                    setParkingName(cars[0].parking.parking_name);
+                } else {
+                    setParkingName('선택된 대여소');
+                }
+
+
+                const startDisplay = rentalDatetime;
+                const endDisplay = returnDatetime;
+                setRentalPeriod(`${startDisplay} ~ ${endDisplay}`);
+
+            } catch (error) {
+                console.error('차량 목록을 불러오는 데 실패했습니다.', error);
+                setCarListData([]);
+                setParkingName('차량 정보를 불러올 수 없습니다.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchCars();
+    }, [parkingId, rentalDatetime, returnDatetime]);
+
+    if (isLoading) {
+        return <main className={styles.container}>로딩 중...</main>;
+    }
+
+    // 가격을 쉼표로 포맷팅하는 함수
+    const formatPrice = (price: number) => {
+        return price.toLocaleString('ko-KR');
+    };
+
     return (
         <main className={styles.container}>
             <div className={styles.searchHeader}>
@@ -28,20 +86,25 @@ function CarListDesktop() {
                         <p>대여장소</p>
                         <div className={styles.inputCont}>
                             <FontAwesomeIcon icon={faLocationDot} />
-                            <div className={styles.location}>강남역지하주차장</div>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className={styles.faX} />
+                            {/* 파라미터로 받은 주차장 이름 출력 */}
+                            <div className={styles.location}>
+                                {carListData?.[0]?.parking?.parking_name}
+                            </div>
                         </div>
                     </div>
                     <div className={styles.locationCont}>
                         <p>대여기간</p>
                         <div className={`${styles.inputCont} ${styles.date}`}>
-                            01.01 (월) 10:00
+                            {/* 파라미터로 받은 날짜 출력 */}
+                            {rentalDatetime}
                             <FontAwesomeIcon icon={faCarSide} className={styles.carSide} />
-                            01.02 (화) 10:00
+                            {returnDatetime}
                         </div>
                     </div>
                 </div>
-                <button className={styles.researchButton}>주차장 재검색</button>
+                <Link to="/reservation">
+                    <button className={styles.researchButton}>주차장 재검색</button>
+                </Link>
             </div>
 
             <div className={styles.contentWrapper}>
@@ -81,47 +144,50 @@ function CarListDesktop() {
                 </aside>
                 <section className={styles.carListSection}>
                     <ul className={styles.carList}>
-                        {carListData.map((car, index) => (
-                            <li key={index}>
-                                <Link to="/reservation/carDetail">
-                                    <article className={styles.carCard}>
-                                        <header className={styles.cardHeader}>
-                                            <div className={styles.title}>
-                                                <h4>{car.model}</h4>
-                                                <p className={`${styles.gradeBtn} ${styles.premium}`}>{car.grade}</p>
-                                            </div>
-                                            <p>{car.year}</p>
-                                        </header>
-                                        <div className={styles.carImage}>
-                                            {/* Placeholder for image */}
-                                        </div>
-                                        <div className={styles.carDetails}>
-                                            <ul className={styles.optionList}>
-                                                <li>
-                                                    <FontAwesomeIcon icon={faCar} />
-                                                    {car.type}
-                                                </li>
-                                                <li>
-                                                    <FontAwesomeIcon icon={faCar} />
-                                                    {car.seats}
-                                                </li>
-                                                <li>
-                                                    <FontAwesomeIcon icon={faCar} />
-                                                    {car.fuel}
-                                                </li>
-                                                <li>
-                                                    <FontAwesomeIcon icon={faCar} />
-                                                    {car.transmission}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <footer className={styles.priceSection}>
-                                            <p>월 <span>{car.price} 원</span></p>
-                                        </footer>
-                                    </article>
-                                </Link>
-                            </li>
-                        ))}
+                        {carListData.length === 0 ? (
+                            <div className={styles.emptyCarList}>
+                                <div className={styles.emptyIconBox}>
+                                    <FontAwesomeIcon icon={faCarSide} className={styles.emptyIcon} />
+                                    <div className={styles.ghostCircle}></div>
+                                </div>
+                                <h3>이용 가능한 차량이 없어요</h3>
+                                <p>선택하신 시간에는 모든 차량이 대여 중입니다.<br />시간이나 장소를 변경해 보세요.</p>
+                                <Link to="/reservation" className={styles.resetBtn}>다른 주차장 찾기</Link>
+                            </div>
+                        ) : (
+                            <ul className={styles.carList}>
+                                {carListData.map((car) => (
+                                    <li key={car.car_id}>
+                                        <Link to={`/reservation/carDetail?carId=${car.car_id}&rentalDatetime=${rentalDatetime}&returnDatetime=${returnDatetime}`}>
+                                            <article className={styles.carCard}>
+                                                <header className={styles.cardHeader}>
+                                                    <div className={styles.title}>
+                                                        <h4>{car.model.model_name}</h4>
+                                                        <p className={`${styles.gradeBtn} ${styles.premium}`}>{car.car_grade}</p>
+                                                    </div>
+                                                    <p>{car.car_year}년형</p>
+                                                </header>
+                                                <div className={styles.carImage}>
+                                                    {/*  */}
+                                                    {/* 실제 차량 이미지를 여기에 렌더링 */}
+                                                </div>
+                                                <div className={styles.carDetails}>
+                                                    <ul className={styles.optionList}>
+                                                        <li><FontAwesomeIcon icon={faCar} /> {car.model.model_category}</li>
+                                                        <li><FontAwesomeIcon icon={faCar} /> {car.model.model_seate_num}인승</li>
+                                                        <li><FontAwesomeIcon icon={faCar} /> {car.car_fuel}</li>
+                                                        <li><FontAwesomeIcon icon={faCar} /> {car.model.model_transmission}</li>
+                                                    </ul>
+                                                </div>
+                                                <footer className={styles.priceSection}>
+                                                    <p>총 <span>{formatPrice(car.totalPrice)} 원</span></p>
+                                                </footer>
+                                            </article>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </ul>
                 </section>
             </div>

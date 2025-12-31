@@ -1,5 +1,5 @@
 import { CarDTO } from "../types/dto/CarDTO";
-import client from "./client";
+import client from "./client.ts";
 
 export const fetchAvailableCars = async (
   parkingId: number,

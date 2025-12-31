@@ -9,21 +9,33 @@ import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
 
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
-import { ParkingData } from '../../../../types/dto/ParkingDTO.ts';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
 import { fetchParkingData } from '../../../../api/parking.ts';
 
 interface ReservationControllerProps {
   map: any;
+  initialKeyword?: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  onSearchComplete: (data: ParkingData[]) => void; // 데이터 전달하도록 타입 변경
+  onSearchComplete: (data: ParkingDTO[]) => void; // 데이터 전달하도록 타입 변경
   reservationInfo: ReservationInfo;
   setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
   dateRange: [Date | null, Date | null];
 }
 
-function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePickerOpen, dateRange, reservationInfo }: ReservationControllerProps) {
-  const [localKeyword, setLocalKeyword] = useState('');
+function ReservationController({
+  map,
+  setKeyword,
+  onSearchComplete,
+  setIsDatePickerOpen,
+  reservationInfo,
+  initialKeyword = ''
+}: ReservationControllerProps) {
+  const [localKeyword, setLocalKeyword] = useState(initialKeyword);
   const monthsShown = useMemo(() => 2, []);
+
+  useEffect(() => {
+    setLocalKeyword(initialKeyword);
+  }, [initialKeyword]);
 
   useEffect(() => {
     if (map) {
@@ -32,7 +44,7 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
   }, [map]);
 
 
-  const handleSearchClick = (data: ParkingData[]) => { // 검색 결과를 받도록 수정
+  const handleSearchClick = (data: ParkingDTO[]) => { // 검색 결과를 받도록 수정
     if (onSearchComplete) {
       onSearchComplete(data); // 검색 결과 데이터 전달
     }
@@ -108,10 +120,6 @@ function ReservationController({ map, setKeyword, onSearchComplete, setIsDatePic
   const handleDatePicker = () => {
     setIsDatePickerOpen(true);
   }
-
-  // datepicker 결과값 리턴
-  const [date, setDate] = useState<ReservationInfo | null>(null)
-
 
   return (
     <>
