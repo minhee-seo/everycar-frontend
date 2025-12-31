@@ -45,17 +45,22 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     rightIcon: faBars,
     customClass: 'myPageAppBar',
   },
-    '/auth/login': {
+  '/auth/login': {
     title: '로그인',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-    '/auth/SignConditions': {
+  '/auth/SignConditions': {
     title: '약관동의',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-      '/auth/signup': {
+  '/login': {
+    title: '로그인',
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
+  },
+  '/auth/signup': {
     title: '회원가입',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',

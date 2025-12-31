@@ -16,6 +16,8 @@ import Contract from '../pages/contract/Contract.tsx';
 import Login from '../pages/login/Login.tsx';
 import SignConditions from '../pages/Auth/SignupConditions/SignupConditions.tsx';
 import Signup from '../pages/Auth/Signup.tsx';
+import ProtectedRoute from '../components/auth/ProtectedRoute.tsx';
+import MypageInfo from '../pages/mypage/MypageInfo.tsx';
 
 const AppRoutes = () => (
   <>
@@ -32,9 +34,15 @@ const AppRoutes = () => (
           <Route path="/auth/SignConditions" element={<SignConditions />} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/myPage/info" element={<MypageInfo />} />
+            <Route path="/reservation/contract" element={<Contract />} />
+            {/* 추가로 보호할 페이지들... */}
+          </Route>
         </Route>
       </Routes>
-      
+
     </BrowserRouter>
   </>
 );

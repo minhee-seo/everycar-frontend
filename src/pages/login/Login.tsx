@@ -28,7 +28,7 @@ const [userId, setUserId] = useState('');
   };
 
   return (
-    <div className={styles.loginContainer}>
+    <div className={styles.container}>
       <div className={styles.loginBox}>
         <div className={styles.header}>
           <h2>로그인</h2>

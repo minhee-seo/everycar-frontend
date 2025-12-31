@@ -32,7 +32,6 @@ function CarListMobile() {
     const returnDatetime = queryParams.get('returnDatetime');
     const [displayParkingName, setDisplayParkingName] = useState('정보를 불러오는 중...');
 
-    console.log(returnDatetime)
     useEffect(() => {
         // 1. useEffect 내부에서 최신 파라미터를 다시 추출합니다.
         if (!parkingId || !rentalDatetime || !returnDatetime) {
