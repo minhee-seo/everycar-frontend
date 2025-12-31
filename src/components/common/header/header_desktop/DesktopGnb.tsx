@@ -1,20 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import styles from './DesktopGnb.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../store';
+import { authService } from '../../../../api/authService.ts';
+import { logoutAction } from '../../../../store/userSlice.ts';
 
 const DesktopGnb: React.FC = () => {
   // 스크롤 상태 감지
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  // 로그인 상태 감지
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem('accessToken'));
 
   const location = useLocation();
   const isMainPage = location.pathname === '/';
 
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // 리덕스에서 현재 로그인된 유저 정보 가져오기
+  const { isAuthenticated, userName, userId } = useSelector((state: RootState) => state.user);
+  console.log(`userId`, userName);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 3) {
@@ -34,6 +42,24 @@ const DesktopGnb: React.FC = () => {
     };
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      if (userId) {
+        // 서버에 로그아웃 알림
+        await authService.logout(userId);
+      }
+    } catch (error) {
+      console.error("서버 로그아웃 처리 중 오류:", error);
+      // 서버 에러가 나더라도 클라이언트는 로그아웃
+    } finally {
+      // 리덕스 상태 초기화 및 로컬스토리지 삭제
+      dispatch(logoutAction());
+
+      alert("로그아웃 되었습니다.");
+      navigate('/login');
+      window.location.href = '/';
+    }
+  };
 
   return (
     <div
@@ -71,8 +97,11 @@ const DesktopGnb: React.FC = () => {
 
           <div className={styles.rightMenu}>
             <ul>
-              {isLoggedIn ? (
+              {isAuthenticated ? (
                 <>
+                  <li className={styles.userName}>
+                    <strong>{userName}</strong>님 환영합니다
+                  </li>
                   <li><Link to="/" onClick={handleLogout}>로그아웃</Link></li>
                   <li><Link to="/myPage/info">내 정보</Link></li>
                 </>

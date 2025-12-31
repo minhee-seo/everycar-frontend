@@ -2,33 +2,28 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.scss';
 import client from '../../api/client.ts'; // axios 인스턴스
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/index.js';
+import { loginUser } from '../../store/userSlice.ts';
 
 const Login = () => {
-  const [userId, setUserId] = useState('');
+const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [error, setError] = useState('');
+  
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  
+  // 리덕스 상태에서 loading과 error 가져오기
+  const { loading, error } = useSelector((state: RootState) => state.user);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      // 서버 APIUserController의 @PostMapping("/login") 호출
-      const response = await client.post('/login', {
-        userId,
-        userPassword
-      });
-
-      if (response.data.accessToken) {
-        // 토큰 저장 (Local Storage)
-        localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-        
-        // 메인 페이지 또는 이전 페이지로 이동
-        navigate('/');
-      }
-    } catch (err: any) {
-      setError('아이디 또는 비밀번호가 일치하지 않습니다.');
-      console.error('Login Error:', err);
+    
+    // 비동기 액션 실행
+    const resultAction = await dispatch(loginUser({ userId, userPassword }));
+    
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate('/'); // 로그인 성공 시 이동
     }
   };
 
@@ -40,7 +35,7 @@ const Login = () => {
           <p>Everycar와 함께 스마트한 이동을 시작하세요</p>
         </div>
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="userId">아이디</label>
             <input
@@ -67,8 +62,8 @@ const Login = () => {
 
           {error && <p style={{ color: '#ff4d4f', fontSize: '14px', marginBottom: '16px' }}>{error}</p>}
 
-          <button type="submit" className={styles.loginBtn}>
-            로그인
+          <button type="submit" className={styles.loginBtn} disabled={loading}>
+            {loading ? '로그인 중...' : '로그인'}
           </button>
         </form>
 

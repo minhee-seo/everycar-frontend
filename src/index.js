@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client';
 import AppRoutes from './routes/index.tsx';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
- 
+import { Provider } from 'react-redux';
+import { store } from './store/index.js'; // 방금 만든 store 파일 경로
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppRoutes />
+    <Provider store={store}>
+      <AppRoutes />
+    </Provider>
   </React.StrictMode>
 );
 
