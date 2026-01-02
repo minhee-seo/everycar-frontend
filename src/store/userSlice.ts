@@ -11,6 +11,7 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
       localStorage.setItem('userId', userId);
+      localStorage.setItem('userNum', data.userNum);
       localStorage.setItem('userName', data.userName);
       return { userId, ...data };
     } catch (error: any) {
@@ -23,6 +24,7 @@ const getStorageItem = (key: string) => localStorage.getItem(key);
 
 interface UserState {
   userId: string | null;
+  userNum: string | null;
   userName: string | null;
   isAuthenticated: boolean;
   loading: boolean;
@@ -31,6 +33,7 @@ interface UserState {
 
 const initialState: UserState = {
   userId: getStorageItem('userId'),
+  userNum: getStorageItem('userNum'),
   userName: getStorageItem('userName'),
   isAuthenticated: !!getStorageItem('accessToken'),
   loading: false,
@@ -41,13 +44,15 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginSuccess: (state, action: PayloadAction<{ userId: string; userName: string }>) => {
+    loginSuccess: (state, action: PayloadAction<{ userId: string; userNum: string; userName: string }>) => {
       state.userId = action.payload.userId;
+      state.userNum = action.payload.userNum;
       state.userName = action.payload.userName;
       state.isAuthenticated = true;
     },
     logoutAction: (state) => {
       state.userId = null;
+      state.userNum = null;
       state.userName = null;
       state.isAuthenticated = false;
       state.loading = false;
@@ -55,6 +60,7 @@ const userSlice = createSlice({
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('userId');
+      localStorage.removeItem('userNum');
       localStorage.removeItem('userName');
     },
   },
@@ -68,6 +74,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.userId = action.payload.userId;
+        state.userNum = action.payload.userNum;
         state.userName = action.payload.userName;
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {

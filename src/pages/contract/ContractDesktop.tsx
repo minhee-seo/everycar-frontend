@@ -1,28 +1,102 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ContractDesktop.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCreditCard, faMobileScreenButton, faWallet, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { reservationService } from '../../api/reservationService.ts';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/index.js';
 
 function ContractDesktop() {
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const location = useLocation();
 
+  // 파라미터에서 car 정보 추출
+  const queryParams = new URLSearchParams(location.search);
+  const carId = queryParams.get('carId');
+  const parkingId = queryParams.get('parkingId');
+  const rentalDatetime = queryParams.get('rentalDatetime');
+  const returnDatetime = queryParams.get('returnDatetime');
+
+  // 유저 정보 불러오기 
+  const { userName, userId, userNum } = useSelector((state: RootState) => state.user);
+
+  const [paymentMethod, setPaymentMethod] = useState('card');
   const [contractData, setContractData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  //  휴대폰 번호를 3개의 객체로 관리
+  const [driverInfo, setDriverInfo] = useState({
+    name: userName || '',
+    phone1: '010',
+    phone2: '',
+    phone3: '',
+    license: '제 1종 보통 / 12-34-567890-11'
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    // ✅ 숫자만 입력 가능하도록 제한 (휴대폰 번호의 경우)
+    if (name.startsWith('phone') && !/^\d*$/.test(value)) return;
+
+    setDriverInfo(prev => ({ ...prev, [name]: value }));
+
+    // ✅ 글자 수 충족 시 다음 칸으로 자동 포커스 이동 (선택 사항)
+    if (name === 'phone2' && value.length === 4) {
+      document.getElementById('phone3')?.focus();
+    }
+  };
+
   useEffect(() => {
+    if (userName) {
+      setDriverInfo(prev => ({ ...prev, name: userName }));
+    }
+  }, [userName]);
+
+  useEffect(() => {
+    // 오류처리
+    if (!carId || !parkingId) {
+      alert("잘못된 접근입니다.");
+      navigate(-1);
+      return;
+    }
+
     const loadData = async () => {
       try {
         setLoading(true);
         // 테스트용 파라미터
         const data = await reservationService.getContractDetails({
-          carId: 402,
-          userNum: 1,
-          parkingId: 14
+          carId: Number(carId),
+          userNum: Number(userNum),
+          parkingId: Number(parkingId)
         });
         setContractData(data);
+
+        if (data.userDto && data.userDto.userPhone) {
+          const rawPhone = data.userDto.userPhone; // 예: "01056781236"
+
+          // 전화번호가 11자리인 경우 (010-1234-5678)
+          if (rawPhone.length === 11) {
+            setDriverInfo(prev => ({
+              ...prev,
+              name: data.userDto.userName || prev.name,
+              phone1: rawPhone.substring(0, 3),
+              phone2: rawPhone.substring(3, 7),
+              phone3: rawPhone.substring(7, 11)
+            }));
+          }
+          // 전화번호가 10자리인 경우 (010-123-4567)
+          else if (rawPhone.length === 10) {
+            setDriverInfo(prev => ({
+              ...prev,
+              name: data.userDto.userName || prev.name,
+              phone1: rawPhone.substring(0, 3),
+              phone2: rawPhone.substring(3, 6),
+              phone3: rawPhone.substring(6, 10)
+            }));
+          }
+        }
       } catch (error) {
         console.error("데이터 로드 중 오류 발생:", error);
       } finally {
@@ -33,10 +107,11 @@ function ContractDesktop() {
     loadData();
   }, []);
 
+
   if (loading) return <div>로딩 중...</div>;
   if (!contractData) return <div>데이터가 없습니다.</div>;
 
-  const { carDto, totalPrice } = contractData;
+  const { carDto, totalPrice, userDTO } = contractData;
 
   return (
     <div className={styles.pageWrapper}>
@@ -57,7 +132,16 @@ function ContractDesktop() {
                 <span className={styles.badge}>{carDto.car_fuel}</span>
                 <h4>{carDto.model.model_brand} {carDto.model.model_name}</h4>
                 <div className={styles.gridInfo}>
-                  {/* 날짜는 필요시 포맷팅 함수 사용 */}
+                  <div className={styles.infoRow}>
+                    <div className={styles.infoItem}>
+                      <span>대여 일시</span>
+                      <p>{rentalDatetime}</p>
+                    </div>
+                    <div className={styles.infoItem}>
+                      <span>반납 일시</span>
+                      <p>{returnDatetime}</p>
+                    </div>
+                  </div>
                   <div className={styles.fullWidth}>
                     <span>대여 및 반납 장소</span>
                     <p>{carDto.parking.parking_name} ({carDto.parking.parking_address})</p>
@@ -67,25 +151,63 @@ function ContractDesktop() {
             </div>
           </section>
 
-          {/* 2. 운전자 정보 (로그인 정보 연동 예정) */}
+          {/* 2. 운전자 정보 */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>운전자 정보</h3>
-            <div className={styles.infoTable}>
-              <div className={styles.row}>
+            <div className={styles.infoInputTable}>
+              <div className={styles.inputRow}>
                 <label>예약자명</label>
-                <p>홍길동</p>
+                <input
+                  type="text"
+                  name="name"
+                  value={driverInfo.name}
+                  onChange={handleInputChange}
+                  placeholder="성함을 입력하세요"
+                />
               </div>
-              <div className={styles.row}>
+              <div className={styles.inputRow}>
                 <label>휴대폰 번호</label>
-                <p>010-1234-5678</p>
+                <div className={styles.phoneInputGroup}>
+                  <input
+                    type="text"
+                    name="phone1"
+                    maxLength={3}
+                    value={driverInfo.phone1}
+                    onChange={handleInputChange}
+                  />
+                  <span className={styles.dash}>-</span>
+                  <input
+                    type="text"
+                    name="phone2"
+                    id="phone2"
+                    maxLength={4}
+                    value={driverInfo.phone2}
+                    onChange={handleInputChange}
+                  />
+                  <span className={styles.dash}>-</span>
+                  <input
+                    type="text"
+                    name="phone3"
+                    id="phone3"
+                    maxLength={4}
+                    value={driverInfo.phone3}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-              <div className={styles.row}>
+              <div className={styles.inputRow}>
                 <label>면허 정보</label>
-                <p>제 1종 보통 / 12-34-567890-11</p>
+                <input
+                  type="text"
+                  name="license"
+                  value={driverInfo.license}
+                  onChange={handleInputChange}
+                  placeholder="면허 정보를 입력하세요"
+                  readOnly
+                />
               </div>
             </div>
           </section>
-
           {/* 3. 결제 수단 */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>결제 수단 선택</h3>

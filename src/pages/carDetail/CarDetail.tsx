@@ -115,7 +115,7 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                             {displayPrice ? Number(displayPrice).toLocaleString() : '0'}원
                         </p>
                     </div>
-                    <Link to='/reservation/contract'>
+                    <Link to={`/reservation/contract?carId=${car.car_id}&parkingId=${car.parking?.parking_id}&rentalDatetime=${rentalDatetime}&returnDatetime=${returnDatetime}`}>
                         <button className={styles.reservationButton}>예약하기</button>
                     </Link>
                 </div>
@@ -235,7 +235,9 @@ function Mobile({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                             {displayPrice ? Number(displayPrice).toLocaleString() : '0'}원
                         </p>
                     </div>
-                    <button className={styles.reservationButton}>예약하기</button>
+                    <Link to={`/reservation/contract?carId=${car.car_id}&parkingId=${car.parking?.parking_id}&rentalDatetime=${rentalDatetime}&returnDatetime=${returnDatetime}`} style={{ width: '100%' }}>
+                        <button className={styles.reservationButton}>예약하기</button>
+                    </Link>
                 </div>
             </section>
         </div>

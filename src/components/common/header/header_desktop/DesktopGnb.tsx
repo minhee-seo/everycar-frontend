@@ -22,7 +22,7 @@ const DesktopGnb: React.FC = () => {
 
   // 리덕스에서 현재 로그인된 유저 정보 가져오기
   const { isAuthenticated, userName, userId } = useSelector((state: RootState) => state.user);
-  console.log(`userId`, userName);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 3) {

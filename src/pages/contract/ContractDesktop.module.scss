@@ -4,7 +4,7 @@
     background-color: $bg-color;
     min-height: 100vh;
     padding: 60px 20px;
-    
+
     margin-top: 60px;
 }
 
@@ -25,13 +25,24 @@
 
         .header {
             margin-bottom: 40px;
-            h2 { font-size: $font-xl; font-weight: 800; margin-bottom: 10px; }
-            p { color: $text-muted; }
+
+            h2 {
+                font-size: $font-xl;
+                font-weight: 800;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: $text-muted;
+            }
         }
 
         .section {
             margin-bottom: 50px;
-            &:last-child { margin-bottom: 0; }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
 
             .sectionTitle {
                 font-size: $font-lg;
@@ -51,34 +62,112 @@
         padding: 30px;
         border-radius: 16px;
 
-        .carImg { width: 240px; height: auto; object-fit: contain; }
+        .carImg {
+            width: 240px;
+            height: auto;
+            object-fit: contain;
+        }
+
         .carText {
             flex: 1;
-            .badge { 
-                background: $color-gray-800; color: white; 
-                padding: 4px 10px; border-radius: 4px; font-size: 12px;
+
+            .badge {
+                background: $color-gray-800;
+                color: white;
+                padding: 4px 10px;
+                border-radius: 4px;
+                font-size: 12px;
             }
-            h4 { font-size: 22px; margin: 12px 0 20px; }
-            
+
+            h4 {
+                font-size: 22px;
+                margin: 12px 0 20px;
+            }
+
             .gridInfo {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 20px;
-                span { font-size: $font-sm; color: $text-muted; display: block; margin-bottom: 5px; }
-                p { font-weight: 600; font-size: $font-md; }
-                .fullWidth { grid-column: span 2; }
+
+                span {
+                    font-size: $font-sm;
+                    color: $text-muted;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    font-size: 15px;
+                    font-weight: 500;
+                    color: #333;
+                    margin: 0;
+                }
+
+                .fullWidth {
+                    grid-column: span 2;
+                }
             }
         }
     }
 
     // 정보 테이블 스타일
-    .infoTable {
-        .row {
+    .infoInputTable {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+
+        .inputRow {
             display: flex;
-            padding: 15px 0;
-            border-bottom: 1px solid $border-color;
-            label { width: 150px; color: $color-gray-600; font-weight: 600; }
-            p { flex: 1; font-weight: 500; }
+            align-items: center;
+            margin-bottom: 15px;
+
+            .phoneInputGroup {
+                display: flex;
+                align-items: center;
+                flex: 1;
+
+                input {
+                    width: 80px !important; // 3개 입력칸의 너비를 작게 고정
+                    flex: none !important;
+                    text-align: center;
+                }
+
+                .dash {
+                    margin: 0 8px;
+                    color: #ccc;
+                }
+            }
+
+            .inputRow {
+
+                // 기존 스타일 유지
+                input {
+                    // ...
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            label {
+                width: 120px;
+                font-weight: 600;
+                color: #666;
+            }
+
+            input {
+                flex: 1;
+                padding: 10px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 15px;
+                outline: none;
+
+                &:focus {
+                    border-color: #000; // 강조색
+                }
+            }
         }
     }
 
@@ -100,15 +189,23 @@
             transition: all 0.2s;
             color: $color-gray-500;
 
-            svg { font-size: 24px; }
-            span { font-weight: 600; }
+            svg {
+                font-size: 24px;
+            }
+
+            span {
+                font-weight: 600;
+            }
 
             &.active {
                 border-color: $color-black;
                 background-color: $color-gray-900;
                 color: $color-white;
             }
-            &:hover:not(.active) { background-color: $color-gray-100; }
+
+            &:hover:not(.active) {
+                background-color: $color-gray-100;
+            }
         }
     }
 
@@ -126,7 +223,11 @@
             border: 1px solid $border-color;
         }
 
-        .sidebarTitle { font-size: $font-lg; font-weight: 700; margin-bottom: 25px; }
+        .sidebarTitle {
+            font-size: $font-lg;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
 
         .priceDetail {
             .priceRow {
@@ -134,8 +235,12 @@
                 justify-content: space-between;
                 margin-bottom: 15px;
                 color: $color-gray-600;
-                .discount { color: #ff4d4d; }
+
+                .discount {
+                    color: #ff4d4d;
+                }
             }
+
             .totalRow {
                 display: flex;
                 justify-content: space-between;
@@ -143,13 +248,22 @@
                 margin-top: 25px;
                 padding-top: 25px;
                 border-top: 1px dashed $color-gray-300;
-                span { font-weight: 700; font-size: $font-md; }
-                strong { font-size: 28px; color: $color-black; }
+
+                span {
+                    font-weight: 700;
+                    font-size: $font-md;
+                }
+
+                strong {
+                    font-size: 28px;
+                    color: $color-black;
+                }
             }
         }
 
         .agreement {
             margin: 30px 0;
+
             .agreeItem {
                 display: flex;
                 align-items: center;
@@ -157,7 +271,10 @@
                 margin-bottom: 10px;
                 font-size: 13px;
                 color: $color-gray-500;
-                .checkIcon { color: $primary-color-text; }
+
+                .checkIcon {
+                    color: $primary-color-text;
+                }
             }
         }
 
@@ -173,9 +290,16 @@
             box-shadow: 0 4px 15px rgba($primary-color, 0.3);
             transition: 0.3s;
 
-            &:hover { background-color: $primary-hover; transform: translateY(-2px); }
+            &:hover {
+                background-color: $primary-hover;
+                transform: translateY(-2px);
+            }
         }
 
-        .notice { font-size: 12px; color: $text-muted; text-align: center; }
+        .notice {
+            font-size: 12px;
+            color: $text-muted;
+            text-align: center;
+        }
     }
 }
