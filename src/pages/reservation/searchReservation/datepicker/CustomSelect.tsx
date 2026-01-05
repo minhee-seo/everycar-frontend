@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './CustomSelect.module.scss';
 import { ReservationInfo } from '../../../../types/reservation';
+import { getFourHoursLaterRounded } from '../../../../utils/CurrentTime.ts';
 
 interface CustomSelectProps {
   label: string;
@@ -14,17 +15,24 @@ interface CustomSelectProps {
 export const generateTimes = (startDate: Date | null, endDate: Date | null | undefined, isEnd: boolean) => {
   const times: string[] = [];
   const now = new Date();
-  let startTime = 0;
+  // 기준 시각 설정 (기본은 00:00)
+  let limitHour = 0;
+  let limitMin = 0;
 
-  // 오늘이면 현재시간 + 4시간 이후부터 가능
-  if (startDate && now.toDateString() === startDate.toDateString()) {
-    startTime = now.getHours() + 4;
+  // 선택한 날짜가 '오늘'인 경우에만 4시간 후 제한 적용
+  if (startDate && startDate.toDateString() === now.toDateString()) {
+    const fourHoursLater = getFourHoursLaterRounded();
+    limitHour = fourHoursLater.getHours();
+    limitMin = fourHoursLater.getMinutes();
   }
 
-  for (let hour = startTime; hour < 24; hour++) {
+  for (let hour = 0; hour < 24; hour++) {
     for (let min of [0, 30]) {
-      if (hour === 24 && min > 0) continue;
-      const h = String(hour % 24).padStart(2, '0');
+      // 제한 시간보다 이전 시간은 제외 (오늘인 경우)
+      if (hour < limitHour) continue;
+      if (hour === limitHour && min < limitMin) continue;
+
+      const h = String(hour).padStart(2, '0');
       const m = String(min).padStart(2, '0');
       times.push(`${h}:${m}`);
     }

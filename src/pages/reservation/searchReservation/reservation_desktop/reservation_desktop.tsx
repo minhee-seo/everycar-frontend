@@ -52,6 +52,8 @@ const Reservation = () => {
     }
   );
 
+  console.log(reservationInfo.startDate);
+
   // 메인에서 address를 가지고 넘어왔을 때 자동 검색 실행
   useEffect(() => {
     if (state?.address && map) {

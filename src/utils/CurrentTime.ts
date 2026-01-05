@@ -6,7 +6,6 @@ import { getRoundedDate } from "./getRoundedTime.tsx";
 export function getFourHoursLaterRounded(): Date {
     // 현재 시각을 기준으로 30분 단위로 올림된 시각
     const roundedDate = getRoundedDate(new Date());
-
     // 반올림된 시각 + 4시간
     return new Date(roundedDate.getTime() + 4 * 60 * 60 * 1000);
 }
