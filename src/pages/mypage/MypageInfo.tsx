@@ -5,11 +5,15 @@ import { RootState } from '../../store';
 import MypageSide from './MypageSide.tsx';
 
 const MyPage = () => {
+
+  // 
+  // 유저정보 
+  // 
   const { userNum, userName: reduxName, userId: reduxId } = useSelector((state: RootState) => state.user);
-  
+
   // 수정 모드 상태
   const [isEditMode, setIsEditMode] = useState(false);
-  
+
   // 유저 정보 상태 (초기값은 Redux나 기본값에서 가져옴)
   const [userInfo, setUserInfo] = useState({
     userId: reduxId || 'admin',
@@ -66,6 +70,31 @@ const MyPage = () => {
     }
   };
 
+  // 
+  // 면허
+  // 
+
+  // 1. 유저 정보 상태에 licenseInfo 추가 (초기값 null이면 미등록 상태)
+  const [licenseInfo, setLicenseInfo] = useState<{
+    type: string;
+    number: string;
+    expiry: string;
+  } | null>({
+    type: '1종 보통',
+    number: '11-22-334455-66',
+    expiry: '2030-12-31'
+  });
+
+  const [isLicenseEdit, setIsLicenseEdit] = useState(false);
+
+  // 면허 삭제 핸들러
+  const handleDeleteLicense = () => {
+    if (window.confirm("등록된 면허 정보를 삭제하시겠습니까?")) {
+      setLicenseInfo(null);
+      alert("삭제되었습니다.");
+    }
+  };
+
   return (
     <div className="container">
       <div className={styles.myPageWrapper}>
@@ -73,142 +102,210 @@ const MyPage = () => {
         <MypageSide />
 
         {/* 메인 콘텐츠 */}
-        <main className={styles.content}>
-          <header className={styles.header}>
-            <h3>개인정보 관리</h3>
-            <p>회원님의 정보를 안전하게 관리하세요.</p>
-          </header>
+        <main className={styles.main}>
+          <section className={styles.content}>
+            <header className={styles.header}>
+              <h3>개인정보 관리</h3>
+              <p>회원님의 정보를 안전하게 관리하세요.</p>
+            </header>
 
-          <section className={styles.infoSection}>
-            {/* 아이디 - 절대 수정 불가 */}
-            <div className={styles.inputGroup}>
-              <label>아이디 (수정 불가)</label>
-              <input 
-                type="text" 
-                value={userInfo.userId} 
-                readOnly 
-                className={styles.permanentReadOnly} 
-              />
-            </div>
-
-            {/* 이름 - 절대 수정 불가 */}
-            <div className={styles.inputGroup}>
-              <label>이름 (수정 불가)</label>
-              <input 
-                type="text" 
-                value={userInfo.userName} 
-                readOnly 
-                className={styles.permanentReadOnly} 
-              />
-            </div>
-
-            {/* 이메일 */}
-            <div className={styles.inputGroup}>
-              <label>이메일</label>
-              <input
-                type="email"
-                name="userEmail"
-                value={userInfo.userEmail}
-                onChange={handleChange}
-                readOnly={!isEditMode}
-                className={!isEditMode ? styles.readOnly : styles.editInput}
-              />
-            </div>
-
-            {/* 휴대폰 번호 */}
-            <div className={styles.inputGroup}>
-              <label>휴대폰 번호</label>
-              <input
-                type="text"
-                name="userPhone"
-                value={isEditMode ? userInfo.userPhone : formatPhone(userInfo.userPhone)}
-                onChange={handleChange}
-                readOnly={!isEditMode}
-                className={!isEditMode ? styles.readOnly : styles.editInput}
-                placeholder="숫자만 입력해 주세요"
-              />
-            </div>
-
-            <div className={styles.row}>
-              {/* 성별 */}
+            <section className={styles.infoSection}>
+              {/* 아이디 - 절대 수정 불가 */}
               <div className={styles.inputGroup}>
-                <label>성별</label>
-                <div className={`${styles.genderGroup} ${!isEditMode ? styles.readOnlyGender : ''}`}>
-                  <button 
-                    type="button"
-                    className={userInfo.userGender === 1 ? styles.selected : ''}
-                    onClick={() => handleGenderChange(1)}
-                  >
-                    남성
-                  </button>
-                  <button 
-                    type="button"
-                    className={userInfo.userGender === 2 ? styles.selected : ''}
-                    onClick={() => handleGenderChange(2)}
-                  >
-                    여성
-                  </button>
+                <label>아이디 (수정 불가)</label>
+                <input
+                  type="text"
+                  value={userInfo.userId}
+                  readOnly
+                  className={styles.permanentReadOnly}
+                />
+              </div>
+
+              {/* 이름 - 절대 수정 불가 */}
+              <div className={styles.inputGroup}>
+                <label>이름 (수정 불가)</label>
+                <input
+                  type="text"
+                  value={userInfo.userName}
+                  readOnly
+                  className={styles.permanentReadOnly}
+                />
+              </div>
+
+              {/* 이메일 */}
+              <div className={styles.inputGroup}>
+                <label>이메일</label>
+                <input
+                  type="email"
+                  name="userEmail"
+                  value={userInfo.userEmail}
+                  onChange={handleChange}
+                  readOnly={!isEditMode}
+                  className={!isEditMode ? styles.readOnly : styles.editInput}
+                />
+              </div>
+
+              {/* 휴대폰 번호 */}
+              <div className={styles.inputGroup}>
+                <label>휴대폰 번호</label>
+                <input
+                  type="text"
+                  name="userPhone"
+                  value={isEditMode ? userInfo.userPhone : formatPhone(userInfo.userPhone)}
+                  onChange={handleChange}
+                  readOnly={!isEditMode}
+                  className={!isEditMode ? styles.readOnly : styles.editInput}
+                  placeholder="숫자만 입력해 주세요"
+                />
+              </div>
+
+              <div className={styles.row}>
+                {/* 성별 */}
+                <div className={styles.inputGroup}>
+                  <label>성별</label>
+                  <div className={`${styles.genderGroup} ${!isEditMode ? styles.readOnlyGender : ''}`}>
+                    <button
+                      type="button"
+                      className={userInfo.userGender === 1 ? styles.selected : ''}
+                      onClick={() => handleGenderChange(1)}
+                    >
+                      남성
+                    </button>
+                    <button
+                      type="button"
+                      className={userInfo.userGender === 2 ? styles.selected : ''}
+                      onClick={() => handleGenderChange(2)}
+                    >
+                      여성
+                    </button>
+                  </div>
+                </div>
+
+                {/* 생년월일 */}
+                <div className={styles.inputGroup}>
+                  <label>생년월일</label>
+                  <input
+                    type="date"
+                    name="userBirth"
+                    value={userInfo.userBirth}
+                    onChange={handleChange}
+                    readOnly={!isEditMode}
+                    className={!isEditMode ? styles.readOnly : styles.editInput}
+                  />
                 </div>
               </div>
 
-              {/* 생년월일 */}
+              {/* 주소 */}
               <div className={styles.inputGroup}>
-                <label>생년월일</label>
-                <input 
-                  type="date" 
-                  name="userBirth"
-                  value={userInfo.userBirth} 
-                  onChange={handleChange}
-                  readOnly={!isEditMode}
-                  className={!isEditMode ? styles.readOnly : styles.editInput}
-                />
+                <label>주소</label>
+                <div className={styles.withButton}>
+                  <input
+                    type="text"
+                    name="userAddress"
+                    value={userInfo.userAddress}
+                    onChange={handleChange}
+                    readOnly={!isEditMode}
+                    className={!isEditMode ? styles.readOnly : styles.editInput}
+                    placeholder="주소를 입력하세요"
+                  />
+                  {isEditMode && (
+                    <button type="button" className={styles.outlineBtn}>주소찾기</button>
+                  )}
+                </div>
               </div>
+            </section>
+
+            {/* 하단 버튼 영역 */}
+            <footer className={styles.actionButtons}>
+              {!isEditMode ? (
+                <button
+                  type="button"
+                  className={styles.editStartBtn}
+                  onClick={handleEditStart}
+                >
+                  정보 수정하기
+                </button>
+              ) : (
+                <div className={styles.editActions}>
+                  <button type="button" className={styles.saveBtn} onClick={handleSave}>
+                    변경사항 저장
+                  </button>
+                  <button type="button" className={styles.cancelBtn} onClick={handleCancel}>
+                    취소
+                  </button>
+                </div>
+              )}
+              <button type="button" className={styles.withdrawBtn}>회원 탈퇴</button>
+            </footer>
+          </section>
+          <section className={styles.content}>
+            <div className={styles.sectionHeader}>
+              <h4>운전면허 정보</h4>
+              {!licenseInfo ? null : !isLicenseEdit ? (
+                <div className={styles.headerActions}>
+                  <button onClick={() => setIsLicenseEdit(true)}>수정</button>
+                  <button className={styles.deleteText} onClick={handleDeleteLicense}>삭제</button>
+                </div>
+              ) : (
+                <div className={styles.headerActions}>
+                  <button onClick={() => setIsLicenseEdit(false)}>취소</button>
+                </div>
+              )}
             </div>
 
-            {/* 주소 */}
-            <div className={styles.inputGroup}>
-              <label>주소</label>
-              <div className={styles.withButton}>
-                <input 
-                  type="text" 
-                  name="userAddress"
-                  value={userInfo.userAddress} 
-                  onChange={handleChange}
-                  readOnly={!isEditMode}
-                  className={!isEditMode ? styles.readOnly : styles.editInput}
-                  placeholder="주소를 입력하세요"
-                />
-                {isEditMode && (
-                  <button type="button" className={styles.outlineBtn}>주소찾기</button>
+            {!licenseInfo ? (
+              /* 등록된 면허가 없을 때 */
+              <div className={styles.emptyLicense}>
+                <p>등록된 면허 정보가 없습니다. 서비스를 이용하시려면 면허를 등록해 주세요.</p>
+                <button className={styles.addBtn}>+ 면허 등록하기</button>
+              </div>
+            ) : (
+              /* 면허 정보 표시/수정 영역 */
+              <div className={`${styles.licenseCard} ${isLicenseEdit ? styles.editing : ''}`}>
+                <div className={styles.inputGroup}>
+                  <label>면허 종류</label>
+                  <select
+                    disabled={!isLicenseEdit}
+                    value={licenseInfo.type}
+                    className={!isLicenseEdit ? styles.readOnly : styles.editInput}
+                  >
+                    <option>1종 보통</option>
+                    <option>2종 보통</option>
+                    <option>1종 대형</option>
+                  </select>
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label>면허 번호</label>
+                  <input
+                    type="text"
+                    value={licenseInfo.number}
+                    readOnly={!isLicenseEdit}
+                    className={!isLicenseEdit ? styles.readOnly : styles.editInput}
+                  />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label>만료일 (적성검사 기간)</label>
+                  <input
+                    type="date"
+                    value={licenseInfo.expiry}
+                    readOnly={!isLicenseEdit}
+                    className={!isLicenseEdit ? styles.readOnly : styles.editInput}
+                  />
+                </div>
+
+                {isLicenseEdit && (
+                  <button className={styles.licenseSaveBtn} onClick={() => setIsLicenseEdit(false)}>
+                    면허 정보 저장
+                  </button>
                 )}
               </div>
-            </div>
-          </section>
-
-          {/* 하단 버튼 영역 */}
-          <footer className={styles.actionButtons}>
-            {!isEditMode ? (
-              <button
-                type="button"
-                className={styles.editStartBtn}
-                onClick={handleEditStart}
-              >
-                정보 수정하기
-              </button>
-            ) : (
-              <div className={styles.editActions}>
-                <button type="button" className={styles.saveBtn} onClick={handleSave}>
-                  변경사항 저장
-                </button>
-                <button type="button" className={styles.cancelBtn} onClick={handleCancel}>
-                  취소
-                </button>
-              </div>
             )}
-            <button type="button" className={styles.withdrawBtn}>회원 탈퇴</button>
-          </footer>
+          </section>
         </main>
       </div>
+
     </div>
   );
 };
