@@ -44,7 +44,6 @@ function CarDetail() {
     if (isLoading) return <div className={styles.loading}>정보를 불러오는 중...</div>;
     if (!data) return <div className={styles.error}>데이터를 찾을 수 없습니다.</div>;
 
-    console.log(data);
     return (
         <ResponsiveSwitch
             mobileComponent={<Mobile data={data} rentalDatetime={rentalDatetime!} returnDatetime={returnDatetime!} />}

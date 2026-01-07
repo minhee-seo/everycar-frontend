@@ -1,0 +1,256 @@
+@import '../../styles/global.scss';
+
+.myPageWrapper {
+  display: flex;
+  padding: $spacing-xl 0;
+  gap: $spacing-xl;
+  margin-top: 140px;
+  
+  @include respond-max(mobile-m) {
+      flex-direction: column;
+      padding: $spacing-md;
+      gap: $spacing-md;
+      margin-top: 30px;
+  }
+}
+
+// 왼쪽 메뉴
+.sideMenu {
+  width: 240px;
+  flex-shrink: 0;
+
+  @include respond-max(mobile-m) {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: $font-xl;
+    margin-bottom: $spacing-lg;
+    font-weight: 700;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    @include respond-max(mobile-m) {
+      display: flex;
+      gap: $spacing-sm;
+      border-bottom: 1px solid $color-gray-200;
+      overflow-x: auto;
+      padding-bottom: $spacing-sm;
+    }
+
+    li {
+      padding: $spacing-md;
+      cursor: pointer;
+      color: $color-gray-600;
+      border-radius: 8px;
+      margin-bottom: $spacing-xs;
+      transition: all 0.2s;
+
+      &:hover:not(.active) {
+        background-color: $color-gray-100;
+      }
+
+      &.active {
+        background-color: $primary-color-opacity;
+        color: $primary-color-text;
+        font-weight: 600;
+      }
+
+      @include respond-max(mobile-m) {
+        white-space: nowrap;
+        padding: $spacing-sm $spacing-md;
+      }
+    }
+  }
+}
+
+// 메인 콘텐츠
+.content {
+  flex: 1;
+  background-color: $color-white;
+  padding: $spacing-xl;
+  border-radius: 16px;
+  border: 1px solid $color-gray-200;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+
+  @include respond-max(mobile-m) {
+    padding: $spacing-md;
+    border: none;
+  }
+
+  .header {
+    margin-bottom: $spacing-xl;
+    h3 {
+      font-size: $font-lg;
+      margin-bottom: $spacing-xs;
+    }
+    p {
+      color: $text-muted;
+      font-size: $font-sm;
+    }
+  }
+}
+
+// 입력 폼 섹션
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+
+    @include respond-max(mobile-m) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  label {
+    font-size: $font-sm;
+    font-weight: 600;
+    color: $color-gray-700;
+  }
+
+  input {
+    padding: 14px;
+    border: 1px solid $color-gray-300;
+    border-radius: 8px;
+    font-size: $font-md;
+    transition: all 0.2s;
+
+    // 수정 모드일 때 (입력 폼 강조)
+    &.editInput:focus {
+      border-color: $primary-color-text;
+      box-shadow: 0 0 0 3px rgba($primary-color-text, 0.1);
+      outline: none;
+    }
+
+    // 조회 모드일 때 (텍스트처럼 보임)
+    &.readOnly {
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-bottom: 1px solid $color-gray-100;
+      padding-left: 0;
+      cursor: default;
+      font-weight: 500;
+    }
+
+    // 아이디 등 수정 불가 필드
+    &.permanentReadOnly {
+      background-color: $color-gray-100;
+      color: $color-gray-500;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.withButton {
+  display: flex;
+  gap: $spacing-sm;
+  input { flex: 1; }
+}
+
+// 성별 선택 버튼
+.genderGroup {
+  display: flex;
+  gap: $spacing-sm;
+
+  &.readOnlyGender {
+    button {
+      cursor: default;
+      border: 1px solid transparent;
+      background-color: transparent;
+      padding-left: 0;
+      display: none; // 선택 안된건 숨김
+      
+      &.selected {
+        display: block;
+        background-color: transparent;
+        color: $text-color;
+        font-weight: 500;
+      }
+    }
+  }
+
+  button {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid $color-gray-300;
+    border-radius: 8px;
+    background-color: $color-white;
+    color: $color-gray-500;
+    
+    &.selected {
+      background-color: $primary-color-opacity;
+      border-color: $primary-color-text;
+      color: $primary-color-text;
+      font-weight: 600;
+    }
+  }
+}
+
+.outlineBtn {
+  padding: 0 $spacing-md;
+  border: 1px solid $color-gray-300;
+  border-radius: 8px;
+  background-color: $color-white;
+  &:hover { background-color: $color-gray-100; }
+}
+
+// 버튼 하단 영역
+.actionButtons {
+  margin-top: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .editStartBtn {
+    width: 100%;
+    padding: 16px;
+    background-color: $primary-color;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: $font-md;
+    &:hover { background-color: $primary-hover; }
+  }
+
+  .editActions {
+    display: flex;
+    gap: $spacing-sm;
+    
+    .saveBtn {
+      flex: 2;
+      padding: 16px;
+      background: $gradient-color;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+    
+    .cancelBtn {
+      flex: 1;
+      padding: 16px;
+      background-color: $color-gray-200;
+      border-radius: 12px;
+      color: $color-gray-700;
+    }
+  }
+
+  .withdrawBtn {
+    align-self: center;
+    margin-top: $spacing-md;
+    color: $color-gray-400;
+    font-size: $font-xs;
+    text-decoration: underline;
+    &:hover { color: $color-gray-600; }
+  }
+}

@@ -37,12 +37,12 @@ function ContractDesktop() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    // ✅ 숫자만 입력 가능하도록 제한 (휴대폰 번호의 경우)
+    // 숫자만 입력 가능하도록 제한
     if (name.startsWith('phone') && !/^\d*$/.test(value)) return;
 
     setDriverInfo(prev => ({ ...prev, [name]: value }));
 
-    // ✅ 글자 수 충족 시 다음 칸으로 자동 포커스 이동 (선택 사항)
+    // 글자 수 충족 시 다음 칸으로 자동 포커스 이동
     if (name === 'phone2' && value.length === 4) {
       document.getElementById('phone3')?.focus();
     }
