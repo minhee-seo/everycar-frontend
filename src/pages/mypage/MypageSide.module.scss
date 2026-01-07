@@ -1,0 +1,86 @@
+@import '../../styles/global.scss';
+
+.sideMenu {
+  width: 240px;
+  flex-shrink: 0;
+
+  @include respond-max(mobile-m) {
+    width: 100%;
+    margin-bottom: $spacing-md;
+  }
+
+  h2 {
+    font-size: $font-xl;
+    margin-bottom: $spacing-lg;
+    font-weight: 700;
+    color: $color-black;
+
+    @include respond-max(mobile-m) {
+      font-size: $font-lg;
+      margin-bottom: $spacing-md;
+      padding-left: $spacing-xs;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @include respond-max(mobile-m) {
+      display: flex;
+      gap: $spacing-sm;
+      border-bottom: 1px solid $color-gray-200;
+      overflow-x: auto; // 메뉴가 많아질 경우 가로 스크롤
+      padding-bottom: $spacing-sm;
+      
+      // 스크롤바 숨기기 (선택 사항)
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    li {
+      margin-bottom: $spacing-xs;
+
+      @include respond-max(mobile-m) {
+        margin-bottom: 0;
+      }
+
+      // NavLink 스타일 (a 태그)
+      a {
+        display: block;
+        padding: $spacing-md;
+        color: $color-gray-600;
+        font-size: $font-md;
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background-color: $color-gray-100;
+          color: $color-black;
+        }
+
+        // react-router-dom의 NavLink가 활성화되었을 때 적용되는 클래스
+        &.active {
+          background-color: $primary-color-opacity;
+          color: $primary-color-text;
+          font-weight: 700;
+        }
+
+        @include respond-max(mobile-m) {
+          white-space: nowrap; // 텍스트 줄바꿈 방지
+          padding: $spacing-sm $spacing-md;
+          border-radius: 20px; // 모바일에서는 캡슐 모양
+          font-size: $font-sm;
+          
+          &.active {
+            background-color: $primary-color; // 모바일은 좀 더 명확한 색상도 좋음
+            color: $color-black;
+          }
+        }
+      }
+    }
+  }
+}
