@@ -3,27 +3,53 @@ import styles from './MypageInfo.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import MypageSide from './MypageSide.tsx';
+import { UserProfileResponse } from '../../types/UserProfileResponse.ts';
+import { userApi } from '../../api/mypageUserApi.ts';
 
 const MyPage = () => {
   const { userNum, userName: reduxName, userId: reduxId } = useSelector((state: RootState) => state.user);
-  
+
   // 수정 모드 상태
   const [isEditMode, setIsEditMode] = useState(false);
-  
+  const [isLoading, setIsLoading] = useState(true);
+
   // 유저 정보 상태 (초기값은 Redux나 기본값에서 가져옴)
-  const [userInfo, setUserInfo] = useState({
-    userId: reduxId || 'admin',
-    userName: reduxName || '홍길동',
-    userEmail: 'admin@everycar.com',
-    userPhone: '01012345678',
-    userGender: 1, // 1: 남, 2: 여
-    userBirth: '1995-05-20',
-    userAddress: '서울특별시 강남구 테헤란로 123',
-    userStatus: 1
+  const [userInfo, setUserInfo] = useState<UserProfileResponse>({
+    userNum: Number(userNum),
+    userId: reduxId || '',
+    userName: '',
+    userEmail: '',
+    userPhone: '',
+    userGender: 1,
+    userBirth: '',
+    userAddress: '',
+    licenseType: '',
+    licenseNumber: '',
+    licenseExpiry: ''
   });
 
   // 수정 취소 시 되돌리기 위한 백업 데이터
   const [backupInfo, setBackupInfo] = useState({ ...userInfo });
+
+  // 데이터 로드
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!reduxId) return;
+      try {
+        setIsLoading(true);
+        const response = await userApi.getUserProfile(userInfo.userNum);
+        setUserInfo(response.data);
+        setBackupInfo(response.data);
+      } catch (error) {
+        console.error("데이터 로드 실패:", error);
+        alert("회원 정보를 불러오는 데 실패했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [reduxId]);
 
   // 전화번호 포맷팅 (출력용)
   const formatPhone = (phone: string) => {
@@ -54,17 +80,20 @@ const MyPage = () => {
     setIsEditMode(false);
   };
 
-  // 수정 저장 (추후 API 연동)
+  // 2. 수정 저장 API 호출
   const handleSave = async () => {
     try {
-      // 여기에 axios.put('/api/user/update', userInfo) 로직 추가 예정
-      console.log("저장될 데이터:", userInfo);
+      await userApi.updateUserProfile(userInfo);
       setIsEditMode(false);
+      setBackupInfo({ ...userInfo });
       alert("정보가 수정되었습니다.");
     } catch (error) {
+      console.error("저장 실패:", error);
       alert("저장 중 오류가 발생했습니다.");
     }
   };
+
+  if (isLoading) return <div className="loading">로딩 중...</div>;
 
   return (
     <div className="container">
@@ -83,22 +112,22 @@ const MyPage = () => {
             {/* 아이디 - 절대 수정 불가 */}
             <div className={styles.inputGroup}>
               <label>아이디 (수정 불가)</label>
-              <input 
-                type="text" 
-                value={userInfo.userId} 
-                readOnly 
-                className={styles.permanentReadOnly} 
+              <input
+                type="text"
+                value={userInfo.userId}
+                readOnly
+                className={styles.permanentReadOnly}
               />
             </div>
 
             {/* 이름 - 절대 수정 불가 */}
             <div className={styles.inputGroup}>
               <label>이름 (수정 불가)</label>
-              <input 
-                type="text" 
-                value={userInfo.userName} 
-                readOnly 
-                className={styles.permanentReadOnly} 
+              <input
+                type="text"
+                value={userInfo.userName}
+                readOnly
+                className={styles.permanentReadOnly}
               />
             </div>
 
@@ -133,34 +162,20 @@ const MyPage = () => {
               {/* 성별 */}
               <div className={styles.inputGroup}>
                 <label>성별</label>
-                <div className={`${styles.genderGroup} ${!isEditMode ? styles.readOnlyGender : ''}`}>
-                  <button 
-                    type="button"
-                    className={userInfo.userGender === 1 ? styles.selected : ''}
-                    onClick={() => handleGenderChange(1)}
-                  >
-                    남성
-                  </button>
-                  <button 
-                    type="button"
-                    className={userInfo.userGender === 2 ? styles.selected : ''}
-                    onClick={() => handleGenderChange(2)}
-                  >
-                    여성
-                  </button>
+                <div className={`${styles.genderGroup} ${styles.readOnlyGender}`}>
+                  <button type="button" className={userInfo.userGender === 1 ? styles.selected : ''}>남성</button>
+                  <button type="button" className={userInfo.userGender === 2 ? styles.selected : ''}>여성</button>
                 </div>
               </div>
 
               {/* 생년월일 */}
               <div className={styles.inputGroup}>
                 <label>생년월일</label>
-                <input 
-                  type="date" 
-                  name="userBirth"
-                  value={userInfo.userBirth} 
-                  onChange={handleChange}
-                  readOnly={!isEditMode}
-                  className={!isEditMode ? styles.readOnly : styles.editInput}
+                <input
+                  type="date"
+                  value={userInfo.userBirth}
+                  readOnly
+                  className={styles.permanentReadOnly}
                 />
               </div>
             </div>
@@ -169,10 +184,10 @@ const MyPage = () => {
             <div className={styles.inputGroup}>
               <label>주소</label>
               <div className={styles.withButton}>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="userAddress"
-                  value={userInfo.userAddress} 
+                  value={userInfo.userAddress}
                   onChange={handleChange}
                   readOnly={!isEditMode}
                   className={!isEditMode ? styles.readOnly : styles.editInput}
@@ -188,11 +203,7 @@ const MyPage = () => {
           {/* 하단 버튼 영역 */}
           <footer className={styles.actionButtons}>
             {!isEditMode ? (
-              <button
-                type="button"
-                className={styles.editStartBtn}
-                onClick={handleEditStart}
-              >
+              <button type="button" className={styles.editStartBtn} onClick={handleEditStart}>
                 정보 수정하기
               </button>
             ) : (
