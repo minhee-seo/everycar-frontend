@@ -11,3 +11,9 @@ export interface UserProfileResponse {
   licenseNumber: string | null;
   licenseExpiry: string | null;
 }
+
+export interface UserLicense {
+  type: string;
+  number: string;
+  expiry: string;
+}

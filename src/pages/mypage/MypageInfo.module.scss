@@ -14,67 +14,17 @@
   }
 }
 
-// 왼쪽 메뉴
-.sideMenu {
-  width: 240px;
-  flex-shrink: 0;
-
-  @include respond-max(mobile-m) {
-    width: 100%;
-  }
-
-  h2 {
-    font-size: $font-xl;
-    margin-bottom: $spacing-lg;
-    font-weight: 700;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    @include respond-max(mobile-m) {
-      display: flex;
-      gap: $spacing-sm;
-      border-bottom: 1px solid $color-gray-200;
-      overflow-x: auto;
-      padding-bottom: $spacing-sm;
-    }
-
-    li {
-      padding: $spacing-md;
-      cursor: pointer;
-      color: $color-gray-600;
-      border-radius: 8px;
-      margin-bottom: $spacing-xs;
-      transition: all 0.2s;
-
-      &:hover:not(.active) {
-        background-color: $color-gray-100;
-      }
-
-      &.active {
-        background-color: $primary-color-opacity;
-        color: $primary-color-text;
-        font-weight: 600;
-      }
-
-      @include respond-max(mobile-m) {
-        white-space: nowrap;
-        padding: $spacing-sm $spacing-md;
-      }
-    }
-  }
+.main{
+  flex: 1;
 }
-
 // 메인 콘텐츠
 .content {
-  flex: 1;
   background-color: $color-white;
   padding: $spacing-xl;
   border-radius: 16px;
   border: 1px solid $color-gray-200;
   box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-
+  margin-bottom: 10px;
   @include respond-max(mobile-m) {
     padding: $spacing-md;
     border: none;
@@ -252,5 +202,105 @@
     font-size: $font-xs;
     text-decoration: underline;
     &:hover { color: $color-gray-600; }
+  }
+}
+
+// 구분선
+.sectionDivider {
+  height: 1px;
+  background-color: $color-gray-200;
+  margin: $spacing-xl 0;
+}
+
+  .sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    h4 {
+      font-size: $font-lg;
+      font-weight: 700;
+    }
+
+    .headerActions {
+      display: flex;
+      gap: $spacing-md;
+      button {
+        font-size: $font-sm;
+        color: $color-gray-600;
+        &:hover { color: $color-black; }
+      }
+      .deleteText { color: #ff4d4f; }
+    }
+  }
+
+// 면허 미등록 상태
+.emptyLicense {
+  padding: $spacing-xl;
+  background-color: $color-gray-100;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px dashed $color-gray-300;
+
+  p {
+    color: $color-gray-500;
+    margin-bottom: $spacing-md;
+    font-size: $font-sm;
+  }
+
+  .addBtn {
+    padding: 10px 20px;
+    background-color: $color-white;
+    border: 1px solid $color-gray-300;
+    border-radius: 8px;
+    font-weight: 600;
+    &:hover { background-color: $primary-color-opacity; }
+  }
+}
+
+// 면허 정보 카드
+.licenseCard {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background-color: #fcfcfc;
+  border: 1px solid $color-gray-200;
+  border-radius: 12px;
+
+  &.editing {
+    background-color: $color-white;
+    border-color: $color-gray-300;
+  }
+
+  @include respond-max(mobile-m) {
+    grid-template-columns: 1fr;
+  }
+
+  select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid $color-gray-300;
+    background-color: $color-white;
+    appearance: none; // 기본 화살표 제거 가능
+
+    &.readOnly {
+      border-color: transparent;
+      background-color: transparent;
+      padding-left: 0;
+      font-weight: 600;
+    }
+  }
+
+  .licenseSaveBtn {
+    grid-column: 1 / -1; // 전체 너비 차지
+    margin-top: $spacing-sm;
+    padding: 12px;
+    background-color: $primary-color-text;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
   }
 }
