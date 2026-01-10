@@ -108,23 +108,9 @@ function ContractDesktop() {
     loadData();
   }, []);
 
-  // 결제 성공 후 백엔드 예약 확정 처리
-  const handlePaymentSuccess = async (paymentId: string) => {
-    try {
-      const response = await reservationService.completeReservation({
-        paymentId,
-        carId: Number(carId),
-        userNum: Number(userNum),
-        // ... 필요한 정보 전송
-      });
-
-      if (response.status === 200) {
-        alert("예약이 확정되었습니다.");
-        navigate('/mypage/reservations');
-      }
-    } catch (error) {
-      alert("결제는 완료되었으나 예약 확정에 실패했습니다. 고객센터에 문의하세요.");
-    }
+  const handlePaymentSuccess = (paymentId: string) => {
+    alert("예약이 확정되었습니다.");
+    navigate('/mypage/reservations');
   };
 
   if (loading) return <div>로딩 중...</div>;
@@ -299,11 +285,12 @@ function ContractDesktop() {
                 phone: `${driverInfo.phone1}${driverInfo.phone2}${driverInfo.phone3}`,
                 email: userDTO?.userEmail || ""
               }}
+              carId={Number(carId)}
+              userNum={Number(userNum)}
+              rentalDatetime={rentalDatetime || ""}
+              returnDatetime={returnDatetime || ""}
               onSuccess={handlePaymentSuccess}
             />
-            {/* <button className={styles.paymentBtn}>
-              97,400원 결제하기
-            </button> */}
             <p className={styles.notice}>
               * 차량 대여 시점에 결제가 진행됩니다.
             </p>
