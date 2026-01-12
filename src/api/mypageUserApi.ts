@@ -24,8 +24,9 @@ export const userApi = {
     return response.data;
   },
 
+  // 예약 상세 내역 조회 API
   getReservationDetail: async (reservationId: number): Promise<ReservationDetail> => {
-    const response = await client.get(`/mypage/reservation/${reservationId}`);
+    const response = await client.get(`/mypage/reservation/detail/${reservationId}`);
     return response.data;
   },
 };

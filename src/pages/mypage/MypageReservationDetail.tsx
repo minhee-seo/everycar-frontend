@@ -2,44 +2,41 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './MypageReservationDetail.module.scss';
 import MypageSide from './MypageSide.tsx';
-import { userApi } from '../../api/mypageUserApi.ts';
-import { ReservationDetail as IDetail } from '../../types/ReservationDetail.ts';
+import { userApi } from '../../api/mypageUserApi.ts'; // API 불러오기
+import { ReservationDetail as IDetail } from '../../types/mypage/ReservationDetail.ts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faMapMarkerAlt, faClock } from '@fortawesome/free-solid-svg-icons';
 
-const MypageReservationDetail = () => {
-  const { id } = useParams<{ id: string }>();
+const ReservationDetail = () => {
+  const { id } = useParams<{ id: string }>(); // URL 파라미터 :id 추출
   const navigate = useNavigate();
   const [detail, setDetail] = useState<IDetail | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetail = async () => {
+      if (!id) return;
+      
       try {
         setLoading(true);
-        // 서버에 상세 정보 요청 (기존 userApi에 메서드 추가 필요)
+        // API 호출: 백엔드에서 데이터 가져오기
         const data = await userApi.getReservationDetail(Number(id));
         setDetail(data);
-      } catch (error) {
+      } catch (error: any) {
         console.error("상세 정보 로드 실패:", error);
-        alert("정보를 불러올 수 없습니다.");
-        navigate(-1);
+        alert("예약 정보를 불러오는 데 실패했습니다.");
+        navigate('/mypage/reservations'); // 실패 시 목록으로 리다이렉트
       } finally {
         setLoading(false);
       }
     };
+
     fetchDetail();
   }, [id, navigate]);
 
-  if (loading) return <div className={styles.loading}>정보를 불러오는 중...</div>;
-  if (!detail) return <div className={styles.error}>데이터가 없습니다.</div>;
-
-  const handleCancelRequest = () => {
-    if (window.confirm("정말로 예약을 취소하시겠습니까? 결제 금액은 전액 환불됩니다.")) {
-      // 결제 취소 API 로직 연결 예정
-      alert("취소 요청이 접수되었습니다.");
-    }
-  };
+  // 로딩 및 예외 처리
+  if (loading) return <div className={styles.loadingContainer}>데이터를 불러오는 중입니다...</div>;
+  if (!detail) return <div className={styles.errorContainer}>해당 예약 내역을 찾을 수 없습니다.</div>;
 
   return (
     <div className="container">
@@ -51,15 +48,17 @@ const MypageReservationDetail = () => {
             <FontAwesomeIcon icon={faChevronLeft} /> 목록으로 돌아가기
           </button>
 
-          <section className={styles.detailHeader}>
+          <header className={styles.detailHeader}>
             <div className={styles.titleArea}>
               <h2>예약 상세 내역</h2>
-              <span className={styles.statusBadge}>{detail.status}</span>
+              <span className={`${styles.statusBadge} ${styles[detail.status]}`}>
+                {detail.status}
+              </span>
             </div>
             <p className={styles.resNum}>예약번호: {detail.reservationId}</p>
-          </section>
+          </header>
 
-          {/* 1. 차량 정보 */}
+          {/* 이하 섹션들은 detail 객체의 데이터를 바인딩하여 출력 */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>차량 정보</h3>
             <div className={styles.carInfoCard}>
@@ -72,7 +71,6 @@ const MypageReservationDetail = () => {
             </div>
           </section>
 
-          {/* 2. 대여/반납 정보 */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>이용 정보</h3>
             <div className={styles.infoGrid}>
@@ -92,28 +90,27 @@ const MypageReservationDetail = () => {
             </div>
           </section>
 
-          {/* 3. 결제 정보 */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>결제 상세</h3>
             <div className={styles.paymentCard}>
               <div className={styles.priceRow}>
                 <span>총 결제금액</span>
+                <strong className={styles.totalPrice}>{detail.totalPrice?.toLocaleString()}원</strong>
               </div>
               <div className={styles.priceRow}>
                 <span>결제 일시</span>
                 <span>{detail.createdAt}</span>
               </div>
               <div className={styles.priceRow}>
-                <span>결제 번호</span>
-                <span>{detail.paymentId}</span>
+                <span>결제 번호 (Payment ID)</span>
+                <span className={styles.paymentId}>{detail.paymentId}</span>
               </div>
             </div>
           </section>
 
-          {/* 하단 액션 버튼 */}
           <div className={styles.actions}>
             {detail.status === '이용예정' && (
-              <button className={styles.cancelBtn} onClick={handleCancelRequest}>
+              <button className={styles.cancelBtn} onClick={() => {/* 환불 함수 연결 */}}>
                 예약 취소하기
               </button>
             )}
@@ -124,4 +121,4 @@ const MypageReservationDetail = () => {
   );
 };
 
-export default MypageReservationDetail;
+export default ReservationDetail;

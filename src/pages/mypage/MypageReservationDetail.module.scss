@@ -11,55 +11,149 @@
   flex: 1;
 
   .backBtn {
-    background: none; border: none; color: #666; cursor: pointer; margin-bottom: 20px;
-    font-size: 14px; display: flex; align-items: center; gap: 8px;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .detailHeader {
-    border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+
     .titleArea {
-      display: flex; align-items: center; gap: 15px;
-      h2 { font-size: 28px; margin: 0; }
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      h2 {
+        font-size: 28px;
+        margin: 0;
+      }
     }
-    .resNum { color: #888; margin-top: 8px; }
+
+    .resNum {
+      color: #888;
+      margin-top: 8px;
+    }
   }
 
   .section {
     margin-bottom: 40px;
-    .sectionTitle { font-size: 18px; margin-bottom: 15px; border-left: 4px solid $color-gray-700; padding-left: 10px; }
-    
+
+    .sectionTitle {
+      font-size: 18px;
+      margin-bottom: 15px;
+      border-left: 4px solid $color-gray-700;
+      padding-left: 10px;
+    }
+
     .carInfoCard {
-      display: flex; gap: 20px; align-items: center; background: #f8f9fa; padding: 20px; border-radius: 12px;
-      img { width: 150px; border-radius: 8px; }
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+
+      img {
+        width: 150px;
+        border-radius: 8px;
+      }
+
       .carText {
-        .brand { color: #666; font-size: 14px; }
-        h4 { font-size: 20px; margin: 5px 0; }
+        .brand {
+          color: #666;
+          font-size: 14px;
+        }
+
+        h4 {
+          font-size: 20px;
+          margin: 5px 0;
+        }
       }
     }
 
     .infoGrid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-      background: #fff; border: 1px solid #eee; padding: 25px; border-radius: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 25px;
+      border-radius: 12px;
+
       .infoItem {
-        .iconLabel { color: $color-gray-700; font-size: 14px; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
-        p { font-size: 16px; margin: 0; }
-        &.fullWidth { grid-column: span 2; border-top: 1px dashed #eee; pt: 15px; }
+        .iconLabel {
+          color: $color-gray-700;
+          font-size: 14px;
+          margin-bottom: 5px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        p {
+          font-size: 16px;
+          margin: 0;
+        }
+
+        &.fullWidth {
+          grid-column: span 2;
+          border-top: 1px dashed #eee;
+          padding-top: 15px;
+        }
       }
     }
   }
 
   .paymentCard {
-    background: #fdfdfd; border: 1px solid #ddd; padding: 20px; border-radius: 12px;
+    background: #fdfdfd;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 12px;
+
     .priceRow {
-      display: flex; justify-content: space-between; padding: 10px 0;
-      .totalPrice { color: #e74c3c; font-size: 20px; }
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+
+      .totalPrice {
+        color: #e74c3c;
+        font-size: 20px;
+      }
     }
   }
 
   .actions {
-    display: flex; gap: 10px; margin-top: 50px;
-    button { flex: 1; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    .cancelBtn { background: #fff; border: 1px solid #e74c3c; color: #e74c3c; }
-    .contactBtn { background: #333; border: none; color: #fff; }
+    display: flex;
+    gap: 10px;
+    margin-top: 50px;
+
+    button {
+      flex: 1;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cancelBtn {
+      background: #fff;
+      border: 1px solid #e74c3c;
+      color: #e74c3c;
+    }
+
+    .contactBtn {
+      background: #333;
+      border: none;
+      color: #fff;
+    }
   }
 }
