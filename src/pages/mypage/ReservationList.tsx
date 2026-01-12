@@ -3,8 +3,9 @@ import styles from './ReservationList.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import MypageSide from './MypageSide.tsx';
-import { ReservationItem } from '../../types/ReservationItem.ts';
+import { ReservationItem } from '../../types/mypage/ReservationItem.ts';
 import { userApi } from '../../api/mypageUserApi.ts';
+import { Link, useNavigate } from 'react-router-dom';
 
 // 예약 상태 타입 정의
 type ReservationStatus = '전체' | '이용예정' | '이용중' | '반납완료' | '취소됨';
@@ -14,6 +15,7 @@ const ReservationList = () => {
   const [activeTab, setActiveTab] = useState<ReservationStatus>('전체');
   const [reservations, setReservations] = useState<ReservationItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   // API 데이터 호출
   useEffect(() => {
@@ -102,7 +104,7 @@ const ReservationList = () => {
                   </div>
 
                   <div className={styles.cardFooter}>
-                    <button className={styles.detailBtn}>상세보기</button>
+                      <button className={styles.detailBtn} onClick={() => navigate(`/mypage/reservations/${item.reservationId}`)}>상세보기</button>
                     {item.status === '이용예정' && (
                       <button
                         className={styles.cancelBtn}

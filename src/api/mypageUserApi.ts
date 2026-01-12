@@ -1,6 +1,7 @@
 // src/api/userApi.ts
-import { ReservationItem } from '../types/ReservationItem.ts';
-import { UserProfileResponse } from '../types/UserProfileRespons.ts';
+import { ReservationDetail } from '../types/mypage/ReservationDetail.ts';
+import { ReservationItem } from '../types/mypage/ReservationItem.ts';
+import { UserProfileResponse } from '../types/mypage/UserProfileResponse.ts';
 import client from './client.ts';
 
 
@@ -20,6 +21,11 @@ export const userApi = {
   // 특정 유저의 예약 내역 조회
   getMyReservations: async (userNum: number): Promise<ReservationItem[]> => {
     const response = await client.get(`/mypage/reservation/${userNum}`);
+    return response.data;
+  },
+
+  getReservationDetail: async (reservationId: number): Promise<ReservationDetail> => {
+    const response = await client.get(`/mypage/reservation/${reservationId}`);
     return response.data;
   },
 };
