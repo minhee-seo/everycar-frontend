@@ -31,19 +31,22 @@ const AppRoutes = () => (
           <Route path="/reservation/carList" element={<CarList />} />
           <Route path="/reservation/carDetail" element={<CarDetail />} />
           <Route path="/reservation/contract" element={<Contract />} />
-          <Route path="/reservation/payment" element={<Payment />} />
+          {/* <Route path="/reservation/payment" element={<Payment />} /> */}
+          {/* <Route path="/reservation/contract" element={<Contract />} /> */}
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/SignConditions" element={<SignConditions />} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
-          <Route path="/mypage">
-            <Route path="info" element={<MypageInfo />} />
-            <Route path="reservations" element={<ReservationList />} />
-            <Route path="reservations/:id" element={<MypageReservationDetail />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/mypage">
+              <Route path="info" element={<MypageInfo />} />
+              <Route path="reservations" element={<ReservationList />} />
+              <Route path="reservations/:id" element={<MypageReservationDetail />} />
+            </Route>
+            <Route path="/reservation/contract" element={<Contract />} />
+            <Route path="/reservation/payment" element={<Payment />} />
           </Route>
-          <Route path="/reservation/contract" element={<Contract />} />
-          {/* 추가로 보호할 페이지들... */}
         </Route>
       </Routes>
 

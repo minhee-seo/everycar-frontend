@@ -23,10 +23,10 @@ export default function MobileGnb() {
           <FontAwesomeIcon icon={faCar} />
           <span>예약</span>
         </Link>
-        <Link to="/support/event" className={location.pathname.includes('event') ? styles.active : ''}>
+        {/* <Link to="/support/event" className={location.pathname.includes('event') ? styles.active : ''}>
           <FontAwesomeIcon icon={faGift} />
           <span>이벤트</span>
-        </Link>
+        </Link> */}
         <Link to="/myPage/info" className={location.pathname.includes('myPage') ? styles.active : ''}>
           <FontAwesomeIcon icon={faUser} />
           <span>마이페이지</span>

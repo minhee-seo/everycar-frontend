@@ -88,9 +88,9 @@ const DesktopGnb: React.FC = () => {
             <div className={styles.centerMenu}>
               <ul>
                 <li><Link to="/reservation">렌터카예약하기</Link></li>
-                <li><Link to="/support/event">이벤트</Link></li>
+                {/* <li><Link to="/support/event">이벤트</Link></li>
                 <li><Link to="/support/inquiry">문의하기</Link></li>
-                <li><Link to="/support/announcement">공지사항</Link></li>
+                <li><Link to="/support/announcement">공지사항</Link></li> */}
               </ul>
             </div>
           </div>

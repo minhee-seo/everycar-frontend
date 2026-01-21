@@ -42,10 +42,10 @@ function MainMobile() {
                             <FontAwesomeIcon icon={faCheck} />
                             예약확인
                         </li>
-                        <li>
+                        {/* <li>
                             <FontAwesomeIcon icon={faComments} />
                             1 : 1 상담
-                        </li>
+                        </li> */}
                         <li>
                             <FontAwesomeIcon icon={faFile} />
                             견적확인
