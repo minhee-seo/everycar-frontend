@@ -19,109 +19,110 @@
     font-size: $font-md;
   }
 
-  .rentTime {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 85px;
-    padding-bottom: 10px;
-    gap: 5px;
-
-    @include respond-max(mobile-m) {
-      display: block;
-      width: 100%;
-    }
-
-    .selectTime {
-      position: relative;
-      width: 100%;
-    }
-
-  }
-
-
-  .result {
-    display: flex;
-    align-items: center;
-    padding: 10px 85px;
-
-    @include respond-max(mobile-m) {
-      display: none;
-    }
-
-
-    .resultCont {
+  .btnCont {
+    .rentTime {
       display: flex;
       justify-content: space-between;
-      width: 100%;
-      align-items: baseline;
-      text-align: right;
-
-      .title {
-        margin-right: 20px;
-        color: $color-gray-600;
-      }
-
-      .date {
-        flex: 1;
-      }
-
-      .time {
-        width: 100px;
-      }
-
-    }
-
-    svg {
-      color: $color-gray-800;
-      margin: 0 20px;
-    }
-  }
-
-  .button {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding-top: 20px;
-    margin-top: 20px;
-    border-top: 1px solid $color-gray-200;
-
-    @include respond-max(mobile-m) {
-      width: 100%;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: $font-sm;
-      cursor: pointer;
-      transition: background-color 0.2s;
+      padding: 10px 85px;
+      padding-bottom: 10px;
+      gap: 5px;
 
       @include respond-max(mobile-m) {
+        display: block;
         width: 100%;
       }
+
+      .selectTime {
+        position: relative;
+        width: 100%;
+      }
+
     }
 
-    .reset {
-      background-color: $color-gray-100;
-      color: $color-gray-800;
-
-      &:hover {
-        background-color: $color-gray-200;
-      }
+    .result {
+      display: flex;
+      align-items: center;
+      padding: 10px 85px;
 
       @include respond-max(mobile-m) {
         display: none;
       }
-    }
 
-    .submit {
-      background-color: $primary-color;
 
-      &:hover {
-        filter: brightness(0.9);
+      .resultCont {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: baseline;
+        text-align: right;
+
+        .title {
+          margin-right: 20px;
+          color: $color-gray-600;
+        }
+
+        .date {
+          flex: 1;
+        }
+
+        .time {
+          width: 100px;
+        }
+
       }
 
+      svg {
+        color: $color-gray-800;
+        margin: 0 20px;
+      }
+    }
+
+    .button {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding-top: 20px;
+      margin-top: 20px;
+      border-top: 1px solid $color-gray-200;
+
+      @include respond-max(mobile-m) {
+        width: 100%;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: $font-sm;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        @include respond-max(mobile-m) {
+          width: 100%;
+        }
+      }
+
+      .reset {
+        background-color: $color-gray-100;
+        color: $color-gray-800;
+
+        &:hover {
+          background-color: $color-gray-200;
+        }
+
+        @include respond-max(mobile-m) {
+          display: none;
+        }
+      }
+
+      .submit {
+        background-color: $primary-color;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+      }
     }
   }
 
@@ -159,12 +160,40 @@
     align-items: center;
   }
 
+  .datepicker .btnCont .rentTime {
+    padding: 0;
+  }
+
+
   :global {
     .react-datepicker {
+      font-size: 15px;
       border: none;
       display: flex;
       justify-content: center;
       flex-direction: column;
+    }
+
+    .ReservationDatePicker_btnCont__fb1-V {
+      display: flex;
+      width: 100%;
+      height: 300px;
+      flex: 1 1;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .react-datepicker__navigation--next{
+      right: 14px;
+    }
+
+    .react-datepicker__navigation--previous{
+      left: 14px;
+    }
+
+    .react-datepicker__day-names {
+      display: flex;
+      justify-content: center;
     }
 
     .react-datepicker__header {
@@ -177,7 +206,27 @@
       width: 300px
     }
 
-
+    .react-datepicker__day-name,
+    .react-datepicker__day,
+    .react-datepicker__time-name {
+      // padding: 5px;
+    }
   }
 
+}
+
+@include respond-max(374px) {
+  :global {
+    .react-datepicker {}
+
+    .react-datepicker__month-container {
+      width: 0;
+    }
+
+    .react-datepicker__day-name,
+    .react-datepicker__day,
+    .react-datepicker__time-name {
+      padding: 0;
+    }
+  }
 }

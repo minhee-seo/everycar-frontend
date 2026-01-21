@@ -236,69 +236,69 @@ const ReservationDatePicker: React.FC<ReservationDatePickerProps> = ({ reservati
           selected={startDate}
           monthsShown={monthsShown}
         />
-        <div className={styles.rentTime}>
-          <div className={styles.selectTime}>
-            <CustomSelect
-              label="대여 시각"
-              value={
-                reservationInfo.startDate
-                  ? formatTimeFromDate(reservationInfo.startDate)
-                  : formatTimeFromDate(initialRentDate) // 초기값 반영
-              }
-              onChange={handleStartTimeChange}
-              startDate={reservationInfo.startDate}
-              endDate={reservationInfo.endDate} // 반납 시각 계산을 위해 넘겨줍니다.
-              isEnd={false}
-            />
+        <div className={styles.btnCont}>
+          <div className={styles.rentTime}>
+            <div className={styles.selectTime}>
+              <CustomSelect
+                label="대여 시각"
+                value={
+                  reservationInfo.startDate
+                    ? formatTimeFromDate(reservationInfo.startDate)
+                    : formatTimeFromDate(initialRentDate) // 초기값 반영
+                }
+                onChange={handleStartTimeChange}
+                startDate={reservationInfo.startDate}
+                endDate={reservationInfo.endDate} // 반납 시각 계산을 위해 넘겨줍니다.
+                isEnd={false}
+              />
+            </div>
+            <div className={styles.selectTime}>
+              <CustomSelect
+                label="반납 시각"
+                value={
+                  reservationInfo.endDate
+                    ? formatTimeFromDate(reservationInfo.endDate)
+                    : formatTimeFromDate(initialReturnDate)
+                }
+                onChange={handleEndTimeChange}
+                startDate={reservationInfo.startDate}
+                endDate={reservationInfo.endDate}
+                isEnd={true}
+              />
+            </div>
           </div>
-          <div className={styles.selectTime}>
-            <CustomSelect
-              label="반납 시각"
-              value={
-                reservationInfo.endDate
-                  ? formatTimeFromDate(reservationInfo.endDate)
-                  : formatTimeFromDate(initialReturnDate)
-              }
-              onChange={handleEndTimeChange}
-              startDate={reservationInfo.startDate}
-              endDate={reservationInfo.endDate}
-              isEnd={true}
-            />
+          <div className={styles.result}>
+            <div className={styles.resultCont}>
+              <span className={styles.title}>시작일</span>
+              <span className={styles.date}>{reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''}</span>
+            </div>
+            <FontAwesomeIcon icon={faCarSide} />
+            <div className={styles.resultCont}>
+              <span className={styles.title}>반납일</span>
+              <span className={styles.date}>{reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''}</span>
+            </div>
           </div>
-        </div>
-        <div className={styles.result}>
-          <div className={styles.resultCont}>
-            <span className={styles.title}>시작일</span>
-            <span className={styles.date}>{reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''}</span>
+          <div className={styles.button}>
+            <button
+              className={styles.reset}
+              onClick={() => {
+                onClose();
+              }}
+            >
+              취소
+            </button>
+            <button
+              className={styles.submit}
+              onClick={() => {
+                if (startDate && endDate && start && end) {
+                  handleSelectComplete();
+                } else {
+                  alert('날짜와 시간을 모두 선택해주세요.');
+                }
+              }}>
+              선택 완료
+            </button>
           </div>
-          <FontAwesomeIcon icon={faCarSide} />
-          <div className={styles.resultCont}>
-            <span className={styles.title}>반납일</span>
-            <span className={styles.date}>{reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''}</span>
-          </div>
-        </div>
-
-
-        <div className={styles.button}>
-          <button
-            className={styles.reset}
-            onClick={() => {
-              onClose();
-            }}
-          >
-            취소
-          </button>
-          <button
-            className={styles.submit}
-            onClick={() => {
-              if (startDate && endDate && start && end) {
-                handleSelectComplete();
-              } else {
-                alert('날짜와 시간을 모두 선택해주세요.');
-              }
-            }}>
-            선택 완료
-          </button>
         </div>
       </div>
     </>
