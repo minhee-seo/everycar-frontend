@@ -1,9 +1,6 @@
-import React from 'react'
 import styles from './MainMobile.module.scss';
 
 import Searchbar from './Searchbar.tsx'
-import ShortCut from '../main_desktop/ShortCut.tsx'
-import CarSlider from '../main_commoon/CarSlide.tsx'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faMapMarkerAlt, faCheck, faComments, faFile, } from '@fortawesome/free-solid-svg-icons';
@@ -47,8 +44,10 @@ function MainMobile() {
                             1 : 1 상담
                         </li> */}
                         <li>
-                            <FontAwesomeIcon icon={faFile} />
-                            견적확인
+                            <Link to="/estimate">
+                                <FontAwesomeIcon icon={faFile} />
+                                견적확인
+                            </Link>
                         </li>
                     </ul>
                 </div>

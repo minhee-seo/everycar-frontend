@@ -1,0 +1,190 @@
+@import '../../styles/global.scss';
+
+.title {
+  margin-top: 140px;
+  text-align: left;
+  font-size: $font-xl;
+  margin-bottom: 20px;
+}
+
+.cont1 {
+  margin-bottom: 100px;
+
+  h3 {
+    font-size: $font-lg;
+    font-weight: 700;
+  }
+
+  h3::after {
+    content: '';
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #f6f6f6;
+  }
+
+  .description {
+    font-size: $font-md;
+    margin-bottom: 20px;
+    color: #666;
+  }
+
+  .tableContainer {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #fff;
+  }
+
+  .tableContainer th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
+
+  .notes {
+    margin-top: 20px;
+    font-size: $font-md;
+    color: #666;
+    line-height: 1.6;
+  }
+}
+
+.cont2 {
+  margin-bottom: 100px;
+
+  h3 {
+    font-size: $font-lg;
+    font-weight: 700;
+  }
+
+  h3::after {
+    content: '';
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #f6f6f6;
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid #ddd;
+    margin: 20px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+  }
+
+  th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+  }
+}
+
+.cont3 {
+  margin-bottom: 100px;
+  h3 {
+    font-size: $font-md;
+    font-weight: 700;
+  }
+
+  h3::after {
+    content: '';
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #f6f6f6;
+  }
+
+  .container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: space-between;
+    font-size: $font-sm;
+    margin-bottom: 20px;
+  }
+
+  .tabs {
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    transition: color 0.3s ease;
+
+    &.active {
+      color: red;
+      font-weight: bold;
+    }
+  }
+
+  .tabs.active {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #000;
+  }
+
+  h2 {
+    font-size: 18px;
+    /*border-bottom: 2px solid #000;*/
+    padding-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  .active {
+    color: rgb(231, 39, 28);
+    font-weight: bold;
+  }
+
+  .gray-bg {
+    background-color: #f4f4f4;
+  }
+
+  .hidden {
+    display: none;
+  }
+}

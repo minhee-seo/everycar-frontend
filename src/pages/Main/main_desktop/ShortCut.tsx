@@ -29,7 +29,7 @@ function ShortCut() {
                     subscript='사고접수 또는 예약 상담'
                 /> */}
                 <ShortcutBox
-                    to='/support/Estimate'
+                    to='/Estimate'
                     ico={faFileInvoiceDollar}
                     title='견적확인'
                     subscript=''

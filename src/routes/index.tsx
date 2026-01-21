@@ -20,6 +20,7 @@ import ProtectedRoute from '../components/auth/ProtectedRoute.tsx';
 import MypageInfo from '../pages/mypage/MypageInfo.tsx';
 import ReservationList from '../pages/mypage/ReservationList.tsx';
 import MypageReservationDetail from '../pages/mypage/MypageReservationDetail.tsx';
+import Estimate from '../pages/estimate/estimate.tsx';
 
 const AppRoutes = () => (
   <>
@@ -37,6 +38,7 @@ const AppRoutes = () => (
           <Route path="/auth/SignConditions" element={<SignConditions />} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/estimate" element={<Estimate />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/mypage">
