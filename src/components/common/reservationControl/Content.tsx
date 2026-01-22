@@ -23,6 +23,14 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
 
   const { address, error } = useCurrentLocation();
 
+  const getGuAddress = (addr: string | null) => {
+    if (!addr) return '강남구'; // 기본값
+    const parts = addr.split(' ');
+    return parts[parts.length - 1]; // 마지막 단어(구) 반환
+  };
+
+  const searchKeyword = getGuAddress(address);
+
   return (
     <>
       <div className={styled.contentContainer} >
@@ -65,7 +73,7 @@ function Content({ setIsDatePickerOpen, reservationInfo }: ReservationController
               <Link
                 to="/reservation"
                 state={{
-                  address,
+                  address: searchKeyword,
                   reservationInfo,
                 }}>
                 <FontAwesomeIcon icon={faArrowRight} className={styled.arrow} />

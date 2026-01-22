@@ -58,9 +58,9 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                 });
 
                 const iwContent = `
-          <div class="CustomOverlay">
-            <span>${parking.parking_name}</span>
-          </div>`;
+                    <div class="CustomOverlay">
+                        <span>${parking.parking_name}</span>
+                    </div>`;
 
                 const iwfowindow = new window.kakao.maps.CustomOverlay({
                     position: position,
@@ -113,9 +113,7 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
                             readOnly
                             value={
                                 reservationInfo.startDate ?
-                                    `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''
-                                    } ${reservationInfo.startTime || ''} ~ ${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''
-                                    } ${reservationInfo.endTime || ''}`
+                                    `${reservationInfo.startDate ? FormatKoreanDate(reservationInfo.startDate) : ''} ~${reservationInfo.endDate ? FormatKoreanDate(reservationInfo.endDate) : ''}`
                                     : ''
                             }
                         />
