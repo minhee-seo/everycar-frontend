@@ -1,8 +1,9 @@
 @import '../../styles/global.scss';
 
-.container{
+.container {
   padding: 100px 0;
 }
+
 section {
   // padding margin
 
@@ -15,11 +16,12 @@ section {
   border-radius: 10px;
   border: 1px solid $border-color;
 }
-.ContentSection_article:first-child{
+
+.ContentSection_article:first-child {
   // margin-top: 140px;
 }
 
-.ContentSection_article:last-child{
+.ContentSection_article:last-child {
   margin-bottom: 40px;
 }
 
@@ -187,43 +189,37 @@ section {
 
   .locationCont {
     display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
+    align-items: center; // 중앙 정렬로 변경
+    gap: 1.2rem;
+    padding: 16px;
+    background: #fff;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
 
     .iconCont {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
+      width: 54px;
+      height: 54px;
       flex-shrink: 0;
-      background-color: lighten($primary-color, 40%);
-      border-radius: 50%;
+      background-color: rgba($primary-color, 0.1); // 더 부드러운 배경색
+      border-radius: 14px; // 약간 각진 둥근 형태
 
       svg {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         color: $primary-color;
       }
     }
 
     .textCont {
-      h3 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin: 0 0 0.5rem;
-      }
-
-      p {
-        font-size: 1rem;
-        color: $color-gray-700;
-        line-height: 1.6;
-        margin: 0;
-      }
+      display: flex;
+      flex-direction: column;
     }
   }
 
   .map {
-    width: 400px;
+    width: 600px;
     height: 250px;
     flex-shrink: 0;
     background: $color-gray-200;
@@ -247,6 +243,10 @@ section {
 @include respond-max(mobile-m) {
   section {
     margin-top: 0
+  }
+
+  .container {
+    padding: 0;
   }
 
   .ContentSection_article {
@@ -295,5 +295,9 @@ section {
     border-radius: 10px;
     padding: 1.5rem;
     margin-top: 1.5rem;
+  }
+
+  .reservationButton {
+    width: 100%;
   }
 }

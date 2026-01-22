@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './CarDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo, faChair, faMapSigns, faLocationDot, faClock } from '@fortawesome/free-solid-svg-icons';
 import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
 import { CarDetailResponse, getCarDetail } from '../../api/carDetail.ts';
 import { Link, useLocation } from 'react-router-dom';
+import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
 
 interface SubComponentProps {
     data: CarDetailResponse;
@@ -54,7 +55,7 @@ function CarDetail() {
 
 function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
     const { car } = data;
-    const model = car.model; // car 객체 내부에 model이 들어있음
+    const model = car.model;
 
     const displayPrice = car.totalPrice;
 
@@ -65,12 +66,51 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
         };
         return `${format(start)} ~ ${format(end)}`;
     };
+
+    const [mapInstance, setMapInstance] = useState<any>(null);
+
+    const handleMapLoad = useCallback((map: any) => {
+        setMapInstance(map);
+    }, []);
+
+    useEffect(() => {
+        if (!mapInstance || !car.parking?.parking_id) return;
+
+        const kakao = window.kakao;
+        if (!kakao || !kakao.maps) return;
+
+        const lat = car.parking_latitude ?? 37.5665;
+        const lng = car.parking_longitude ?? 126.9780;
+        const markerPosition = new kakao.maps.LatLng(lat, lng);
+
+        // 1. 지도의 크기가 변했을 수 있으므로 레이아웃 재계산
+        mapInstance.relayout();
+
+        // 2. 마커 생성 및 즉시 지도 설정
+        const marker = new kakao.maps.Marker({
+            position: markerPosition,
+            map: mapInstance // setMap(mapInstance) 대신 생성 시점에 넣어줌
+        });
+
+        // 3. 중심점 이동 및 레벨 조정
+        mapInstance.setLevel(3);
+        mapInstance.setCenter(markerPosition);
+
+        // 가끔 setCenter가 즉시 반영 안 될 때를 대비해 panTo 사용
+        setTimeout(() => {
+            mapInstance.panTo(markerPosition);
+        }, 100);
+
+        return () => {
+            marker.setMap(null);
+        };
+    }, [mapInstance, car.parking?.parking_id, car.parking?.parking_latitude]);
+
     return (
         <div className={styles.container}>
             <section className={styles.ContentSection_article}>
                 <div className={styles.rentalTime}>
                     <h2>대여기간</h2>
-                    {/* "2025-12-26 19:30 ~ 2025-12-28 10:00" 처럼 출력됨 */}
                     <p>{formatPeriod(rentalDatetime, returnDatetime)}</p>
                 </div>
             </section>
@@ -108,9 +148,7 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                 <div className={styles.carPrice}>
                     <div className={styles.priceDisplay}>
                         <span className={styles.priceLabel}>총 금액</span>
-                        {/* car.toto가 아니라 totalPrice를 사용합니다. */}
                         <p className={styles.priceValue}>
-                            {/* 안전하게 Number로 변환하여 출력 */}
                             {displayPrice ? Number(displayPrice).toLocaleString() : '0'}원
                         </p>
                     </div>
@@ -125,15 +163,31 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                 <div className={styles.locationSection}>
                     <div className={styles.location}>
                         <div className={styles.locationCont}>
+                            <div className={styles.iconCont}>
+                                <FontAwesomeIcon icon={faLocationDot} />
+                            </div>
                             <div className={styles.textCont}>
                                 <h3>대여장소</h3>
                                 <p>{car.parking?.parking_name}</p>
                                 <p>{car.parking?.parking_address}</p>
                             </div>
                         </div>
+
+                        {/* 기간 정보 카드 */}
+                        <div className={styles.locationCont}>
+                            <div className={styles.iconCont}>
+                                <FontAwesomeIcon icon={faClock} />
+                            </div>
+                            <div className={styles.textCont}>
+                                <h3>대여 기간</h3>
+                                <p>{formatPeriod(rentalDatetime, returnDatetime)}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className={styles.map} id="detail-map">
-                        {/* 여기에 카카오맵을 다시 렌더링하거나 위치 이미지를 넣을 수 있습니다 */}
+                    <div className={styles.map}>
+                        <div id="map" style={{ width: '100%', height: '250px' }}>
+                            <MapView onMapLoad={handleMapLoad} />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -150,6 +204,45 @@ function Mobile({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
     const formatPeriod = (start: string, end: string) => {
         return `${start.replace('T', ' ')} ~ ${end.replace('T', ' ')}`;
     };
+
+    const [mapInstance, setMapInstance] = useState<any>(null);
+
+    const handleMapLoad = useCallback((map: any) => {
+        setMapInstance(map);
+    }, []);
+
+    useEffect(() => {
+        if (!mapInstance || !car.parking?.parking_id) return;
+
+        const kakao = window.kakao;
+        if (!kakao || !kakao.maps) return;
+
+        const lat = car.parking_latitude ?? 37.5665;
+        const lng = car.parking_longitude ?? 126.9780;
+        const markerPosition = new kakao.maps.LatLng(lat, lng);
+
+        // 1. 지도의 크기가 변했을 수 있으므로 레이아웃 재계산
+        mapInstance.relayout();
+
+        // 2. 마커 생성 및 즉시 지도 설정
+        const marker = new kakao.maps.Marker({
+            position: markerPosition,
+            map: mapInstance // setMap(mapInstance) 대신 생성 시점에 넣어줌
+        });
+
+        // 3. 중심점 이동 및 레벨 조정
+        mapInstance.setLevel(3);
+        mapInstance.setCenter(markerPosition);
+
+        // 가끔 setCenter가 즉시 반영 안 될 때를 대비해 panTo 사용
+        setTimeout(() => {
+            mapInstance.panTo(markerPosition);
+        }, 100);
+
+        return () => {
+            marker.setMap(null);
+        };
+    }, [mapInstance, car.parking?.parking_id, car.parking?.parking_latitude]);
 
     return (
         <div className={styles.container}>
@@ -220,7 +313,9 @@ function Mobile({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                         </div>
                     </div>
                     <div className={styles.map} id="mobile-detail-map">
-                        {/* 지도 영역 */}
+                        <div id="map" style={{ width: '100%', height: '250px' }}> {/* MapView가 찾는 ID */}
+                            <MapView onMapLoad={handleMapLoad} />
+                        </div>
                     </div>
                 </div>
             </section>

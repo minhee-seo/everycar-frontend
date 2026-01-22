@@ -8,14 +8,13 @@ import { ParkingDTO } from '../types/dto/ParkingDTO.ts';
 
 // 상세 페이지 응답 구조 인터페이스
 export interface CarDetailResponse {
-  // 1. car 바구니 안에 자동차 기본 정보가 있음
   car: {
     car_id: number;
     car_fuel: string;
     car_grade: string;
     car_options: string;
     car_year: number;
-    car_category: string | null; // 디버깅 결과 null인 것들
+    car_category: string | null; 
     car_status: number | null;
     model_id: string | null;
     rental_station: number;
@@ -23,6 +22,8 @@ export interface CarDetailResponse {
     totalPrice: number;
     parking: ParkingDTO;
     parkingList: ParkingDTO[] | null;
+    parking_latitude: number | null;
+    parking_longitude: number | null;
   };
 }
 export const getCarDetail = async (
