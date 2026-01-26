@@ -9,6 +9,7 @@ import { CarDTO } from '../../types/dto/CarDTO.ts';
 import { ParkingDTO } from '../../types/dto/ParkingDTO.ts';
 
 import { getAvailableCars } from '../../api/reservationApi.ts';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;
 export type ModelInfoResponse = ModelDTO;
@@ -168,8 +169,10 @@ function CarListDesktop() {
                                                     <p>{car.car_year}년형</p>
                                                 </header>
                                                 <div className={styles.carImage}>
-                                                    {/*  */}
-                                                    {/* 실제 차량 이미지를 여기에 렌더링 */}
+                                                    <img
+                                                        src={ `/main/car/${CarNameMapper(car.model.model_name)}.png`}
+                                                        alt={car.model.model_name}
+                                                    />
                                                 </div>
                                                 <div className={styles.carDetails}>
                                                     <ul className={styles.optionList}>

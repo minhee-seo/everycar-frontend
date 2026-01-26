@@ -13,6 +13,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { getAvailableCars } from '../../api/reservationApi.ts';
 import { CarDTO } from '../../types/dto/CarDTO';
 import { ModelInfoResponse, ParkingInfoResponse } from './CarListDesktop';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 interface CarDetail extends Omit<CarDTO, 'parking'> {
     totalPrice: number;
@@ -114,7 +115,10 @@ function CarListMobile() {
                                             </header>
 
                                             <div className={styles.carImage}>
-                                                {car.model.image_url && <img src={car.model.image_url} alt={car.model.model_name} />}
+                                                <img
+                                                    src={`/main/car/${CarNameMapper(car.model.model_name)}.png`}
+                                                    alt={car.model.model_name}
+                                                />
                                             </div>
 
                                             <div className={styles.carDetails}>

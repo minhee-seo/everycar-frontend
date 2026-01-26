@@ -6,6 +6,7 @@ import { userApi } from '../../api/mypageUserApi.ts'; // API 불러오기
 import { ReservationDetail as IDetail } from '../../types/mypage/ReservationDetail.ts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faMapMarkerAlt, faClock } from '@fortawesome/free-solid-svg-icons';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 const ReservationDetail = () => {
   const { id } = useParams<{ id: string }>(); // URL 파라미터 :id 추출
@@ -16,7 +17,7 @@ const ReservationDetail = () => {
   useEffect(() => {
     const fetchDetail = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
         // API 호출: 백엔드에서 데이터 가져오기
@@ -42,7 +43,7 @@ const ReservationDetail = () => {
     <div className="container">
       <div className={styles.pageWrapper}>
         <MypageSide />
-        
+
         <main className={styles.content}>
           <button className={styles.backBtn} onClick={() => navigate(-1)}>
             <FontAwesomeIcon icon={faChevronLeft} /> 목록으로 돌아가기
@@ -62,7 +63,10 @@ const ReservationDetail = () => {
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>차량 정보</h3>
             <div className={styles.carInfoCard}>
-              <img src={detail.carImg || '/sample-car.png'} alt={detail.carName} />
+              <img
+                src={`/main/car/${CarNameMapper(detail.carName)}.png`}
+                alt={detail.carName}
+              />
               <div className={styles.carText}>
                 <span className={styles.brand}>{detail.brand}</span>
                 <h4>{detail.carName}</h4>
@@ -110,7 +114,7 @@ const ReservationDetail = () => {
 
           <div className={styles.actions}>
             {detail.status === '이용예정' && (
-              <button className={styles.cancelBtn} onClick={() => {/* 환불 함수 연결 */}}>
+              <button className={styles.cancelBtn} onClick={() => {/* 환불 함수 연결 */ }}>
                 예약 취소하기
               </button>
             )}

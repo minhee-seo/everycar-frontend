@@ -33,6 +33,10 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     title: '상세조회',
     leftIcon: faArrowLeft,
   },
+  '/reservation/contract': {
+    title: '결제',
+    leftIcon: faArrowLeft,
+  },
   '/support/inquiry': {
     title: '문의하기',
     leftIcon: faArrowLeft,

@@ -6,6 +6,7 @@ import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
 import { CarDetailResponse, getCarDetail } from '../../api/carDetail.ts';
 import { Link, useLocation } from 'react-router-dom';
 import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 interface SubComponentProps {
     data: CarDetailResponse;
@@ -118,7 +119,10 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
             <section className={styles.ContentSection_article}>
                 <div className={styles.infoSection}>
                     <div className={styles.carImage}>
-                        {model?.image_url && <img src={model.image_url} alt={model.model_name} />}
+                        <img
+                            src={`/main/car/${CarNameMapper(car.model.model_name)}.png`}
+                            alt={car.model.model_name}
+                        />
                     </div>
                     <div className={styles.carInfo}>
                         <div className={styles.infoHeader}>
@@ -258,7 +262,10 @@ function Mobile({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
             <section className={styles.ContentSection_article}>
                 <div className={styles.infoSection}>
                     <div className={styles.carImage}>
-                        {model?.image_url && <img src={model.image_url} alt={model.model_name} />}
+                        <img
+                            src={`/main/car/${CarNameMapper(car.model.model_name)}.png`}
+                            alt={car.model.model_name}
+                        />
                     </div>
                     <div className={styles.carInfo}>
                         <div className={styles.infoHeader}>

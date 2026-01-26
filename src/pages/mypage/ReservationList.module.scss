@@ -16,23 +16,45 @@
 .sideMenu {
   width: 240px;
   flex-shrink: 0;
+
   // (이전 MypageInfo와 동일한 스타일 유지)
-  h2 { font-size: $font-xl; margin-bottom: $spacing-lg; }
+  h2 {
+    font-size: $font-xl;
+    margin-bottom: $spacing-lg;
+  }
+
   ul {
-    list-style: none; padding: 0;
+    list-style: none;
+    padding: 0;
+
     li {
-      padding: $spacing-md; cursor: pointer; border-radius: 8px;
-      &.active { background-color: $primary-color-opacity; color: $primary-color-text; font-weight: 600; }
+      padding: $spacing-md;
+      cursor: pointer;
+      border-radius: 8px;
+
+      &.active {
+        background-color: $primary-color-opacity;
+        color: $primary-color-text;
+        font-weight: 600;
+      }
     }
   }
 }
 
 .content {
   flex: 1;
+
   .header {
     margin-bottom: $spacing-lg;
-    h3 { font-size: $font-lg; }
-    p { color: $text-muted; font-size: $font-sm; }
+
+    h3 {
+      font-size: $font-lg;
+    }
+
+    p {
+      color: $text-muted;
+      font-size: $font-sm;
+    }
   }
 }
 
@@ -68,7 +90,10 @@
   margin-bottom: $spacing-lg;
   transition: transform 0.2s;
 
-  &:hover { transform: translateY(-4px); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
 
   .cardHeader {
     display: flex;
@@ -78,7 +103,10 @@
     border-bottom: 1px solid $color-gray-100;
     margin-bottom: $spacing-md;
 
-    .resId { font-size: $font-sm; color: $color-gray-500; }
+    .resId {
+      font-size: $font-sm;
+      color: $color-gray-500;
+    }
   }
 }
 
@@ -89,26 +117,68 @@
   font-weight: 700;
 }
 
-.statusReady { background-color: $primary-color-opacity; color: $primary-color-text; }
-.statusIng { background-color: #e3f2fd; color: #1976d2; }
-.statusDone { background-color: $color-gray-100; color: $color-gray-600; }
-.statusCancel { background-color: #ffebee; color: #d32f2f; }
+.statusReady {
+  background-color: $primary-color-opacity;
+  color: $primary-color-text;
+}
+
+.statusIng {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.statusDone {
+  background-color: $color-gray-100;
+  color: $color-gray-600;
+}
+
+.statusCancel {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
 
 .cardBody {
   display: flex;
   align-items: center;
   gap: $spacing-lg;
 
-  @include respond-max(mobile-m) { flex-direction: column; align-items: flex-start; }
+  @include respond-max(mobile-m) {
+    flex-direction: column;
+    align-items: flex-start;
 
-  .carThumb { width: 120px; height: auto; object-fit: contain; }
-  
+    .carImage {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .carThumb {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+  }
+
   .infoText {
     flex: 1;
-    .carBrand { font-size: $font-xs; color: $color-gray-500; }
-    h4 { font-size: $font-lg; margin: 4px 0 $spacing-sm 0; }
+
+    .carBrand {
+      font-size: $font-xs;
+      color: $color-gray-500;
+    }
+
+    h4 {
+      font-size: $font-lg;
+      margin: 4px 0 $spacing-sm 0;
+    }
+
     .dateInfo {
-      p { font-size: $font-sm; margin: 2px 0; color: $color-gray-700; }
+      p {
+        font-size: $font-sm;
+        margin: 2px 0;
+        color: $color-gray-700;
+      }
     }
   }
 
@@ -116,8 +186,17 @@
     text-align: right;
     display: flex;
     flex-direction: column;
-    .priceLabel { font-size: $font-xs; color: $color-gray-500; }
-    .priceValue { font-size: $font-lg; color: $color-black; margin-top: 4px; }
+
+    .priceLabel {
+      font-size: $font-xs;
+      color: $color-gray-500;
+    }
+
+    .priceValue {
+      font-size: $font-lg;
+      color: $color-black;
+      margin-top: 4px;
+    }
   }
 }
 
@@ -134,8 +213,15 @@
     font-weight: 600;
   }
 
-  .detailBtn { background-color: $color-gray-100; color: $color-gray-700; }
-  .cancelBtn { border: 1px solid $color-gray-300; color: $color-gray-500; }
+  .detailBtn {
+    background-color: $color-gray-100;
+    color: $color-gray-700;
+  }
+
+  .cancelBtn {
+    border: 1px solid $color-gray-300;
+    color: $color-gray-500;
+  }
 }
 
 .emptyState {

@@ -7,6 +7,7 @@ import { reservationService } from '../../api/reservationService.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/index.js';
 import PaymentButton from '../../components/payment/PaymentButton.tsx';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 function ContractDesktop() {
   const navigate = useNavigate();
@@ -132,7 +133,13 @@ function ContractDesktop() {
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>예약 정보</h3>
             <div className={styles.carInfoDetail}>
-              <img src="/sample-car.png" alt="car" className={styles.carImg} />
+              <div className={styles.carImage}>
+                <img
+                  src={`/main/car/${CarNameMapper(carDto.model.model_name)}.png`}
+                  alt={carDto.model.model_name}
+                />
+              </div>
+
               <div className={styles.carText}>
                 <span className={styles.badge}>{carDto.car_fuel}</span>
                 <h4>{carDto.model.model_brand} {carDto.model.model_name}</h4>

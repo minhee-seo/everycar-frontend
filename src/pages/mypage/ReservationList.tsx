@@ -6,6 +6,7 @@ import MypageSide from './MypageSide.tsx';
 import { ReservationItem } from '../../types/mypage/ReservationItem.ts';
 import { userApi } from '../../api/mypageUserApi.ts';
 import { Link, useNavigate } from 'react-router-dom';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 // 예약 상태 타입 정의
 type ReservationStatus = '전체' | '이용예정' | '이용중' | '반납완료' | '취소됨';
@@ -87,7 +88,12 @@ const ReservationList = () => {
                   </div>
 
                   <div className={styles.cardBody}>
-                    <img src={item.carImg || '/sample-car.png'} alt={item.carName} className={styles.carThumb} />
+                    <div className={styles.carImage}>
+                      <img
+                        src={`/main/car/${CarNameMapper(item.carName)}.png`}
+                        alt={item.carName}
+                      />
+                    </div>
                     <div className={styles.infoText}>
                       <span className={styles.carBrand}>{item.brand}</span>
                       <h4>{item.carName} ({item.fuel})</h4>
@@ -104,7 +110,7 @@ const ReservationList = () => {
                   </div>
 
                   <div className={styles.cardFooter}>
-                      <button className={styles.detailBtn} onClick={() => navigate(`/mypage/reservations/${item.reservationId}`)}>상세보기</button>
+                    <button className={styles.detailBtn} onClick={() => navigate(`/mypage/reservations/${item.reservationId}`)}>상세보기</button>
                     {item.status === '이용예정' && (
                       <button
                         className={styles.cancelBtn}

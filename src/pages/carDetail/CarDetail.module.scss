@@ -36,14 +36,18 @@ section {
 
 // 차량정보 섹션
 .infoSection {
-  display: flex; // 가로 배치
-  align-items: flex-start; // 세로 정렬 (원하는 대로 center 등 변경 가능)
+  display: flex; 
+  align-items: flex-start; 
 
   .carImage {
-    width: 400px; // 원하는 크기 지정
+    width: 400px; 
     height: 300px;
-    flex-shrink: 0; // 줄어들지 않게
+    flex-shrink: 0; 
     background: $color-gray-200;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .carInfo {
@@ -264,6 +268,10 @@ section {
       width: 100%;
       height: auto;
       aspect-ratio: 16 / 9;
+
+      img{
+        width: 90%;
+      }
     }
 
     .carInfo {
