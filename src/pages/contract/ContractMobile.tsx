@@ -1,12 +1,81 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ContractMobile.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faCreditCard, faMobileScreenButton, faCheckCircle, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { reservationService } from '../../api/reservationService.ts';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 function ContractMobile() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 파라미터에서 car 정보 추출
+  const queryParams = new URLSearchParams(location.search);
+  const carId = queryParams.get('carId');
+  const parkingId = queryParams.get('parkingId');
+  const rentalDatetime = queryParams.get('rentalDatetime');
+  const returnDatetime = queryParams.get('returnDatetime');
+
+  // 유저 정보 불러오기 
+  const { userName, userId, userNum } = useSelector((state: RootState) => state.user);
+
   const [paymentMethod, setPaymentMethod] = useState('card');
+  const [contractData, setContractData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    // 숫자만 입력 가능하도록 제한
+    if (name.startsWith('phone') && !/^\d*$/.test(value)) return;
+
+    // 글자 수 충족 시 다음 칸으로 자동 포커스 이동
+    if (name === 'phone2' && value.length === 4) {
+      document.getElementById('phone3')?.focus();
+    }
+  };
+
+  useEffect(() => {
+    // 오류처리
+    if (!carId || !parkingId) {
+      alert("잘못된 접근입니다.");
+      navigate(-1);
+      return;
+    }
+
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        // 테스트용 파라미터
+        const data = await reservationService.getContractDetails({
+          carId: Number(carId),
+          userNum: Number(userNum),
+          parkingId: Number(parkingId)
+        });
+        setContractData(data);
+
+      } catch (error) {
+        console.error("데이터 로드 중 오류 발생:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  const handlePaymentSuccess = (paymentId: string) => {
+    alert("예약이 확정되었습니다.");
+    navigate('/mypage/reservations');
+  };
+
+  if (loading) return <div>로딩 중...</div>;
+  if (!contractData) return <div>데이터가 없습니다.</div>;
+
+  const { carDto, totalPrice, userDTO } = contractData;
 
   return (
 
@@ -17,12 +86,18 @@ function ContractMobile() {
           <h3 className={styles.sectionTitle}>대여 정보</h3>
           <div className={styles.carInfoCard}>
             <div className={styles.carText}>
-              <span className={styles.carBrand}>현대</span>
-              <h4>아이오닉 5 (전기)</h4>
-              <p className={styles.rentalPeriod}>12.26 14:00 ~ 12.27 14:00 (24시간)</p>
-              <p className={styles.location}>강남역 에브리카 대여소</p>
+              <span className={styles.carBrand}>{carDto.model.model_brand}</span>
+              <h4>{carDto.model.model_name} ({carDto.car_fuel})</h4>
+              <p className={styles.rentalPeriod}>{rentalDatetime}</p>
+              <p className={styles.rentalPeriod}>{returnDatetime}</p>
+              <p className={styles.location}>{carDto.parking.parking_address}</p>
             </div>
-            <img src="/sample-car.png" alt="car" className={styles.carImg} />
+            <div className={styles.carImage}>
+              <img
+                src={`/main/car/${CarNameMapper(carDto.model.model_name)}.png`}
+                alt={carDto.model.model_name}
+              />
+            </div>
           </div>
         </section>
 

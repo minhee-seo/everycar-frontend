@@ -26,6 +26,7 @@
     border-radius: 12px;
 
     .carText {
+
         .carBrand {
             font-size: $font-xs;
             color: $text-muted;
@@ -44,9 +45,11 @@
         }
     }
 
-    .carImg {
-        width: 100px;
-        height: auto;
+    .carImage {
+        text-align: center;
+        img{
+            width: 100px;
+        }
     }
 }
 

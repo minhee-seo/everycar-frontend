@@ -43,10 +43,19 @@ export const appBarConfigMap: Record<string, AppBarConfig> = {
     rightIcon: null,
     customClass: 'inquiryAppBar',
   },
-  '/myPage/info': {
+  '/mypage/info': {
     title: '내 정보',
-    leftIcon: faHome,
-    rightIcon: faBars,
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
+  },
+  '/mypage/reservations': {
+    title: '예약내역',
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
+  },
+  '/mypage/reservations/:id': {
+    title: '상세조회',
+    leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
   '/auth/login': {
