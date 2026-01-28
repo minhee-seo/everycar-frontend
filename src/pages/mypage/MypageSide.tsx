@@ -23,7 +23,7 @@ function MypageSide() {
             예약 내역
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink 
             to="/myPage/payment" 
             className={({ isActive }) => (isActive ? styles.active : '')}
@@ -38,7 +38,7 @@ function MypageSide() {
           >
             고객센터
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </aside>
   );
