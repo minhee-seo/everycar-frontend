@@ -26,7 +26,7 @@ const ReservationDetail = () => {
       } catch (error: any) {
         console.error("상세 정보 로드 실패:", error);
         alert("예약 정보를 불러오는 데 실패했습니다.");
-        navigate('/mypage/reservations'); // 실패 시 목록으로 리다이렉트
+        navigate('/myPage/reservations'); // 실패 시 목록으로 리다이렉트
       } finally {
         setLoading(false);
       }

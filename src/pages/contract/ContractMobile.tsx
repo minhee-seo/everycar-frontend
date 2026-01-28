@@ -69,7 +69,7 @@ function ContractMobile() {
 
   const handlePaymentSuccess = (paymentId: string) => {
     alert("예약이 확정되었습니다.");
-    navigate('/mypage/reservations');
+    navigate('/myPage/reservations');
   };
 
   if (loading) return <div>로딩 중...</div>;

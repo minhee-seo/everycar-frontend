@@ -19,7 +19,9 @@ export default function MobileGnb() {
           <FontAwesomeIcon icon={faHome} />
           <span>홈</span>
         </Link>
-        <Link to="/reservation" className={location.pathname.includes('reservation') ? styles.active : ''}>
+        <Link
+          to="/reservation"
+          className={location.pathname.startsWith('/reservation') ? styles.active : ''}>
           <FontAwesomeIcon icon={faCar} />
           <span>예약</span>
         </Link>
@@ -27,7 +29,10 @@ export default function MobileGnb() {
           <FontAwesomeIcon icon={faGift} />
           <span>이벤트</span>
         </Link> */}
-        <Link to="/myPage/info" className={location.pathname.includes('myPage') ? styles.active : ''}>
+        <Link
+          to="/myPage/info"
+          className={location.pathname.startsWith('/myPage') ? styles.active : ''}
+        >
           <FontAwesomeIcon icon={faUser} />
           <span>마이페이지</span>
         </Link>

@@ -9,7 +9,7 @@ function MypageSide() {
       <ul>
         <li>
           <NavLink 
-            to="/mypage/info" 
+            to="/myPage/info" 
             className={({ isActive }) => (isActive ? styles.active : '')}
           >
             개인정보 관리
@@ -17,7 +17,7 @@ function MypageSide() {
         </li>
         <li>
           <NavLink 
-            to="/mypage/reservations" 
+            to="/myPage/reservations" 
             className={({ isActive }) => (isActive ? styles.active : '')}
           >
             예약 내역
@@ -25,7 +25,7 @@ function MypageSide() {
         </li>
         <li>
           <NavLink 
-            to="/mypage/payment" 
+            to="/myPage/payment" 
             className={({ isActive }) => (isActive ? styles.active : '')}
           >
             결제 수단 관리
@@ -33,7 +33,7 @@ function MypageSide() {
         </li>
         <li>
           <NavLink 
-            to="/mypage/cs" 
+            to="/myPage/cs" 
             className={({ isActive }) => (isActive ? styles.active : '')}
           >
             고객센터

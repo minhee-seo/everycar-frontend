@@ -1,6 +1,6 @@
 import MobileAppBar from '../components/common/header/header_mobile/MobileAppBar.tsx'
 import MobileTabBar from '../components/common/header/header_mobile/MobileGnb.tsx'
-import { appBarConfigMap } from '../components/common/header/header_mobile/appBarConfig.tsx';
+import { AppBarConfig, appBarConfigMap } from '../components/common/header/header_mobile/appBarConfig.tsx';
 
 import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../components/common/Footer.tsx';
@@ -8,8 +8,22 @@ import Footer from '../components/common/Footer.tsx';
 const MobileLayout = () => {
   const location = useLocation();
   const path = location.pathname;
-  const config = appBarConfigMap[path] ?? { show: true, title: '페이지' };
 
+  const defaultConfig: AppBarConfig = {
+    pattern: '',
+    show: true,
+    title: '페이지',
+    leftIcon: null,  // 속성 추가
+    rightIcon: null, // 속성 추가
+    customClass: ''
+  };
+
+  const config: AppBarConfig = appBarConfigMap.find((cfg) => {
+    if (cfg.pattern instanceof RegExp) {
+      return cfg.pattern.test(path);
+    }
+    return cfg.pattern === path;
+  }) ?? defaultConfig;
 
   return (
     <>

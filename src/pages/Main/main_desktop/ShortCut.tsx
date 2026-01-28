@@ -17,7 +17,7 @@ function ShortCut() {
                     subscript='1일 렌트부터 4개월까지 원하는 만큼 최저가 보장 '
                 />
                 <ShortcutBox
-                    to='/mypage/reservations'
+                    to='/myPage/reservations'
                     ico={faClipboardCheck}
                     title='내 예약 확인'
                     subscript='예약 내역과 진행상황을 확인해요'

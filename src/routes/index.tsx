@@ -41,7 +41,7 @@ const AppRoutes = () => (
           <Route path="/estimate" element={<Estimate />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/mypage">
+            <Route path="/myPage">
               <Route path="info" element={<MypageInfo />} />
               <Route path="reservations" element={<ReservationList />} />
               <Route path="reservations/:id" element={<MypageReservationDetail />} />

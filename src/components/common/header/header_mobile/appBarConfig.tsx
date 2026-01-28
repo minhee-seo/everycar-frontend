@@ -2,6 +2,7 @@
 import { faArrowLeft, faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 
 export interface AppBarConfig {
+  pattern: RegExp | string;
   title?: string;
   show?: boolean;
   leftIcon?: any;
@@ -9,73 +10,86 @@ export interface AppBarConfig {
   customClass?: string;
 }
 
-export const appBarConfigMap: Record<string, AppBarConfig> = {
-  '/': {
-    show: false,
+export const appBarConfigMap: AppBarConfig[] = [
+  { pattern: '/', show: false },
+
+  {
+    pattern: /^\/myPage\/reservations\/\d+$/,
+    title: '상세조회',
+    leftIcon: faArrowLeft,
+    customClass: 'myPageAppBar',
   },
-  '/reservation': {
+
+  {
+    pattern: '/reservation',
     title: '예약하기',
     leftIcon: faArrowLeft,
     rightIcon: faBars,
     customClass: 'reservationAppBar',
   },
-  '/reservation/carList': {
+  {
+    pattern: '/reservation/carList',
     title: '예약하기',
     leftIcon: faArrowLeft,
     rightIcon: faBars,
     customClass: 'reservationAppBar',
   },
-  '/reservation/payment': {
+  {
+    pattern: '/reservation/payment',
     title: '결제',
     leftIcon: faArrowLeft,
   },
-  '/reservation/carDetail': {
+  {
+    pattern: '/reservation/carDetail',
     title: '상세조회',
     leftIcon: faArrowLeft,
   },
-  '/reservation/contract': {
+  {
+    pattern: '/reservation/contract',
     title: '결제',
     leftIcon: faArrowLeft,
   },
-  '/support/inquiry': {
+  {
+    pattern: '/support/inquiry',
     title: '문의하기',
     leftIcon: faArrowLeft,
     rightIcon: null,
     customClass: 'inquiryAppBar',
   },
-  '/mypage/info': {
+  {
+    pattern: '/myPage/info',
     title: '내 정보',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-  '/mypage/reservations': {
+  {
+    pattern: '/myPage/reservations',
     title: '예약내역',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-  '/mypage/reservations/:id': {
-    title: '상세조회',
-    leftIcon: faArrowLeft,
-    customClass: 'myPageAppBar',
-  },
-  '/auth/login': {
+  {
+    pattern: '/auth/login',
     title: '로그인',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-  '/auth/SignConditions': {
+  {
+    pattern: '/auth/SignConditions',
     title: '약관동의',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-  '/login': {
+  {
+    pattern: '/login',
     title: '로그인',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-  '/auth/signup': {
+  {
+    pattern: '/auth/signup',
     title: '회원가입',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
-};
+];

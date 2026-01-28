@@ -110,7 +110,7 @@ const ReservationList = () => {
                   </div>
 
                   <div className={styles.cardFooter}>
-                    <button className={styles.detailBtn} onClick={() => navigate(`/mypage/reservations/${item.reservationId}`)}>상세보기</button>
+                    <button className={styles.detailBtn} onClick={() => navigate(`/myPage/reservations/${item.reservationId}`)}>상세보기</button>
                     {item.status === '이용예정' && (
                       <button
                         className={styles.cancelBtn}

@@ -72,7 +72,6 @@ const MyPage = () => {
     fetchUserData();
   }, [reduxId, userInfo.userNum]);
 
-  console.log(licenseInfo);
   // 전화번호 포맷팅 (출력용)
   const formatPhone = (phone: string) => {
     return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
