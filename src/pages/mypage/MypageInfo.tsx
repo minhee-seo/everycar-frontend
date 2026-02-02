@@ -5,6 +5,8 @@ import { RootState } from '../../store';
 import MypageSide from './MypageSide.tsx';
 import { UserLicense, UserProfileResponse } from '../../types/UserProfileResponse.ts';
 import { userApi } from '../../api/mypageUserApi.ts';
+import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
+import ErrorView from '../../components/common/DataErrorView.tsx';
 
 const MyPage = () => {
 
@@ -16,6 +18,7 @@ const MyPage = () => {
   // 수정 모드 상태
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // 유저 정보 상태 (초기값은 Redux나 기본값에서 가져옴)
   const [userInfo, setUserInfo] = useState<UserProfileResponse>({
@@ -46,31 +49,37 @@ const MyPage = () => {
   const [backupInfo, setBackupInfo] = useState({ ...userInfo });
 
   // 데이터 로드
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!reduxId) return;
-      try {
-        setIsLoading(true);
-        const response = await userApi.getUserProfile(userInfo.userNum);
-        setUserInfo(response.data);
-        setBackupInfo(response.data);
-        if (response.data.licenseNumber) {
-            setLicenseInfo({
-                type: response.data.licenseType || '1종 보통',
-                number: response.data.licenseNumber,
-                expiry: response.data.licenseExpiry || ''
-            });
-        }
-      } catch (error) {
-        console.error("데이터 로드 실패:", error);
-        alert("회원 정보를 불러오는 데 실패했습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchUserData = async () => {
+    if (!reduxId) return;
 
+    try {
+      setIsLoading(true);
+      setError(null);
+      const response = await userApi.getUserProfile(Number(userNum));
+
+      if (!response.data) throw new Error("유저 데이터를 찾을 수 없습니다.");
+
+      setUserInfo(response.data);
+      setBackupInfo(response.data);
+
+      if (response.data.licenseNumber) {
+        setLicenseInfo({
+          type: response.data.licenseType || '1종 보통',
+          number: response.data.licenseNumber,
+          expiry: response.data.licenseExpiry || ''
+        });
+      }
+    } catch (error: any) {
+      console.error("데이터 로드 실패:", error);
+      setError(error.response?.data?.message || "회원 정보를 불러오는 데 실패했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
-  }, [reduxId, userInfo.userNum]);
+  }, [reduxId, userNum]);
 
   // 전화번호 포맷팅 (출력용)
   const formatPhone = (phone: string) => {
@@ -114,7 +123,17 @@ const MyPage = () => {
     }
   };
 
-  if (isLoading) return <div className="loading">로딩 중...</div>;
+  if (isLoading) return <LoadingSpinner />;
+
+  if (error) {
+    return (
+      <ErrorView
+        title="네트워크 오류"
+        message={error}
+        onRetry={fetchUserData}
+      />
+    );
+  }
   // 
   // 면허
   // 
