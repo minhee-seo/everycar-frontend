@@ -10,74 +10,25 @@ import { ParkingDTO } from '../../types/dto/ParkingDTO.ts';
 
 import { getAvailableCars } from '../../api/reservationApi.ts';
 import CarNameMapper from '../../utils/carnamemapper.ts';
+import { useCarList } from '../../hooks/useCarList.ts';
 
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;
 export type ModelInfoResponse = ModelDTO;
 export type CarInfoResponse = CarDTO;
 
-interface CarDetail extends Omit<CarDTO, 'parking'> {
-    totalPrice: number;
-    model: ModelInfoResponse;
-    parking: ParkingInfoResponse;
-}
+
 
 function CarListDesktop() {
     const location = useLocation();
-    const [carListData, setCarListData] = useState<CarDetail[]>([]);
-    const [parkingName, setParkingName] = useState('로딩 중...');
-    const [rentalPeriod, setRentalPeriod] = useState('정보 없음');
-    const [isLoading, setIsLoading] = useState(true);
+    const { carListData, isLoading, params, formatPrice } = useCarList();
+    const { rentalDatetime, returnDatetime } = params;
 
-    // URL 쿼리 파라미터 추출
-    const queryParams = new URLSearchParams(location.search);
-    const parkingId = queryParams.get('parkingId');
-    const rentalDatetime = queryParams.get('rentalDatetime');
-    const returnDatetime = queryParams.get('returnDatetime');
-    const [displayParkingName, setDisplayParkingName] = useState('정보를 불러오는 중...');
+    if (isLoading) return <main className={styles.container}>로딩 중...</main>;
 
-    useEffect(() => {
-        if (!parkingId || !rentalDatetime || !returnDatetime) {
-            console.error('필수 예약 파라미터가 누락되었습니다.');
-            setIsLoading(false);
-            return;
-        }
-
-        const fetchCars = async () => {
-            try {
-                const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
-                setCarListData(cars);
-
-                if (cars.length > 0) {
-                    setParkingName(cars[0].parking.parking_name);
-                } else {
-                    setParkingName('선택된 대여소');
-                }
-
-
-                const startDisplay = rentalDatetime;
-                const endDisplay = returnDatetime;
-                setRentalPeriod(`${startDisplay} ~ ${endDisplay}`);
-
-            } catch (error) {
-                console.error('차량 목록을 불러오는 데 실패했습니다.', error);
-                setCarListData([]);
-                setParkingName('차량 정보를 불러올 수 없습니다.');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchCars();
-    }, [parkingId, rentalDatetime, returnDatetime]);
-
-    if (isLoading) {
-        return <main className={styles.container}>로딩 중...</main>;
-    }
-
-    // 가격을 쉼표로 포맷팅하는 함수
-    const formatPrice = (price: number) => {
-        return price.toLocaleString('ko-KR');
-    };
+    // // 가격을 쉼표로 포맷팅하는 함수
+    // const formatPrice = (price: number) => {
+    //     return price.toLocaleString('ko-KR');
+    // };
 
     return (
         <main className={styles.container}>
@@ -170,7 +121,7 @@ function CarListDesktop() {
                                                 </header>
                                                 <div className={styles.carImage}>
                                                     <img
-                                                        src={ `/main/car/${CarNameMapper(car.model.model_name)}.png`}
+                                                        src={`/main/car/${CarNameMapper(car.model.model_name)}.png`}
                                                         alt={car.model.model_name}
                                                     />
                                                 </div>
