@@ -7,105 +7,38 @@ import { CarDetailResponse, getCarDetail } from '../../api/carDetail.ts';
 import { Link, useLocation } from 'react-router-dom';
 import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
 import CarNameMapper from '../../utils/carnamemapper.ts';
+import { useCarDetail } from '../../hooks/useCarDetail.ts';
 
-interface SubComponentProps {
-    data: CarDetailResponse;
-    rentalDatetime: string;
-    returnDatetime: string;
+interface SubComponentProps extends ReturnType<typeof useCarDetail> {
+    // 만약 data가 null일 수도 있는 상황을 대비해 강제 지정하거나, 
+    // 부모에서 null 체크를 완료했다면 아래와 같이 씁니다.
+    data: NonNullable<ReturnType<typeof useCarDetail>['data']>;
 }
-
 function CarDetail() {
-    const location = useLocation();
-    const [data, setData] = useState<CarDetailResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    // URL 파라미터 추출
-    const queryParams = new URLSearchParams(location.search);
-    const carId = queryParams.get('carId');
-    const rentalDatetime = queryParams.get('rentalDatetime');
-    const returnDatetime = queryParams.get('returnDatetime');
-
-    useEffect(() => {
-        if (!carId || !rentalDatetime || !returnDatetime) return;
-
-        const fetchData = async () => {
-            try {
-                setIsLoading(true);
-                const result = await getCarDetail(carId, rentalDatetime, returnDatetime);
-                setData(result);
-            } catch (error) {
-                console.error("상세 정보 호출 실패:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [carId, rentalDatetime, returnDatetime]);
+    const result = useCarDetail();
+    const { data, isLoading } = result;
 
     if (isLoading) return <div className={styles.loading}>정보를 불러오는 중...</div>;
     if (!data) return <div className={styles.error}>데이터를 찾을 수 없습니다.</div>;
 
+    // 공통 props 객체 생성
+    const commonProps: SubComponentProps = {
+        ...result,
+        data: data
+    };
+
     return (
         <ResponsiveSwitch
-            mobileComponent={<Mobile data={data} rentalDatetime={rentalDatetime!} returnDatetime={returnDatetime!} />}
-            desktopComponent={<Desktop data={data} rentalDatetime={rentalDatetime!} returnDatetime={returnDatetime!} />}
+            mobileComponent={<Mobile {...commonProps} />}
+            desktopComponent={<Desktop {...commonProps} />}
         />
     );
 }
 
-function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
+function Desktop({ data, rentalDatetime, returnDatetime, handleMapLoad, formatPeriod, formatPrice }: SubComponentProps) {
     const { car } = data;
     const model = car.model;
 
-    const displayPrice = car.totalPrice;
-
-    const formatPeriod = (start: string, end: string) => {
-        const format = (dateStr: string) => {
-            // "2025-12-26T19:30:27" -> "2025-12-26 19:30"
-            return dateStr.replace('T', ' ').slice(0, 16);
-        };
-        return `${format(start)} ~ ${format(end)}`;
-    };
-
-    const [mapInstance, setMapInstance] = useState<any>(null);
-
-    const handleMapLoad = useCallback((map: any) => {
-        setMapInstance(map);
-    }, []);
-
-    useEffect(() => {
-        if (!mapInstance || !car.parking?.parking_id) return;
-
-        const kakao = window.kakao;
-        if (!kakao || !kakao.maps) return;
-
-        const lat = car.parking_latitude ?? 37.5665;
-        const lng = car.parking_longitude ?? 126.9780;
-        const markerPosition = new kakao.maps.LatLng(lat, lng);
-
-        // 1. 지도의 크기가 변했을 수 있으므로 레이아웃 재계산
-        mapInstance.relayout();
-
-        // 2. 마커 생성 및 즉시 지도 설정
-        const marker = new kakao.maps.Marker({
-            position: markerPosition,
-            map: mapInstance // setMap(mapInstance) 대신 생성 시점에 넣어줌
-        });
-
-        // 3. 중심점 이동 및 레벨 조정
-        mapInstance.setLevel(3);
-        mapInstance.setCenter(markerPosition);
-
-        // 가끔 setCenter가 즉시 반영 안 될 때를 대비해 panTo 사용
-        setTimeout(() => {
-            mapInstance.panTo(markerPosition);
-        }, 100);
-
-        return () => {
-            marker.setMap(null);
-        };
-    }, [mapInstance, car.parking?.parking_id, car.parking?.parking_latitude]);
 
     return (
         <div className={styles.container}>
@@ -153,7 +86,7 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                     <div className={styles.priceDisplay}>
                         <span className={styles.priceLabel}>총 금액</span>
                         <p className={styles.priceValue}>
-                            {displayPrice ? Number(displayPrice).toLocaleString() : '0'}원
+                            {car.totalPrice ? Number(car.totalPrice).toLocaleString() : '0'}원
                         </p>
                     </div>
                     <Link to={`/reservation/contract?carId=${car.car_id}&parkingId=${car.parking?.parking_id}&rentalDatetime=${rentalDatetime}&returnDatetime=${returnDatetime}`}>
@@ -199,55 +132,9 @@ function Desktop({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
     );
 }
 
-function Mobile({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
-    const { car } = data;
+function Mobile({ data, rentalDatetime, returnDatetime, handleMapLoad, formatPeriod, formatPrice }: SubComponentProps) {
+    const { car } = data!;
     const model = car.model;
-    const displayPrice = car.totalPrice;
-
-    // 날짜 포맷팅 함수
-    const formatPeriod = (start: string, end: string) => {
-        return `${start.replace('T', ' ')} ~ ${end.replace('T', ' ')}`;
-    };
-
-    const [mapInstance, setMapInstance] = useState<any>(null);
-
-    const handleMapLoad = useCallback((map: any) => {
-        setMapInstance(map);
-    }, []);
-
-    useEffect(() => {
-        if (!mapInstance || !car.parking?.parking_id) return;
-
-        const kakao = window.kakao;
-        if (!kakao || !kakao.maps) return;
-
-        const lat = car.parking_latitude ?? 37.5665;
-        const lng = car.parking_longitude ?? 126.9780;
-        const markerPosition = new kakao.maps.LatLng(lat, lng);
-
-        // 1. 지도의 크기가 변했을 수 있으므로 레이아웃 재계산
-        mapInstance.relayout();
-
-        // 2. 마커 생성 및 즉시 지도 설정
-        const marker = new kakao.maps.Marker({
-            position: markerPosition,
-            map: mapInstance // setMap(mapInstance) 대신 생성 시점에 넣어줌
-        });
-
-        // 3. 중심점 이동 및 레벨 조정
-        mapInstance.setLevel(3);
-        mapInstance.setCenter(markerPosition);
-
-        // 가끔 setCenter가 즉시 반영 안 될 때를 대비해 panTo 사용
-        setTimeout(() => {
-            mapInstance.panTo(markerPosition);
-        }, 100);
-
-        return () => {
-            marker.setMap(null);
-        };
-    }, [mapInstance, car.parking?.parking_id, car.parking?.parking_latitude]);
-
     return (
         <div className={styles.container}>
             {/* 대여기간 섹션 */}
@@ -333,7 +220,7 @@ function Mobile({ data, rentalDatetime, returnDatetime }: SubComponentProps) {
                     <div className={styles.priceDisplay}>
                         <span className={styles.priceLabel}>총 금액</span>
                         <p className={styles.priceValue}>
-                            {displayPrice ? Number(displayPrice).toLocaleString() : '0'}원
+                            {car.totalPrice ? Number(car.totalPrice).toLocaleString() : '0'}원
                         </p>
                     </div>
                     <Link to={`/reservation/contract?carId=${car.car_id}&parkingId=${car.parking?.parking_id}&rentalDatetime=${rentalDatetime}&returnDatetime=${returnDatetime}`} style={{ width: '100%' }}>
