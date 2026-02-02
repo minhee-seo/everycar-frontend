@@ -11,6 +11,8 @@ import { ParkingDTO } from '../../types/dto/ParkingDTO.ts';
 import { getAvailableCars } from '../../api/reservationApi.ts';
 import CarNameMapper from '../../utils/carnamemapper.ts';
 import { useCarList } from '../../hooks/useCarList.ts';
+import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
+import ErrorView from '../../components/common/DataErrorView.tsx';
 
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;
 export type ModelInfoResponse = ModelDTO;
@@ -19,12 +21,20 @@ export type CarInfoResponse = CarDTO;
 
 
 function CarListDesktop() {
-    const location = useLocation();
-    const { carListData, isLoading, params, formatPrice } = useCarList();
+    const { carListData, isLoading, error, refetch, params, formatPrice } = useCarList();
     const { rentalDatetime, returnDatetime } = params;
 
-    if (isLoading) return <main className={styles.container}>로딩 중...</main>;
+    // 로딩 처리
+    if (isLoading) return <LoadingSpinner message="이용 가능한 차량을 찾고 있습니다..." />;
 
+    // 에러문구
+    if (error) {
+        return (
+            <main className={styles.container}>
+                <ErrorView message={error} onRetry={refetch} />
+            </main>
+        );
+    }
     // // 가격을 쉼표로 포맷팅하는 함수
     // const formatPrice = (price: number) => {
     //     return price.toLocaleString('ko-KR');

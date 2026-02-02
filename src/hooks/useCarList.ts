@@ -7,6 +7,7 @@ export const useCarList = () => {
     const location = useLocation();
     const [carListData, setCarListData] = useState<CarDetail[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     // URL 쿼리 파라미터 추출
     const queryParams = new URLSearchParams(location.search);
@@ -14,31 +15,35 @@ export const useCarList = () => {
     const rentalDatetime = queryParams.get('rentalDatetime');
     const returnDatetime = queryParams.get('returnDatetime');
 
-    useEffect(() => {
+
+    const fetchCars = async () => {
         if (!parkingId || !rentalDatetime || !returnDatetime) {
             setIsLoading(false);
             return;
         }
 
-        const fetchCars = async () => {
+        try {
             setIsLoading(true);
-            try {
-                const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
-                setCarListData(cars);
-            } catch (error) {
-                console.error('데이터 로드 실패', error);
-                setCarListData([]);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+            setError(null);
+            const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
+            setCarListData(cars);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
+    useEffect(() => {
         fetchCars();
-    }, [parkingId, rentalDatetime, returnDatetime]); 
+    }, [parkingId, rentalDatetime, returnDatetime]);
+
 
     return {
         carListData,
         isLoading,
+        error,
+        refetch: fetchCars,
         params: {
             parkingId,
             rentalDatetime,
