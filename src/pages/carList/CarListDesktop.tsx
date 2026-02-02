@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styles from './CarList.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,7 @@ import CarNameMapper from '../../utils/carnamemapper.ts';
 import { useCarList } from '../../hooks/useCarList.ts';
 import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
 import ErrorView from '../../components/common/DataErrorView.tsx';
+import CarFilterSidebar from './CarFilterSidebar.tsx';
 
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;
 export type ModelInfoResponse = ModelDTO;
@@ -23,6 +24,27 @@ export type CarInfoResponse = CarDTO;
 function CarListDesktop() {
     const { carListData, isLoading, error, refetch, params, formatPrice } = useCarList();
     const { rentalDatetime, returnDatetime } = params;
+
+    // 필터 상태 관리
+    const [filters, setFilters] = useState({
+        searchName: '',
+        maxPrice: 1000000, // 초기 최대값
+        grades: [] as string[],
+        categories: [] as string[],
+    });
+
+    // 필터링된 데이터 계산 (useMemo로 성능 최적화)
+    const filteredCars = useMemo(() => {
+        if (!carListData) return [];
+
+        return carListData.filter(car => {
+            const matchesName = car.model.model_name.toLowerCase().includes(filters.searchName.toLowerCase());
+            const matchesGrade = filters.grades.length === 0 || filters.grades.includes(car.car_grade);
+            const matchesCategory = filters.categories.length === 0 || filters.categories.includes(car.model.model_category);
+
+            return matchesName && matchesGrade && matchesCategory;
+        });
+    }, [carListData, filters]);
 
     // 로딩 처리
     if (isLoading) return <LoadingSpinner message="이용 가능한 차량을 찾고 있습니다..." />;
@@ -35,10 +57,7 @@ function CarListDesktop() {
             </main>
         );
     }
-    // // 가격을 쉼표로 포맷팅하는 함수
-    // const formatPrice = (price: number) => {
-    //     return price.toLocaleString('ko-KR');
-    // };
+
 
     return (
         <main className={styles.container}>
@@ -70,43 +89,10 @@ function CarListDesktop() {
             </div>
 
             <div className={styles.contentWrapper}>
-                <aside className={styles.filterSidebar}>
-                    <h2 className={styles.filterTitle}>차량검색</h2>
-                    <ul className={styles.filterList}>
-                        <li className={styles.filterItem}>
-                            <h3>자동차 모델 검색</h3>
-                            <div className={styles.modelSearch}>
-                                <input type="text" placeholder='모델명을 입력하세요' />
-                                <button>검색</button>
-                            </div>
-                        </li>
-                        <li className={styles.filterItem}>
-                            <h3>금액</h3>
-                            <input type="range" className={styles.priceSlider} />
-                        </li>
-                        <li className={styles.filterItem}>
-                            <h3>등급</h3>
-                            <ul className={styles.checkboxGroup}>
-                                <li><label><input type="checkbox" /> Premium</label></li>
-                                <li><label><input type="checkbox" /> Standard</label></li>
-                            </ul>
-                        </li>
-                        <li className={styles.filterItem}>
-                            <h3>차급</h3>
-                            <ul className={styles.checkboxGroup}>
-                                <li><label><input type="checkbox" /> 경차</label></li>
-                                <li><label><input type="checkbox" /> 소형</label></li>
-                                <li><label><input type="checkbox" /> 중형</label></li>
-                                <li><label><input type="checkbox" /> 준중형</label></li>
-                                <li><label><input type="checkbox" /> 대형</label></li>
-                                <li><label><input type="checkbox" /> SUV</label></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </aside>
+                <CarFilterSidebar filters={filters} onFilterChange={setFilters} />
                 <section className={styles.carListSection}>
                     <ul className={styles.carList}>
-                        {carListData.length === 0 ? (
+                        {filteredCars.length === 0 ? (
                             <div className={styles.emptyCarList}>
                                 <div className={styles.emptyIconBox}>
                                     <FontAwesomeIcon icon={faCarSide} className={styles.emptyIcon} />
@@ -118,7 +104,7 @@ function CarListDesktop() {
                             </div>
                         ) : (
                             <ul className={styles.carList}>
-                                {carListData.map((car) => (
+                                {filteredCars.map((car) => (
                                     <li key={car.car_id}>
                                         <Link to={`/reservation/carDetail?carId=${car.car_id}&rentalDatetime=${rentalDatetime}&returnDatetime=${returnDatetime}`}>
                                             <article className={styles.carCard}>
