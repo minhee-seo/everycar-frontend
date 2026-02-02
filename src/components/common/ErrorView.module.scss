@@ -1,0 +1,75 @@
+@import '../../styles//global.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  min-height: 300px; // 최소 높이를 확보하여 화면이 퉤 튀지 않게 함
+  width: 100%;
+  padding-top: 140px;
+  height: 100vh;
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  // 부드러운 애니메이션 효과 (선택사항)
+  animation: bounce 2s infinite;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.message {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  word-break: keep-all; // 한글 줄바꿈을 자연스럽게
+}
+
+.retryButton {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: $primary-color; // 프로젝트의 메인 컬러로 변경하세요
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $primary-hover;
+  }
+
+  &:active {
+    transform: scale(0.98); // 클릭 시 살짝 눌리는 효과
+  }
+}
+
+// 아이콘 둥실둥실 애니메이션
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+// 모바일 대응
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.1rem;
+  }
+  .message {
+    font-size: 0.9rem;
+  }
+  .retryButton {
+    width: 100%; 
+    max-width: 200px;
+  }
+}

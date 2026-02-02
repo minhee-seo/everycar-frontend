@@ -7,6 +7,7 @@ export const useCarDetail = () => {
     const [data, setData] = useState<CarDetailResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [mapInstance, setMapInstance] = useState<any>(null);
+    const [error, setError] = useState<string | null>(null);
 
     // URL 파라미터 추출
     const queryParams = new URLSearchParams(location.search);
@@ -75,6 +76,27 @@ export const useCarDetail = () => {
         return start && end ? `${format(start)} ~ ${format(end)}` : '';
     };
 
+    // 예외처리
+    const fetchData = useCallback(async () => {
+        if (!carId) return;
+
+        try {
+            setIsLoading(true);
+            setError(null);
+            const result = await getCarDetail(carId, rentalDatetime, returnDatetime);
+            setData(result);
+        } catch (err: any) {
+            setError(err.message || '데이터를 가져오지 못했습니다.');
+        } finally {
+            setIsLoading(false);
+        }
+    }, [carId, rentalDatetime, returnDatetime]); // 의존성 배열 확인
+
+    // 2. 처음 로드될 때 실행
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+    
     return {
         data,
         isLoading,
@@ -82,6 +104,8 @@ export const useCarDetail = () => {
         returnDatetime,
         handleMapLoad,
         formatPeriod,
-        formatPrice: (price: number) => price?.toLocaleString() ?? '0'
+        formatPrice: (price: number) => price?.toLocaleString() ?? '0',
+        error,
+        refetch: fetchData
     };
 };

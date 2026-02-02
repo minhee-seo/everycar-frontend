@@ -8,17 +8,22 @@ import { Link, useLocation } from 'react-router-dom';
 import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
 import CarNameMapper from '../../utils/carnamemapper.ts';
 import { useCarDetail } from '../../hooks/useCarDetail.ts';
+import ErrorView from '../../components/common/DataErrorView.tsx';
+import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
 
 interface SubComponentProps extends ReturnType<typeof useCarDetail> {
-    // 만약 data가 null일 수도 있는 상황을 대비해 강제 지정하거나, 
-    // 부모에서 null 체크를 완료했다면 아래와 같이 씁니다.
     data: NonNullable<ReturnType<typeof useCarDetail>['data']>;
 }
 function CarDetail() {
     const result = useCarDetail();
-    const { data, isLoading } = result;
+    const { data, isLoading, error, refetch } = result;
 
-    if (isLoading) return <div className={styles.loading}>정보를 불러오는 중...</div>;
+    // 로딩
+    if (isLoading) return <LoadingSpinner message="차량 상세 정보를 가져오고 있어요" />;
+
+    // 에러
+    if (error) return <ErrorView message={error} onRetry={refetch} />;
+
     if (!data) return <div className={styles.error}>데이터를 찾을 수 없습니다.</div>;
 
     // 공통 props 객체 생성
@@ -26,6 +31,8 @@ function CarDetail() {
         ...result,
         data: data
     };
+
+
 
     return (
         <ResponsiveSwitch
