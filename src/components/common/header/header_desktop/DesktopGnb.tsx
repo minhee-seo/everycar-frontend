@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
 import { authService } from '../../../../api/authService.ts';
 import { logoutAction } from '../../../../store/userSlice.ts';
+import { useLogout } from '../../../../hooks/useLogout.ts';
 
 const DesktopGnb: React.FC = () => {
   // 스크롤 상태 감지
@@ -42,24 +43,8 @@ const DesktopGnb: React.FC = () => {
     };
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      if (userId) {
-        // 서버에 로그아웃 알림
-        await authService.logout(userId);
-      }
-    } catch (error) {
-      console.error("서버 로그아웃 처리 중 오류:", error);
-      // 서버 에러가 나더라도 클라이언트는 로그아웃
-    } finally {
-      // 리덕스 상태 초기화 및 로컬스토리지 삭제
-      dispatch(logoutAction());
-
-      alert("로그아웃 되었습니다.");
-      navigate('/login');
-      window.location.href = '/';
-    }
-  };
+  // 로그아웃
+  const { handleLogout } = useLogout();
 
   return (
     <div

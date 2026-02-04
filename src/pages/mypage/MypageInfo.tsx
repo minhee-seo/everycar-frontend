@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MypageInfo.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import MypageSide from './MypageSide.tsx';
-import { UserLicense, UserProfileResponse } from '../../types/UserProfileResponse.ts';
 import { userApi } from '../../api/mypageUserApi.ts';
 import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
 import ErrorView from '../../components/common/DataErrorView.tsx';
-
+import { authService } from '../../api/authService.ts';
+import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hooks/useLogout.ts';
+import { UserLicense, UserProfileResponse } from '../../types/mypage/UserProfileResponse.ts';
 const MyPage = () => {
 
   // 
@@ -89,13 +91,7 @@ const MyPage = () => {
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserInfo(prev => ({ ...prev, [name]: value }));
-  };
-
-  // 성별 변경 핸들러 (수정 모드일 때만 작동)
-  const handleGenderChange = (gender: number) => {
-    if (!isEditMode) return;
-    setUserInfo(prev => ({ ...prev, userGender: gender }));
+    setUserInfo((prev: any) => ({ ...prev, [name]: value }));
   };
 
   // 수정 시작
@@ -122,6 +118,9 @@ const MyPage = () => {
       alert("저장 중 오류가 발생했습니다.");
     }
   };
+
+  // 로그아웃
+  const { handleLogout } = useLogout();
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -268,7 +267,6 @@ const MyPage = () => {
                   </button>
                 </div>
               )}
-              <button type="button" className={styles.withdrawBtn}>회원 탈퇴</button>
             </footer>
           </section>
           <section className={styles.content}>
@@ -336,6 +334,13 @@ const MyPage = () => {
               </div>
             )}
           </section >
+          <button
+            type="button"
+            className={styles.mobileLogoutBtn}
+            onClick={handleLogout}
+          >
+            로그아웃
+          </button>
         </main >
       </div >
 

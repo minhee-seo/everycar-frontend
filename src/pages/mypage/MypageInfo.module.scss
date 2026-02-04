@@ -5,26 +5,28 @@
   padding: $spacing-xl 0;
   gap: $spacing-xl;
   margin-top: 140px;
-  
+
   @include respond-max(mobile-m) {
-      flex-direction: column;
-      padding: $spacing-md;
-      gap: $spacing-md;
-      margin-top: 30px;
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-md;
+    margin-top: 30px;
   }
 }
 
-.main{
+.main {
   flex: 1;
 }
+
 // 메인 콘텐츠
 .content {
   background-color: $color-white;
   padding: $spacing-xl;
   border-radius: 16px;
   border: 1px solid $color-gray-200;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
   margin-bottom: 10px;
+
   @include respond-max(mobile-m) {
     padding: $spacing-md;
     border: none;
@@ -32,10 +34,12 @@
 
   .header {
     margin-bottom: $spacing-xl;
+
     h3 {
       font-size: $font-lg;
       margin-bottom: $spacing-xs;
     }
+
     p {
       color: $text-muted;
       font-size: $font-sm;
@@ -107,7 +111,10 @@
 .withButton {
   display: flex;
   gap: $spacing-sm;
-  input { flex: 1; }
+
+  input {
+    flex: 1;
+  }
 }
 
 // 성별 선택 버튼
@@ -122,7 +129,7 @@
       background-color: transparent;
       padding-left: 0;
       display: none; // 선택 안된건 숨김
-      
+
       &.selected {
         display: block;
         background-color: transparent;
@@ -139,7 +146,7 @@
     border-radius: 8px;
     background-color: $color-white;
     color: $color-gray-500;
-    
+
     &.selected {
       background-color: $primary-color-opacity;
       border-color: $primary-color-text;
@@ -154,7 +161,10 @@
   border: 1px solid $color-gray-300;
   border-radius: 8px;
   background-color: $color-white;
-  &:hover { background-color: $color-gray-100; }
+
+  &:hover {
+    background-color: $color-gray-100;
+  }
 }
 
 // 버튼 하단 영역
@@ -164,6 +174,14 @@
   flex-direction: column;
   gap: $spacing-md;
 
+  // 정보 수정, 저장 버튼 등 공통 스타일
+  button {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
   .editStartBtn {
     width: 100%;
     padding: 16px;
@@ -171,13 +189,16 @@
     border-radius: 12px;
     font-weight: 600;
     font-size: $font-md;
-    &:hover { background-color: $primary-hover; }
+
+    &:hover {
+      background-color: $primary-hover;
+    }
   }
 
   .editActions {
     display: flex;
     gap: $spacing-sm;
-    
+
     .saveBtn {
       flex: 2;
       padding: 16px;
@@ -185,7 +206,8 @@
       border-radius: 12px;
       font-weight: 700;
     }
-    
+
+
     .cancelBtn {
       flex: 1;
       padding: 16px;
@@ -201,7 +223,10 @@
     color: $color-gray-400;
     font-size: $font-xs;
     text-decoration: underline;
-    &:hover { color: $color-gray-600; }
+
+    &:hover {
+      color: $color-gray-600;
+    }
   }
 }
 
@@ -212,28 +237,35 @@
   margin: $spacing-xl 0;
 }
 
-  .sectionHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: $spacing-lg;
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
 
-    h4 {
-      font-size: $font-lg;
-      font-weight: 700;
+  h4 {
+    font-size: $font-lg;
+    font-weight: 700;
+  }
+
+  .headerActions {
+    display: flex;
+    gap: $spacing-md;
+
+    button {
+      font-size: $font-sm;
+      color: $color-gray-600;
+
+      &:hover {
+        color: $color-black;
+      }
     }
 
-    .headerActions {
-      display: flex;
-      gap: $spacing-md;
-      button {
-        font-size: $font-sm;
-        color: $color-gray-600;
-        &:hover { color: $color-black; }
-      }
-      .deleteText { color: #ff4d4f; }
+    .deleteText {
+      color: #ff4d4f;
     }
   }
+}
 
 // 면허 미등록 상태
 .emptyLicense {
@@ -255,7 +287,10 @@
     border: 1px solid $color-gray-300;
     border-radius: 8px;
     font-weight: 600;
-    &:hover { background-color: $primary-color-opacity; }
+
+    &:hover {
+      background-color: $primary-color-opacity;
+    }
   }
 }
 
@@ -302,5 +337,29 @@
     color: white;
     border-radius: 8px;
     font-weight: 600;
+  }
+}
+
+.mobileLogoutBtn {
+  display: none; // 기본적으로 숨김 (PC 버전)
+
+  @media (max-width: 768px) {
+    display: block; // 모바일에서만 표시
+    width: 100%;// 좌우 여백 확보
+    margin: 40px auto 20px;
+    padding: 14px 0;
+    background-color: #f8f9fa;
+    color: #868e96;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+
+    &:active {
+      background-color: #f1f3f5; // 클릭 시 피드백
+    }
   }
 }
