@@ -92,4 +92,9 @@ export const appBarConfigMap: AppBarConfig[] = [
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
   },
+  {
+    pattern: '/estimate',
+    title: '견적확인',
+    leftIcon: faArrowLeft,
+  },
 ];
