@@ -35,20 +35,22 @@ function MainMobile() {
                 </div>
                 <div className={styles.shortcut}>
                     <ul>
-                        <li>
-                            <FontAwesomeIcon icon={faCheck} />
-                            예약확인
-                        </li>
+                        <Link to="/myPage/reservations" className={styles.list}>
+                            <li>
+                                <FontAwesomeIcon icon={faCheck} />
+                                예약확인
+                            </li>
+                        </Link>
                         {/* <li>
                             <FontAwesomeIcon icon={faComments} />
                             1 : 1 상담
                         </li> */}
-                        <li>
-                            <Link to="/estimate">
+                        <Link to="/estimate" className={styles.list}>
+                            <li>
                                 <FontAwesomeIcon icon={faFile} />
                                 견적확인
-                            </Link>
-                        </li>
+                            </li>
+                        </Link>
                     </ul>
                 </div>
             </section>

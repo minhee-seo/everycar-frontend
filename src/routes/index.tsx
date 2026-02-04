@@ -27,19 +27,18 @@ const AppRoutes = () => (
     <BrowserRouter>
       <Routes>
         <Route element={<ResponsiveLayout />}>
+        {/* 누구나 접근 가능 */}
           <Route path="/" element={<MainPage />} />
           <Route path="reservation" element={<Reservation />} />
           <Route path="/reservation/carList" element={<CarList />} />
           <Route path="/reservation/carDetail" element={<CarDetail />} />
-          <Route path="/reservation/contract" element={<Contract />} />
-          {/* <Route path="/reservation/payment" element={<Payment />} /> */}
-          {/* <Route path="/reservation/contract" element={<Contract />} /> */}
           <Route path="/auth/login" element={<Login />} />
+          <Route path="/estimate" element={<Estimate />} />
           <Route path="/auth/SignConditions" element={<SignConditions />} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/estimate" element={<Estimate />} />
 
+        {/* 로그인 필요 */}
           <Route element={<ProtectedRoute />}>
             <Route path="/myPage">
               <Route path="info" element={<MypageInfo />} />

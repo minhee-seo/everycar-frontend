@@ -5,11 +5,21 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store/index.js'; // 방금 만든 store 파일 경로
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            marginBottom: '100px',
+          },
+        }}
+      />
       <AppRoutes />
     </Provider>
   </React.StrictMode>
