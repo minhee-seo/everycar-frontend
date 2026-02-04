@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { reservationService } from '../../api/reservationService.ts';
 import CarNameMapper from '../../utils/carnamemapper.ts';
+import PaymentButton from '../../components/payment/PaymentButton.tsx';
 
 function ContractMobile() {
   const navigate = useNavigate();
@@ -37,6 +38,13 @@ function ContractMobile() {
       document.getElementById('phone3')?.focus();
     }
   };
+
+  const [driverInfo, setDriverInfo] = useState({
+    name: userName || '',
+    phone1: '010',
+    phone2: '',
+    phone3: '',
+  });
 
   useEffect(() => {
     // 오류처리
@@ -140,17 +148,13 @@ function ContractMobile() {
         <section className={`${styles.section} ${styles.summarySection}`}>
           <h3 className={styles.sectionTitle}>결제 금액</h3>
           <div className={styles.priceRow}>
-            <span>대여 요금</span>
-            <p>85,000원</p>
-          </div>
-          <div className={styles.priceRow}>
-            <span>보험료 (라이트)</span>
-            <p>12,400원</p>
+            <span>대여 및 보험료</span>
+            <p>{totalPrice}원</p>
           </div>
           <hr />
           <div className={`${styles.priceRow} ${styles.totalPrice}`}>
             <span>총 결제 금액</span>
-            <p>97,400원</p>
+            <p>{totalPrice}원</p>
           </div>
         </section>
 
@@ -161,9 +165,22 @@ function ContractMobile() {
           <FontAwesomeIcon icon={faCheckCircle} className={styles.checkIcon} />
           예약 조건 및 개인정보 처리방침에 동의합니다.
         </div>
-        <button className={styles.submitBtn}>
-          97,400원 결제하기
-        </button>
+        <PaymentButton
+          amount={totalPrice}
+          orderName={`${carDto.model.model_brand} ${carDto.model.model_name} 대여`}
+          payMethod={paymentMethod}
+          customer={{
+            name: driverInfo.name,
+            phone: `${driverInfo.phone1}${driverInfo.phone2}${driverInfo.phone3}`,
+            email: userDTO?.userEmail || ""
+          }}
+          carId={Number(carId)}
+          userNum={Number(userNum)}
+          rentalDatetime={rentalDatetime || ""}
+          returnDatetime={returnDatetime || ""}
+          onSuccess={handlePaymentSuccess}
+          className={styles.submitBtn} // 모바일 스타일 적용을 위해 클래스 전달
+        />
       </footer>
     </>
   );
