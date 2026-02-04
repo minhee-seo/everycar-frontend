@@ -41,7 +41,6 @@ function ContractMobile() {
   useEffect(() => {
     // 오류처리
     if (!carId || !parkingId) {
-      alert("잘못된 접근입니다.");
       navigate(-1);
       return;
     }

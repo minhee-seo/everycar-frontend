@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import styles from './Login.module.scss';
 import client from '../../api/client.ts'; // axios 인스턴스
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index.js';
 import { loginUser } from '../../store/userSlice.ts';
+import toast from 'react-hot-toast';
 
 const Login = () => {
-const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  
+
+  const { loading, error } = useSelector((state: RootState) => state.user);
+
+  const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  
-  // 리덕스 상태에서 loading과 error 가져오기
-  const { loading, error } = useSelector((state: RootState) => state.user);
+
+
+  // 💡 ProtectedRoute에서 넘겨준 state가 있으면 그 경로를, 없으면 메인('/')을 목적지로 설정
+  const from = location.state?.from?.pathname || "/";
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // 비동기 액션 실행
     const resultAction = await dispatch(loginUser({ userId, userPassword }));
-    
+
     if (loginUser.fulfilled.match(resultAction)) {
-      navigate('/'); // 로그인 성공 시 이동
+      navigate(from, { replace: true });
     }
   };
 

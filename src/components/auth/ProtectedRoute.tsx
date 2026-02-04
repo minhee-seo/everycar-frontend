@@ -28,7 +28,7 @@ const ProtectedRoute = () => {
         alert("로그인 후 예약 진행이 가능합니다.");
       }
 
-      isnotified.current = true; 
+      isnotified.current = true;
     }
 
     return () => {
@@ -37,11 +37,8 @@ const ProtectedRoute = () => {
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
-    // 로그인이 안 되어 있으면 알림을 띄우고 로그인 페이지로 이동
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-
-  // 로그인 되어 있으면 자식 라우트(Outlet)를 보여줌
   return <Outlet />;
 };
 

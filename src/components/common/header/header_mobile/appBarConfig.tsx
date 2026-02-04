@@ -85,7 +85,7 @@ export const appBarConfigMap: AppBarConfig[] = [
     title: '로그인',
     leftIcon: faArrowLeft,
     customClass: 'myPageAppBar',
-  },
+  },  
   {
     pattern: '/auth/signup',
     title: '회원가입',
