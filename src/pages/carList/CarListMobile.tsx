@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react'
 import styles from './CarListMobile.module.scss';
 import './Slide.scss';
 
+import { faCar, faCarSide, faLocationDot, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faLocationDot, faCarSide, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Link, useLocation } from 'react-router-dom';
-import CarNameMapper from '../../utils/carnamemapper.ts';
-import { useCarList } from '../../hooks/useCarList.ts';
-import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
 import ErrorView from '../../components/common/DataErrorView.tsx';
+import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
+import { useCarList } from '../../hooks/useCarList.ts';
+import CarNameMapper from '../../utils/carnamemapper.ts';
 
 
 function CarListMobile() {

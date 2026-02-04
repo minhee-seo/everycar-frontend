@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './SelectList.module.scss';
 
 function SelectList() {

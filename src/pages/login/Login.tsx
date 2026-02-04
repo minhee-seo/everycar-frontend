@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import styles from './Login.module.scss';
-import client from '../../api/client.ts'; // axios 인스턴스
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/index.js';
 import { loginUser } from '../../store/userSlice.ts';
-import toast from 'react-hot-toast';
+import styles from './Login.module.scss';
 
 const Login = () => {
   const [userId, setUserId] = useState('');

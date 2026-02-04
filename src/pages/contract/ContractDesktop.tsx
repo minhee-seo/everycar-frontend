@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './ContractDesktop.module.scss';
+import { faCircleCheck, faCreditCard, faMobileScreenButton, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCreditCard, faMobileScreenButton, faWallet, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { reservationService } from '../../api/reservationService.ts';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/index.js';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { reservationService } from '../../api/reservationService.ts';
 import PaymentButton from '../../components/payment/PaymentButton.tsx';
+import { RootState } from '../../store/index.js';
 import CarNameMapper from '../../utils/carnamemapper.ts';
+import styles from './ContractDesktop.module.scss';
 
 function ContractDesktop() {
   const navigate = useNavigate();

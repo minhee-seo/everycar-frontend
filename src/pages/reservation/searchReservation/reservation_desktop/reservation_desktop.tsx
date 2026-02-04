@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import styles from './reservation_desktop.module.scss';
+import { useEffect, useState } from 'react';
 import MapView from '../reservation_mobile/components/MapView.tsx';
+import styles from './reservation_desktop.module.scss';
 import ReservationController from './ReservationController.tsx';
 
+import { faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFaceFrown, faClock, faAngleRight, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import ParkingList from './ParkingList.tsx';
-import SelectList from './SelectList.tsx';
-import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
-import { ReservationInfo } from '../../../../types/reservation.tsx';
-import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
-import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
 import { useLocation } from 'react-router-dom';
-import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
-import { UserLocation } from '../../../../types/UserLocation.ts';
 import { fetchParkingData } from '../../../../api/parking.ts';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
+import { ReservationInfo } from '../../../../types/reservation.tsx';
+import { UserLocation } from '../../../../types/UserLocation.ts';
+import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
+import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
+import ParkingList from './ParkingList.tsx';
 
 interface DesktopProps {
   address?: string;

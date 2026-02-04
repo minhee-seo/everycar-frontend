@@ -1,16 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import styles from './ReservationController.module.scss';
-
+import { faClock, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { ko } from "date-fns/locale";
-import DatePicker from 'react-datepicker';
-import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
-
+import React, { useEffect, useMemo, useState } from 'react';
+import { fetchParkingData } from '../../../../api/parking.ts';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
 import { ReservationInfo } from '../../../../types/reservation.tsx';
 import FormatKoreanDate from '../../../../utils/dateUtils.ts';
-import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
-import { fetchParkingData } from '../../../../api/parking.ts';
+import styles from './ReservationController.module.scss';
 
 interface ReservationControllerProps {
   map: any;

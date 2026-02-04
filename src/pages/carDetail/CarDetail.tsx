@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import styles from './CarDetail.module.scss';
+import { faClock, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVideo, faChair, faMapSigns, faLocationDot, faClock } from '@fortawesome/free-solid-svg-icons';
-import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
-import { CarDetailResponse, getCarDetail } from '../../api/carDetail.ts';
-import { Link, useLocation } from 'react-router-dom';
-import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
-import CarNameMapper from '../../utils/carnamemapper.ts';
-import { useCarDetail } from '../../hooks/useCarDetail.ts';
+import { Link } from 'react-router-dom';
 import ErrorView from '../../components/common/DataErrorView.tsx';
 import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
+import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
+import { useCarDetail } from '../../hooks/useCarDetail.ts';
+import CarNameMapper from '../../utils/carnamemapper.ts';
+import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
+import styles from './CarDetail.module.scss';
 
 interface SubComponentProps extends ReturnType<typeof useCarDetail> {
     data: NonNullable<ReturnType<typeof useCarDetail>['data']>;

@@ -1,8 +1,7 @@
 // pages/Reservation/components/MapView.tsx
 import { useEffect, useState } from 'react';
-import KakaoMap from '../../../../../components/map/KaKaoMap.tsx';
-import styles from './MapView.module.scss';
 import { loadKakaoMap } from '../../../../../utils/LoadKaKaoMap.tsx';
+import styles from './MapView.module.scss';
 
 declare global {
   interface Window {
@@ -34,19 +33,6 @@ const MapView = ({ onMapLoad }: MapViewProps) => {
         const map = new kakao.maps.Map(container, options);
 
         if (onMapLoad) onMapLoad(map);
-
-        // 주차장 데이터 로드
-        // const res = await fetch('/data/parking.json');
-        // const data = await res.json();
-        // setParkingData(data);
-
-        // 마커 생성 후 클러스터 추가
-        // const markers = data.map((parking: any) => {
-        //   return new kakao.maps.Marker({
-        //     position: new kakao.maps.LatLng(parking.parking_latitude, parking.parking_longtitude),
-        //   });
-        // });
-
       } catch (error) {
         console.error('지도 로드 실패:', error);
       }

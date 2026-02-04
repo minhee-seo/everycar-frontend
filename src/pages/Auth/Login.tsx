@@ -1,19 +1,8 @@
 import React, { useState } from "react";
 import styles from './Login.module.scss';
 import { Link } from "react-router-dom";
-// import useLogin from "../../components/hooks/useLogin";
-// import styles from "../../css/routes/authorization/login.module.scss";
 
 const Login = () => {
-  // const { login, errorMessage } = useLogin(); // 커스텀 훅 사용
-  // const [userId, setUserId] = useState("");
-  // const [userPassword, setUserPassword] = useState("");
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   login(userId, userPassword); // 로그인 실행
-  // };
-
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cont}>
