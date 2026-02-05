@@ -5,10 +5,11 @@ import ShortCut from './ShortCut';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import ReservationDatePicker from '../../reservation/searchReservation/datepicker/ReservationDatePicker';
-import { ReservationInfo } from '../../../types/reservation';
+import { ReservationInfo } from '../../../types/ReservationInfo';
 import FormatKoreanDate, { FormatTime } from '../../../utils/dateUtils';
 import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../utils/CurrentTime';
 import { getRoundedDate } from '../../../utils/getRoundedTime';
+import Slide from './Slide';
 
 const MainDesktop = () => {
     const [isDatepickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
@@ -62,6 +63,7 @@ const MainDesktop = () => {
                     </div>
 
                     <div className={styles.event}>
+                        <Slide />
                     </div>
                 </div>
             </div>

@@ -19,30 +19,4 @@ function MainPage() {
   )
 }
 
-function Desktop() {
-
-
-  return (
-    <div className={styles.container}>
-      {/* <Slide></Slide> */}
-      <Content/>
-      <ShortCut></ShortCut>
-      {/* <CarSlider></CarSlider> */}
-    </div >
-  );
-}
-
-function Mobile() {
-  return (
-    <div className={styles.container}>
-      <div className={styles.searchBar}>
-        <Searchbar></Searchbar>
-      </div>
-      <div className={styles.mainCont}>
-        <ShortCut></ShortCut>
-        <CarSlider></CarSlider>
-      </div>
-    </div>
-  );
-}
 export default MainPage

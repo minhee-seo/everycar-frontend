@@ -117,14 +117,11 @@
         }
 
         .bannerCont {
-
-            display: flex;
-
-            .banner {
-                background-color: $color-gray-500;
-                width: 50%;
-                height: 150px;
-                border-radius: 10px;
+            position: relative;
+            width: 100%;
+            img{
+                width: 100%;
+                object-fit: cover;
             }
         }
     }

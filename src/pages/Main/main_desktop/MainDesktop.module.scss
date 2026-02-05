@@ -9,6 +9,7 @@
 
     .bottomMenu {
         display: flex;
+        position: relative;
         justify-content: space-between;
         padding: 40px 0;
         gap: 10px;
@@ -80,9 +81,12 @@
 
 
         .event {
+            overflow: hidden;
+            position: relative;
             flex: 2;
-            background-color: $color-gray-500;
+            background-color: $color-gray-100;
             border-radius: 10px;
+            width: 100%;
         }
     }
 

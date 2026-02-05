@@ -1,13 +1,36 @@
 @import '../../../styles/global.scss';
 
 .mySwiper {
+  display: block;
+  position: relative;
   width: 100%;
-  height: 400px;
-  background: $color-gray-500;
-  border-radius: 20px;
-  margin-top: 24px;
+  height: 300px;
+  overflow: hidden;
+
+  overflow: hidden;
+  position: relative;
+  flex: 2;
+  border-radius: 10px;
+  width: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+  }
+
+  @include respond-max(mobile-m) {
+    height: 150px;
+  }
+
   .swiper-button-prev,
   .swiper-button-next {
     color: black; // 네비게이션 버튼 색상
+
+    @include respond-max(mobile-m) {
+      color: rgba(0, 0, 0, 0.205);
+    }
   }
 }

@@ -7,6 +7,7 @@ import { faArrowRight, faMapMarkerAlt, faCheck, faComments, faFile, } from '@for
 import Footer from '../../../components/common/Footer';
 import { useCurrentLocation } from '../../../utils/useCurrentLocation';
 import { Link } from 'react-router-dom';
+import Slide from '../main_desktop/Slide';
 
 function MainMobile() {
     const { address, error } = useCurrentLocation();
@@ -56,17 +57,13 @@ function MainMobile() {
             </section>
             <section className={styles.mainCont}>
                 <div className={styles.event}>
-                    <div className={styles.banner}></div>
-                    {/* 슬라이드 추가 */}
+                    <Slide />
                 </div>
                 <div className={styles.boon}>
                     <h3>에브리카 혜택</h3>
                     <div className={styles.bannerCont}>
-                        <div className={styles.banner}></div>
-                        <div className={styles.banner}></div>
-
+                        <img src="/main/promotion/option1.png" alt="" />
                     </div>
-                    {/* 슬라이드 추가 */}
                 </div>
             </section>
             <Footer />
