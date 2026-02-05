@@ -36,7 +36,7 @@ const MyPage = () => {
   });
 
   // 1. 유저 정보 상태에 licenseInfo 추가 (초기값 null이면 미등록 상태)
-  const [licenseInfo, setLicenseInfo] = useState<UserLicense>({
+  const [licenseInfo, setLicenseInfo] = useState<UserLicense | null>({
     type: '',
     number: '',
     expiry: ''

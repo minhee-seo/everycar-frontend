@@ -34,8 +34,6 @@ const PaymentButton = ({
 
   const handlePayment = async () => {
     try {
-
-
       const redirectUrl = `${window.location.origin}${window.location.pathname}${window.location.search}`;
 
       const payment = await PortOne.requestPayment({
@@ -57,7 +55,7 @@ const PaymentButton = ({
       // 모바일 리다이렉트 시 아무것도 반환하지 않을 경우
       if (!payment) return;
 
-      // 데스크탑 전용 팝업 방식일 때만 아래 코드가 실행됨
+      // 데스크탑 전용 팝업 방식
       if (payment) {
         if (payment.code != null) return alert(`결제 실패: ${payment.message}`);
         await handleVerification(payment.paymentId);
@@ -67,6 +65,9 @@ const PaymentButton = ({
       if (payment.code != null) {
         return alert(`결제 실패: ${payment.message}`);
       }
+
+      // 결제 성공 시 검증
+      await handleVerification(payment.paymentId);
 
 
     } catch (error: any) {

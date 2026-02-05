@@ -1,4 +1,5 @@
 // src/api/reservationService
+import { ContractDetailsResponse } from '../types/contract/cantract';
 import client from './client';
 
 export interface ContractDetailsParams {
@@ -8,10 +9,8 @@ export interface ContractDetailsParams {
 }
 
 export const reservationService = {
-  // 계약 페이지 정보 조회
-  getContractDetails: async (params: ContractDetailsParams) => {
+  getContractDetails: async (params: ContractDetailsParams): Promise<ContractDetailsResponse> => {
     const response = await client.get('/reservation/contract-details', { params });
     return response.data;
   },
-
 };

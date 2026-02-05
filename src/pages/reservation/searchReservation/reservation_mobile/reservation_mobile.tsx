@@ -8,7 +8,7 @@ import ReservationDatePicker from '../datepicker/ReservationDatePicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-import { ReservationInfo } from '../../../../types/reservation';
+import { ReservationInfo } from '../../../../types/ReservationInfo';
 import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime';
 import { getRoundedDate } from '../../../../utils/getRoundedTime';
 import { ParkingDTO } from '../../../../types/dto/ParkingDTO';

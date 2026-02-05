@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './MainPage.module.scss';
 import Content from '../../components/common/reservationControl/Content';
 import Slide from './main_desktop/Slide';
@@ -9,6 +9,7 @@ import Searchbar from './main_mobile/Searchbar';
 import Footer from '../../components/common/Footer';
 import MainMobile from './main_mobile/MainMobile';
 import MainDesktop from './main_desktop/MainDesktop';
+import { ReservationInfo } from '../../types/ReservationInfo';
 function MainPage() {
   return (
     <ResponsiveSwitch
@@ -19,13 +20,15 @@ function MainPage() {
 }
 
 function Desktop() {
+
+
   return (
     <div className={styles.container}>
       {/* <Slide></Slide> */}
-      <Content></Content>
+      <Content/>
       <ShortCut></ShortCut>
       {/* <CarSlider></CarSlider> */}
-    </div>
+    </div >
   );
 }
 

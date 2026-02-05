@@ -3,9 +3,9 @@ import styles from './ReservationController.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faAngleRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import ReservationDatePicker from '../../datepicker/ReservationDatePicker';
-import { ReservationInfo } from '../../../../../types/reservation';
+import { ReservationInfo } from '../../../../../types/ReservationInfo';
 import FormatKoreanDate from '../../../../../utils/dateUtils';
-import { ParkingData } from '../../../../../types/dto/ParkingDTO';
+import { ParkingDTO } from '../../../../../types/dto/ParkingDTO';
 import { fetchParkingData } from '../../../../../api/parking';
 
 declare global {
@@ -20,7 +20,7 @@ interface ReservationControllerProps {
     keyword: string;
     setKeyword: React.Dispatch<React.SetStateAction<string>>;
     filtered: any[];
-    onSearchComplete: (data: ParkingData[]) => void;
+    onSearchComplete: (data: ParkingDTO[]) => void;
     isDatePickerOpen: boolean;
     setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     // dateRange: [Date | null, Date | null];
@@ -90,7 +90,7 @@ function ReservationController({ map, closeSheet, keyword, setKeyword, filtered,
         handleSearchClick(filtered);
     };
 
-    const handleSearchClick = (data: ParkingData[]) => { // 검색 결과를 받도록 수정
+    const handleSearchClick = (data: ParkingDTO[]) => { // 검색 결과를 받도록 수정
         if (onSearchComplete) {
             onSearchComplete(data); // 검색 결과 데이터 전달
         }

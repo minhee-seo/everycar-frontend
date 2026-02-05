@@ -16,7 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
 
 
-  // 💡 ProtectedRoute에서 넘겨준 state가 있으면 그 경로를, 없으면 메인('/')을 목적지로 설정
   const from = location.state?.from?.pathname || "/";
 
 

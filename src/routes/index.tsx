@@ -11,7 +11,6 @@ import '../styles/global.scss';
 import '../layouts/layout.scss';
 import CarList from '../pages/carList/CarList';
 import CarDetail from '../pages/carDetail/CarDetail';
-import Payment from '../pages/payment/Payment';
 import Contract from '../pages/contract/Contract';
 import Login from '../pages/login/Login';
 import SignConditions from '../pages/Auth/SignupConditions/SignupConditions';
@@ -46,7 +45,6 @@ const AppRoutes = () => (
               <Route path="reservations/:id" element={<MypageReservationDetail />} />
             </Route>
             <Route path="/reservation/contract" element={<Contract />} />
-            <Route path="/reservation/payment" element={<Payment />} />
           </Route>
         </Route>
       </Routes>

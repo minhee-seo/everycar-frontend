@@ -8,6 +8,7 @@ import PaymentButton from '../../components/payment/PaymentButton';
 import { RootState } from '../../store/index.js';
 import CarNameMapper from '../../utils/carnamemapper';
 import styles from './ContractDesktop.module.scss';
+import { ContractDetailsResponse } from '../../types/contract/cantract';
 
 function ContractDesktop() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function ContractDesktop() {
   const { userName, userId, userNum } = useSelector((state: RootState) => state.user);
 
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [contractData, setContractData] = useState(null);
+  const [contractData, setContractData] = useState<ContractDetailsResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   //  휴대폰 번호를 3개의 객체로 관리
@@ -66,7 +67,6 @@ function ContractDesktop() {
     const loadData = async () => {
       try {
         setLoading(true);
-        // 테스트용 파라미터
         const data = await reservationService.getContractDetails({
           carId: Number(carId),
           userNum: Number(userNum),
@@ -74,29 +74,18 @@ function ContractDesktop() {
         });
         setContractData(data);
 
-        if (data.userDto && data.userDto.userPhone) {
-          const rawPhone = data.userDto.userPhone; // 예: "01056781236"
+        // 전화번호 파싱
+        const rawPhone = data.userDTO?.userPhone || "";
+        if (rawPhone) {
+          const p1 = rawPhone.substring(0, 3);
+          const p2 = rawPhone.length === 11 ? rawPhone.substring(3, 7) : rawPhone.substring(3, 6);
+          const p3 = rawPhone.length === 11 ? rawPhone.substring(7, 11) : rawPhone.substring(6, 10);
 
-          // 전화번호가 11자리인 경우 (010-1234-5678)
-          if (rawPhone.length === 11) {
-            setDriverInfo(prev => ({
-              ...prev,
-              name: data.userDto.userName || prev.name,
-              phone1: rawPhone.substring(0, 3),
-              phone2: rawPhone.substring(3, 7),
-              phone3: rawPhone.substring(7, 11)
-            }));
-          }
-          // 전화번호가 10자리인 경우 (010-123-4567)
-          else if (rawPhone.length === 10) {
-            setDriverInfo(prev => ({
-              ...prev,
-              name: data.userDto.userName || prev.name,
-              phone1: rawPhone.substring(0, 3),
-              phone2: rawPhone.substring(3, 6),
-              phone3: rawPhone.substring(6, 10)
-            }));
-          }
+          setDriverInfo(prev => ({
+            ...prev,
+            name: data.userDTO?.userName || prev.name,
+            phone1: p1, phone2: p2, phone3: p3
+          }));
         }
       } catch (error) {
         console.error("데이터 로드 중 오류 발생:", error);
@@ -106,9 +95,12 @@ function ContractDesktop() {
     };
 
     loadData();
-  }, []);
+  }, [carId, parkingId, userNum]);
 
-  const handlePaymentSuccess = (paymentId: string) => {
+  const handlePaymentSuccess = (paymentId?: string) => {
+    if (!paymentId) {
+      console.warn("결제 ID가 없습니다.");
+    }
     alert("예약이 확정되었습니다.");
     navigate('/myPage/reservations');
   };
@@ -155,7 +147,7 @@ function ContractDesktop() {
                   </div>
                   <div className={styles.fullWidth}>
                     <span>대여 및 반납 장소</span>
-                    <p>{carDto.parking.parking_name} ({carDto.parking.parking_address})</p>
+                    <p>{carDto.parking?.parking_name} ({carDto.parking?.parking_address})</p>
                   </div>
                 </div>
               </div>

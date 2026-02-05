@@ -22,10 +22,10 @@ export const getAvailableCars = async (
   returnDatetime: string
 ): Promise<AvailableCarResponse[]> => {
   try {
-    const response = await client.get<AvailableCarResponse[]>(`/reservation/cars`, {
+    const { data } = await client.get<AvailableCarResponse[]>(`/reservation/cars`, {
       params: { parkingId, rentalDatetime, returnDatetime },
     });
-    return response.data;
+    return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "차량 목록을 가져오는 데 실패했습니다.";

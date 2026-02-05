@@ -3,19 +3,23 @@ import styled from './Content.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-import { ReservationInfo } from '../../../types/reservation';
+import { ReservationInfo } from '../../../types/ReservationInfo';
 import FormatKoreanDate from '../../../utils/dateUtils';
 import CurrentLocation from '../../../utils/CurrentLocation';
 import { useCurrentLocation } from '../../../utils/useCurrentLocation';
 import { Link } from 'react-router-dom';
 
 interface ReservationControllerProps {
-  setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDatePickerOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   // onDateSelect: (reservationInfo: ReservationInfo) => void;
-  reservationInfo: ReservationInfo;
+  reservationInfo?: ReservationInfo;
 }
 
-function Content({ setIsDatePickerOpen, reservationInfo }: ReservationControllerProps) {
+function Content({
+  setIsDatePickerOpen = () => { },
+  reservationInfo = { startDate: null, endDate: null, totalTime: null }
+}: ReservationControllerProps) {
+
   // datepicker open
   const handleDatepicker = () => {
     setIsDatePickerOpen(true);

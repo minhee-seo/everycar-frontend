@@ -8,6 +8,7 @@ import { RootState } from '../../store/index';
 import { reservationService } from '../../api/reservationService';
 import CarNameMapper from '../../utils/carnamemapper';
 import PaymentButton from '../../components/payment/PaymentButton';
+import { ContractDetailsResponse } from '../../types/contract/cantract';
 
 function ContractMobile() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function ContractMobile() {
   const { userName, userId, userNum } = useSelector((state: RootState) => state.user);
 
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [contractData, setContractData] = useState(null);
+  const [contractData, setContractData] = useState<ContractDetailsResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +75,10 @@ function ContractMobile() {
     loadData();
   }, []);
 
-  const handlePaymentSuccess = (paymentId: string) => {
+  const handlePaymentSuccess = (paymentId?: string) => {
+    if (!paymentId) {
+      console.warn("결제 ID가 없습니다.");
+    }
     alert("예약이 확정되었습니다.");
     navigate('/myPage/reservations');
   };
@@ -97,7 +101,7 @@ function ContractMobile() {
               <h4>{carDto.model.model_name} ({carDto.car_fuel})</h4>
               <p className={styles.rentalPeriod}>{rentalDatetime}</p>
               <p className={styles.rentalPeriod}>{returnDatetime}</p>
-              <p className={styles.location}>{carDto.parking.parking_address}</p>
+              <p className={styles.location}>{carDto.parking?.parking_address}</p>
             </div>
             <div className={styles.carImage}>
               <img
@@ -179,7 +183,7 @@ function ContractMobile() {
           rentalDatetime={rentalDatetime || ""}
           returnDatetime={returnDatetime || ""}
           onSuccess={handlePaymentSuccess}
-          className={styles.submitBtn} // 모바일 스타일 적용을 위해 클래스 전달
+          // className={styles.submitBtn}
         />
       </footer>
     </>

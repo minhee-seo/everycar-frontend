@@ -19,8 +19,6 @@ export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_add
 export type ModelInfoResponse = ModelDTO;
 export type CarInfoResponse = CarDTO;
 
-
-
 function CarListDesktop() {
     const { carListData, isLoading, error, refetch, params, formatPrice } = useCarList();
     const { rentalDatetime, returnDatetime } = params;
@@ -46,6 +44,7 @@ function CarListDesktop() {
         });
     }, [carListData, filters]);
 
+    console.log(carListData);
     // 로딩 처리
     if (isLoading) return <LoadingSpinner message="이용 가능한 차량을 찾고 있습니다..." />;
 

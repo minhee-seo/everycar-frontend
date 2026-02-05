@@ -17,11 +17,11 @@ function Estimate() {
     { id: "rv", name: "RV" },
   ];
 
-  const showCategory = (category) => {
+  const showCategory = (category: any) => {
     setActiveCategory(category);
   };
 
-  const renderCategoryTable = (category) => {
+  const renderCategoryTable = (category: any) => {
     switch (category) {
             case "compact":
               return (

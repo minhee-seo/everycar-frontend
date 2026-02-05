@@ -5,6 +5,13 @@ import { faCar, faClipboardCheck, faComments, faFileInvoiceDollar } from '@forta
 
 import styled from './ShortCut.module.scss';
 
+interface ShortcutBoxProps {
+  to: string;
+  ico: any; 
+  title: string;
+  subscript?: string; 
+}
+
 function ShortCut() {
     return (
         <div className={styled.serviceShortcut} data-aos="fade-up" data-aos-duration="1000" >
@@ -38,7 +45,7 @@ function ShortCut() {
         </div>
     );
 }
-function ShortcutBox({ to, ico, title, subscript }) {
+function ShortcutBox({ to, ico, title, subscript }: ShortcutBoxProps) {
     return (
         <Link className={styled.shortcutBox} to={to}>
             <div className={styled.icon}>

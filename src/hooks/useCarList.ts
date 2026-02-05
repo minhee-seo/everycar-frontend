@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getAvailableCars } from '../api/reservationApi.ts';
-import { CarDetail } from '../types/carDetail'; // 타입을 별도 파일로 분리하는 것이 좋습니다.
+import { getAvailableCars } from '../api/reservationApi';
+import { CarDetail } from '../types/carDetail/carDetail';
 
 export const useCarList = () => {
     const location = useLocation();
@@ -25,14 +25,22 @@ export const useCarList = () => {
         try {
             setIsLoading(true);
             setError(null);
-            const cars = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
-            setCarListData(cars);
+            const rawData = await getAvailableCars(parkingId, rentalDatetime, returnDatetime);
+
+            const formattedData: CarDetail[] = rawData.map((item: any) => ({
+                ...item,                  
+                model: item.model,        
+                parking: item.parking,    
+                totalPrice: item.totalPrice || 0,
+            }));
+
+            setCarListData(formattedData);
         } catch (err: any) {
             setError(err.message);
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         fetchCars();

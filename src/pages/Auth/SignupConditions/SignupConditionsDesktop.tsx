@@ -17,7 +17,7 @@ function SignupConditionsDesktop() {
     setIsPrivacyChecked(!isPrivacyChecked);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // 체크박스가 모두 선택되지 않았다면 alert을 띄우고, 선택되었다면 다음 단계로 진행
