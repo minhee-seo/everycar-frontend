@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './ReservationController.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faAngleRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import ReservationDatePicker from '../../datepicker/ReservationDatePicker.tsx';
-import { ReservationInfo } from '../../../../../types/reservation.tsx';
-import FormatKoreanDate from '../../../../../utils/dateUtils.ts';
-import { ParkingData } from '../../../../../types/dto/ParkingDTO.ts';
-import { fetchParkingData } from '../../../../../api/parking.ts';
+import ReservationDatePicker from '../../datepicker/ReservationDatePicker';
+import { ReservationInfo } from '../../../../../types/reservation';
+import FormatKoreanDate from '../../../../../utils/dateUtils';
+import { ParkingData } from '../../../../../types/dto/ParkingDTO';
+import { fetchParkingData } from '../../../../../api/parking';
 
 declare global {
     interface Window {

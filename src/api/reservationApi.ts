@@ -1,9 +1,9 @@
-// src/api/reservationApi.ts
+// src/api/reservationApi
 
-import client from './client.ts';
-import { ModelDTO } from '../types/dto/ModelDTO.ts';
-import { CarDTO } from '../types/dto/CarDTO.ts';
-import { ParkingDTO } from '../types/dto/ParkingDTO.ts';
+import client from './client';
+import { ModelDTO } from '../types/dto/ModelDTO';
+import { CarDTO } from '../types/dto/CarDTO';
+import { ParkingDTO } from '../types/dto/ParkingDTO';
 import axios from 'axios';
 
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;

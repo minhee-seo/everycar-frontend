@@ -1,5 +1,5 @@
-// src/api/reservationService.ts
-import client from './client.ts';
+// src/api/reservationService
+import client from './client';
 
 export interface ContractDetailsParams {
   carId: number;

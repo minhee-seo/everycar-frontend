@@ -1,7 +1,7 @@
 
-import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
-import CarListDesktop from './CarListDesktop.tsx';
-import CarListMobile from './CarListMobile.tsx';
+import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch';
+import CarListDesktop from './CarListDesktop';
+import CarListMobile from './CarListMobile';
 
 
 function CarList() {

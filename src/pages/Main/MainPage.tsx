@@ -1,14 +1,14 @@
 import React from 'react'
 import styles from './MainPage.module.scss';
-import Content from '../../components/common/reservationControl/Content.tsx';
-import Slide from './main_desktop/Slide.tsx';
-import ShortCut from './main_desktop/ShortCut.tsx';
-import CarSlider from './main_commoon/CarSlide.tsx';
-import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
-import Searchbar from './main_mobile/Searchbar.tsx';
-import Footer from '../../components/common/Footer.tsx';
-import MainMobile from './main_mobile/MainMobile.tsx';
-import MainDesktop from './main_desktop/MainDesktop.tsx';
+import Content from '../../components/common/reservationControl/Content';
+import Slide from './main_desktop/Slide';
+import ShortCut from './main_desktop/ShortCut';
+import CarSlider from './main_commoon/CarSlide';
+import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch';
+import Searchbar from './main_mobile/Searchbar';
+import Footer from '../../components/common/Footer';
+import MainMobile from './main_mobile/MainMobile';
+import MainDesktop from './main_desktop/MainDesktop';
 function MainPage() {
   return (
     <ResponsiveSwitch

@@ -1,5 +1,5 @@
-// src/api/payment.ts
-import client from './client.ts';
+// src/api/payment
+import client from './client';
 
 export interface PaymentVerifyRequest {
   paymentId: string;

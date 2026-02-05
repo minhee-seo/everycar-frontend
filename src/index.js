@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import AppRoutes from './routes/index.tsx';
+import AppRoutes from './routes/index';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { store } from './store/index.js'; // 방금 만든 store 파일 경로
+import { store } from './store/index'; // 방금 만든 store 파일 경로
 import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

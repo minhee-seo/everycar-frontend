@@ -1,8 +1,8 @@
-// src/components/payment/PaymentButton.tsx
+// src/components/payment/PaymentButton
 import React from 'react';
 import * as PortOne from '@portone/browser-sdk/v2';
 import styles from './PaymentButton.module.scss'; // 전용 스타일
-import { PaymentVerifyRequest, verifyPayment } from '../../api/payment.ts';
+import { PaymentVerifyRequest, verifyPayment } from '../../api/payment';
 
 interface PaymentButtonProps {
   amount: number;

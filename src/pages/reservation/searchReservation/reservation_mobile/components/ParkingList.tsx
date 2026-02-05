@@ -3,8 +3,8 @@ import styles from './ParkingList.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCar, faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { ParkingDTO } from '../../../../../types/dto/ParkingDTO.ts';
-import { ReservationInfo } from '../../../../../types/reservation.tsx';
+import { ParkingDTO } from '../../../../../types/dto/ParkingDTO';
+import { ReservationInfo } from '../../../../../types/reservation';
 
 interface ParkingListProps {
     filtered: ParkingDTO[];

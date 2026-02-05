@@ -1,4 +1,4 @@
-// src/components/common/header/header_mobile/appBarConfig.ts
+// src/components/common/header/header_mobile/appBarConfig
 import { faArrowLeft, faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 
 export interface AppBarConfig {

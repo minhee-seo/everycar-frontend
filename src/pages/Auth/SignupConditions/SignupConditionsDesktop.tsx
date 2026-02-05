@@ -1,7 +1,7 @@
 import style from "./SignConditions.module.scss";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // useNavigate 임포트
-import SignupProgress from "../SignupProgress/SignupProgress.tsx";
+import SignupProgress from "../SignupProgress/SignupProgress";
 
 function SignupConditionsDesktop() {
   const [isTermsChecked, setIsTermsChecked] = useState(false);

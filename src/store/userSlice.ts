@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { authService } from '../api/authService.ts';
+import { authService } from '../api/authService';
 
 // 비동기 로그인 액션
 export const loginUser = createAsyncThunk(

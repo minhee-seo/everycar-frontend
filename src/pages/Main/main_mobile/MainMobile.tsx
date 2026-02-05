@@ -1,11 +1,11 @@
 import styles from './MainMobile.module.scss';
 
-import Searchbar from './Searchbar.tsx'
+import Searchbar from './Searchbar'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faMapMarkerAlt, faCheck, faComments, faFile, } from '@fortawesome/free-solid-svg-icons';
-import Footer from '../../../components/common/Footer.tsx';
-import { useCurrentLocation } from '../../../utils/useCurrentLocation.ts';
+import Footer from '../../../components/common/Footer';
+import { useCurrentLocation } from '../../../utils/useCurrentLocation';
 import { Link } from 'react-router-dom';
 
 function MainMobile() {

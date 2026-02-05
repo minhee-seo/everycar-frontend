@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ReservationList.module.scss';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import MypageSide from './MypageSide.tsx';
-import { ReservationItem } from '../../types/mypage/ReservationItem.ts';
-import { userApi } from '../../api/mypageUserApi.ts';
+import { RootState } from '../../store/index';
+import MypageSide from './MypageSide';
+import { ReservationItem } from '../../types/mypage/ReservationItem';
+import { userApi } from '../../api/mypageUserApi';
 import { Link, useNavigate } from 'react-router-dom';
-import CarNameMapper from '../../utils/carnamemapper.ts';
+import CarNameMapper from '../../utils/carnamemapper';
 
 // 예약 상태 타입 정의
 type ReservationStatus = '전체' | '이용예정' | '이용중' | '반납완료' | '취소됨';

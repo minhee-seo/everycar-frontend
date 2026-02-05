@@ -4,10 +4,10 @@ import styles from './ContractMobile.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faCreditCard, faMobileScreenButton, faCheckCircle, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { reservationService } from '../../api/reservationService.ts';
-import CarNameMapper from '../../utils/carnamemapper.ts';
-import PaymentButton from '../../components/payment/PaymentButton.tsx';
+import { RootState } from '../../store/index';
+import { reservationService } from '../../api/reservationService';
+import CarNameMapper from '../../utils/carnamemapper';
+import PaymentButton from '../../components/payment/PaymentButton';
 
 function ContractMobile() {
   const navigate = useNavigate();

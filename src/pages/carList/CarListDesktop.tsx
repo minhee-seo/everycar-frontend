@@ -4,16 +4,16 @@ import styles from './CarList.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faLocationDot, faCarSide, faMagnifyingGlass, faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
-import { ModelDTO } from '../../types/dto/ModelDTO.ts';
-import { CarDTO } from '../../types/dto/CarDTO.ts';
-import { ParkingDTO } from '../../types/dto/ParkingDTO.ts';
+import { ModelDTO } from '../../types/dto/ModelDTO';
+import { CarDTO } from '../../types/dto/CarDTO';
+import { ParkingDTO } from '../../types/dto/ParkingDTO';
 
-import { getAvailableCars } from '../../api/reservationApi.ts';
-import CarNameMapper from '../../utils/carnamemapper.ts';
-import { useCarList } from '../../hooks/useCarList.ts';
-import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
-import ErrorView from '../../components/common/DataErrorView.tsx';
-import CarFilterSidebar from './CarFilterSidebar.tsx';
+import { getAvailableCars } from '../../api/reservationApi';
+import CarNameMapper from '../../utils/carnamemapper';
+import { useCarList } from '../../hooks/useCarList';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import ErrorView from '../../components/common/DataErrorView';
+import CarFilterSidebar from './CarFilterSidebar';
 
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;
 export type ModelInfoResponse = ModelDTO;

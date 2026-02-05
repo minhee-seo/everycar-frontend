@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import MobileGnb from './header/header_mobile/MobileGnb.tsx';
-import ResponsiveSwitch from '../responsive/ResponsiveSwitch.tsx';
-import DesktopGnb from './header/header_desktop/DesktopGnb.tsx';
+import MobileGnb from './header/header_mobile/MobileGnb';
+import ResponsiveSwitch from '../responsive/ResponsiveSwitch';
+import DesktopGnb from './header/header_desktop/DesktopGnb';
 
 const Gnb: React.FC = () => {
   // const isMobile = useMediaQuery({ maxWidth: 768 });

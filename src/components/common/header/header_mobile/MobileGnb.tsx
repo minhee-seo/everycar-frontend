@@ -16,7 +16,7 @@ export default function MobileGnb() {
     <>
       <nav className={styles.mobileTabBar}>
         <Link to="/" className={location.pathname === '/' ? styles.active : ''}>
-          <FontAwesomeIcon icon={faHome} />
+          <FontAwesomeIcon icon={faHome as any} />
           <span>홈</span>
         </Link>
         <Link

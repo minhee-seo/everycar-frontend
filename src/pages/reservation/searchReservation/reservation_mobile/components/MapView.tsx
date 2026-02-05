@@ -1,6 +1,6 @@
-// pages/Reservation/components/MapView.tsx
+// pages/Reservation/components/MapView
 import { useEffect, useState } from 'react';
-import { loadKakaoMap } from '../../../../../utils/LoadKaKaoMap.tsx';
+import { loadKakaoMap } from '../../../../../utils/LoadKaKaoMap';
 import styles from './MapView.module.scss';
 
 declare global {

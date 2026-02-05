@@ -4,11 +4,11 @@ import styles from './ParkingList.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationCrosshairs, faLocationDot, faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserLocation } from '../../../../types/UserLocation.ts';
-import { calculateDistance, formatDistance } from '../../../../utils/haversine.ts';
-import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
-import { ModelDTO } from '../../../../types/dto/ModelDTO.ts';
-import { CarDTO } from '../../../../types/dto/CarDTO.ts';
+import { UserLocation } from '../../../../types/UserLocation';
+import { calculateDistance, formatDistance } from '../../../../utils/haversine';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO';
+import { ModelDTO } from '../../../../types/dto/ModelDTO';
+import { CarDTO } from '../../../../types/dto/CarDTO';
 
 export type ParkingInfoResponse = ParkingDTO;
 export type ModelInfoResponse = ModelDTO;

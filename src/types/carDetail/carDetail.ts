@@ -1,6 +1,6 @@
-import { ModelDTO } from '../dto/ModelDTO.ts';
-import { CarDTO } from '../dto/CarDTO.ts';
-import { ParkingDTO } from '../dto/ParkingDTO.ts';
+import { ModelDTO } from '../dto/ModelDTO';
+import { CarDTO } from '../dto/CarDTO';
+import { ParkingDTO } from '../dto/ParkingDTO';
 
 //  주차장 정보 타입 (ParkingDTO에서 필요한 것만 추출)
 export type ParkingInfoResponse = Pick<ParkingDTO, 'parking_name' | 'parking_address'>;

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import styles from './MainDesktop.module.scss';
-import Content from '../../../components/common/reservationControl/Content.tsx';
-import ShortCut from './ShortCut.tsx';
+import Content from '../../../components/common/reservationControl/Content';
+import ShortCut from './ShortCut';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-import ReservationDatePicker from '../../reservation/searchReservation/datepicker/ReservationDatePicker.tsx';
-import { ReservationInfo } from '../../../types/reservation.tsx';
-import FormatKoreanDate, { FormatTime } from '../../../utils/dateUtils.ts';
-import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../utils/CurrentTime.ts';
-import { getRoundedDate } from '../../../utils/getRoundedTime.tsx';
+import ReservationDatePicker from '../../reservation/searchReservation/datepicker/ReservationDatePicker';
+import { ReservationInfo } from '../../../types/reservation';
+import FormatKoreanDate, { FormatTime } from '../../../utils/dateUtils';
+import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../utils/CurrentTime';
+import { getRoundedDate } from '../../../utils/getRoundedTime';
 
 const MainDesktop = () => {
     const [isDatepickerOpen, setIsDatePickerOpen] = useState<boolean>(false);

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styles from './reservation_mobile.module.scss';
-import MapView from './components/MapView.tsx';
-import ReservationController from './components/reservationController.tsx';
-import SearchTrigger from './components/SearchTrigger.tsx';
-import ParkingList from './components/ParkingList.tsx';
-import ReservationDatePicker from '../datepicker/ReservationDatePicker.tsx';
+import MapView from './components/MapView';
+import ReservationController from './components/reservationController';
+import SearchTrigger from './components/SearchTrigger';
+import ParkingList from './components/ParkingList';
+import ReservationDatePicker from '../datepicker/ReservationDatePicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-import { ReservationInfo } from '../../../../types/reservation.tsx';
-import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime.ts';
-import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
-import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
+import { ReservationInfo } from '../../../../types/reservation';
+import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime';
+import { getRoundedDate } from '../../../../utils/getRoundedTime';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO';
 
 function ReservationMobile() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);

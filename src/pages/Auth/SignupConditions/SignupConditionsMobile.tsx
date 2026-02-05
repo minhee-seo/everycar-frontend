@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from './SignupConditionsMobile.module.scss';
 import { useNavigate } from 'react-router-dom';
-import SignupProgress from '../SignupProgress/SignupProgress.tsx';
+import SignupProgress from '../SignupProgress/SignupProgress';
 
 function SignupConditionsMobile() {
   const [isTermsChecked, setIsTermsChecked] = useState(false);

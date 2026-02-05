@@ -1,9 +1,9 @@
-import MobileAppBar from '../components/common/header/header_mobile/MobileAppBar.tsx'
-import MobileTabBar from '../components/common/header/header_mobile/MobileGnb.tsx'
-import { AppBarConfig, appBarConfigMap } from '../components/common/header/header_mobile/appBarConfig.tsx';
+import MobileAppBar from '../components/common/header/header_mobile/MobileAppBar'
+import MobileTabBar from '../components/common/header/header_mobile/MobileGnb'
+import { AppBarConfig, appBarConfigMap } from '../components/common/header/header_mobile/appBarConfig';
 
 import { Outlet, useLocation } from 'react-router-dom';
-import Footer from '../components/common/Footer.tsx';
+import Footer from '../components/common/Footer';
 
 const MobileLayout = () => {
   const location = useLocation();

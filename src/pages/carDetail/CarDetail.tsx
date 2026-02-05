@@ -1,12 +1,12 @@
 import { faClock, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import ErrorView from '../../components/common/DataErrorView.tsx';
-import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
-import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
-import { useCarDetail } from '../../hooks/useCarDetail.ts';
-import CarNameMapper from '../../utils/carnamemapper.ts';
-import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView.tsx';
+import ErrorView from '../../components/common/DataErrorView';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch';
+import { useCarDetail } from '../../hooks/useCarDetail';
+import CarNameMapper from '../../utils/carnamemapper';
+import MapView from '../reservation/searchReservation/reservation_mobile/components/MapView';
 import styles from './CarDetail.module.scss';
 
 interface SubComponentProps extends ReturnType<typeof useCarDetail> {

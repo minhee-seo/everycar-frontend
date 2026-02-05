@@ -1,6 +1,6 @@
 // hooks/useCurrentLocation.ts
 import { useEffect, useState } from 'react';
-import { loadKakaoMap } from './LoadKaKaoMap.tsx';
+import { loadKakaoMap } from './LoadKaKaoMap';
 
 declare global {
   interface Window {

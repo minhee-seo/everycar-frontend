@@ -1,4 +1,4 @@
-import client from './client.ts';
+import client from './client';
 
 export const authService = {
     // 로그인 요청

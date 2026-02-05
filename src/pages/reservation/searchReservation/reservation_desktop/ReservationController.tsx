@@ -1,10 +1,10 @@
 import { faClock, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useMemo, useState } from 'react';
-import { fetchParkingData } from '../../../../api/parking.ts';
-import { ParkingDTO } from '../../../../types/dto/ParkingDTO.ts';
-import { ReservationInfo } from '../../../../types/reservation.tsx';
-import FormatKoreanDate from '../../../../utils/dateUtils.ts';
+import { fetchParkingData } from '../../../../api/parking';
+import { ParkingDTO } from '../../../../types/dto/ParkingDTO';
+import { ReservationInfo } from '../../../../types/reservation';
+import FormatKoreanDate from '../../../../utils/dateUtils';
 import styles from './ReservationController.module.scss';
 
 interface ReservationControllerProps {

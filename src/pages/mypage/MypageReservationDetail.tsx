@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './MypageReservationDetail.module.scss';
-import MypageSide from './MypageSide.tsx';
-import { userApi } from '../../api/mypageUserApi.ts'; // API 불러오기
-import { ReservationDetail as IDetail } from '../../types/mypage/ReservationDetail.ts';
+import MypageSide from './MypageSide';
+import { userApi } from '../../api/mypageUserApi'; // API 불러오기
+import { ReservationDetail as IDetail } from '../../types/mypage/ReservationDetail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faMapMarkerAlt, faClock } from '@fortawesome/free-solid-svg-icons';
-import CarNameMapper from '../../utils/carnamemapper.ts';
+import CarNameMapper from '../../utils/carnamemapper';
 
 const ReservationDetail = () => {
   const { id } = useParams<{ id: string }>(); // URL 파라미터 :id 추출

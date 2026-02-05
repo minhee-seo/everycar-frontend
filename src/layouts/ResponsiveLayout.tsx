@@ -1,7 +1,7 @@
-import ResponsiveSwitch from '../components/responsive/ResponsiveSwitch.tsx';
+import ResponsiveSwitch from '../components/responsive/ResponsiveSwitch';
 
-import MobileLayout from '../layouts/MobileLayout.tsx';
-import DesktopLayout from '../layouts/DesktopLayout.tsx';
+import MobileLayout from '../layouts/MobileLayout';
+import DesktopLayout from '../layouts/DesktopLayout';
 
 
 const ResponsiveLayout = () => (

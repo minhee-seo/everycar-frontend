@@ -1,8 +1,8 @@
-// src/api/userApi.ts
-import { ReservationDetail } from '../types/mypage/ReservationDetail.ts';
-import { ReservationItem } from '../types/mypage/ReservationItem.ts';
-import { UserProfileResponse } from '../types/mypage/UserProfileResponse.ts';
-import client from './client.ts';
+// src/api/userApi
+import { ReservationDetail } from '../types/mypage/ReservationDetail';
+import { ReservationItem } from '../types/mypage/ReservationItem';
+import { UserProfileResponse } from '../types/mypage/UserProfileResponse';
+import client from './client';
 
 
 // 정보 수정 시 보낼 타입

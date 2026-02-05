@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { reservationService } from '../../api/reservationService.ts';
-import PaymentButton from '../../components/payment/PaymentButton.tsx';
+import { reservationService } from '../../api/reservationService';
+import PaymentButton from '../../components/payment/PaymentButton';
 import { RootState } from '../../store/index.js';
-import CarNameMapper from '../../utils/carnamemapper.ts';
+import CarNameMapper from '../../utils/carnamemapper';
 import styles from './ContractDesktop.module.scss';
 
 function ContractDesktop() {

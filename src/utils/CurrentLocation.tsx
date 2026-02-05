@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { loadKakaoMap } from "./LoadKaKaoMap.tsx"; // ✅ Kakao API 로드 유틸 import
+import { loadKakaoMap } from "./LoadKaKaoMap"; // ✅ Kakao API 로드 유틸 import
 
 declare global {
   interface Window {

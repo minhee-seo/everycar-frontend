@@ -7,19 +7,19 @@ import styles from './ReservationDatePicker.module.scss';
 
 import { ko } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import CustomSelect from './CustomSelect.tsx';
+import CustomSelect from './CustomSelect';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 
-import { getRoundedDate } from '../../../../utils/getRoundedTime.tsx';
+import { getRoundedDate } from '../../../../utils/getRoundedTime';
 
 // 날짜, 시간 타입
-import { ReservationInfo } from '../../../../types/reservation.tsx';
-import FormatKoreanDate from '../../../../utils/dateUtils.ts';
-import { TimeCalculator } from '../../../../utils/TimeCalculator.ts';
-import CombineDateAndTime from '../../../../utils/CombineDateAndTime.ts';
-import { formatTimeFromDate } from '../../../../types/formatTimeFromDate.ts';
+import { ReservationInfo } from '../../../../types/reservation';
+import FormatKoreanDate from '../../../../utils/dateUtils';
+import { TimeCalculator } from '../../../../utils/TimeCalculator';
+import CombineDateAndTime from '../../../../utils/CombineDateAndTime';
+import { formatTimeFromDate } from '../../../../types/formatTimeFromDate';
 
 interface ReservationDatePickerProps {
   reservationInfo: ReservationInfo;

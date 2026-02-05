@@ -3,10 +3,10 @@ import styled from './Content.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faArrowRight, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-import { ReservationInfo } from '../../../types/reservation.tsx';
-import FormatKoreanDate from '../../../utils/dateUtils.ts';
-import CurrentLocation from '../../../utils/CurrentLocation.tsx';
-import { useCurrentLocation } from '../../../utils/useCurrentLocation.ts';
+import { ReservationInfo } from '../../../types/reservation';
+import FormatKoreanDate from '../../../utils/dateUtils';
+import CurrentLocation from '../../../utils/CurrentLocation';
+import { useCurrentLocation } from '../../../utils/useCurrentLocation';
 import { Link } from 'react-router-dom';
 
 interface ReservationControllerProps {

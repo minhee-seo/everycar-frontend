@@ -1,26 +1,26 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import MainPage from '../pages/Main/MainPage.tsx';
-import Reservation from '../pages/reservation/searchReservation/reservation.tsx';
-import Header from '../components/common/Gnb.tsx';
-import Footer from '../components/common/Footer.tsx';
+import MainPage from '../pages/Main/MainPage';
+import Reservation from '../pages/reservation/searchReservation/reservation';
+import Header from '../components/common/Gnb';
+import Footer from '../components/common/Footer';
 
-import ResponsiveLayout from '../layouts/ResponsiveLayout.tsx';
+import ResponsiveLayout from '../layouts/ResponsiveLayout';
 
 import '../styles/global.scss';
 import '../layouts/layout.scss';
-import CarList from '../pages/carList/CarList.tsx';
-import CarDetail from '../pages/carDetail/CarDetail.tsx';
-import Payment from '../pages/payment/Payment.tsx';
-import Contract from '../pages/contract/Contract.tsx';
-import Login from '../pages/login/Login.tsx';
-import SignConditions from '../pages/Auth/SignupConditions/SignupConditions.tsx';
-import Signup from '../pages/Auth/Signup.tsx';
-import ProtectedRoute from '../components/auth/ProtectedRoute.tsx';
-import MypageInfo from '../pages/mypage/MypageInfo.tsx';
-import ReservationList from '../pages/mypage/ReservationList.tsx';
-import MypageReservationDetail from '../pages/mypage/MypageReservationDetail.tsx';
-import Estimate from '../pages/estimate/estimate.tsx';
+import CarList from '../pages/carList/CarList';
+import CarDetail from '../pages/carDetail/CarDetail';
+import Payment from '../pages/payment/Payment';
+import Contract from '../pages/contract/Contract';
+import Login from '../pages/login/Login';
+import SignConditions from '../pages/Auth/SignupConditions/SignupConditions';
+import Signup from '../pages/Auth/Signup';
+import ProtectedRoute from '../components/auth/ProtectedRoute';
+import MypageInfo from '../pages/mypage/MypageInfo';
+import ReservationList from '../pages/mypage/ReservationList';
+import MypageReservationDetail from '../pages/mypage/MypageReservationDetail';
+import Estimate from '../pages/estimate/estimate';
 
 const AppRoutes = () => (
   <>

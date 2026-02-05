@@ -1,9 +1,9 @@
-// src/hooks/useLogout.ts
+// src/hooks/useLogout
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logoutAction } from '../store/userSlice.ts'; // 경로 확인 필수
-import { authService } from '../api/authService.ts';
-import { RootState } from '../store';
+import { logoutAction } from '../store/userSlice'; // 경로 확인 필수
+import { authService } from '../api/authService';
+import { RootState } from '../store/index';
 
 export const useLogout = () => {
   const dispatch = useDispatch();

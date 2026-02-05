@@ -1,8 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { CarDTO } from '../types/dto/CarDTO';
-import client from './client.ts';
-import { ModelDTO } from '../types/dto/ModelDTO.ts';
-import { ParkingDTO } from '../types/dto/ParkingDTO.ts';
+import client from './client';
+import { ModelDTO } from '../types/dto/ModelDTO';
+import { ParkingDTO } from '../types/dto/ParkingDTO';
 
 // 상세 페이지 응답 구조 인터페이스
 export interface CarDetailResponse {

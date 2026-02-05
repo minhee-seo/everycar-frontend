@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { userApi } from '../../api/mypageUserApi.ts';
-import ErrorView from '../../components/common/DataErrorView.tsx';
-import LoadingSpinner from '../../components/common/LoadingSpinner.tsx';
-import { useLogout } from '../../hooks/useLogout.ts';
-import { RootState } from '../../store';
-import { UserLicense, UserProfileResponse } from '../../types/mypage/UserProfileResponse.ts';
+import { userApi } from '../../api/mypageUserApi';
+import ErrorView from '../../components/common/DataErrorView';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { useLogout } from '../../hooks/useLogout';
+import { RootState } from '../../store/index';
+import { UserLicense, UserProfileResponse } from '../../types/mypage/UserProfileResponse';
 import styles from './MypageInfo.module.scss';
-import MypageSide from './MypageSide.tsx';
+import MypageSide from './MypageSide';
 const MyPage = () => {
 
   // 

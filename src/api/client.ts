@@ -1,5 +1,5 @@
 // api 공통설정 
-// src/api/client.ts
+// src/api/client
 
 import axios, { AxiosInstance } from 'axios';
 

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import style from './Signup.module.scss';
-import SignupProgress from "./SignupProgress/SignupProgress.tsx";
+import SignupProgress from "./SignupProgress/SignupProgress";
 
 const Signup = () => {
   const [id, setId] = useState('');

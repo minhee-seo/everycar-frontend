@@ -1,6 +1,6 @@
-import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch.tsx';
-import ContractDesktop from './ContractDesktop.tsx';
-import ContractMobile from './ContractMobile.tsx';
+import ResponsiveSwitch from '../../components/responsive/ResponsiveSwitch';
+import ContractDesktop from './ContractDesktop';
+import ContractMobile from './ContractMobile';
 
 const Contract = () => {
     return (

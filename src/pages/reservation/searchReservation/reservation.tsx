@@ -1,11 +1,11 @@
 import React from 'react'
-import ResponsiveLayout from '../../../layouts/ResponsiveLayout.tsx'
-import ResponsiveSwitch from '../../../components/responsive/ResponsiveSwitch.tsx';
+import ResponsiveLayout from '../../../layouts/ResponsiveLayout'
+import ResponsiveSwitch from '../../../components/responsive/ResponsiveSwitch';
 
-import Mobile from './reservation_mobile/reservation_mobile.tsx';
-import Desktop from './reservation_desktop/reservation_desktop.tsx';
+import Mobile from './reservation_mobile/reservation_mobile';
+import Desktop from './reservation_desktop/reservation_desktop';
 import { useLocation } from 'react-router-dom';
-import { ReservationInfo } from '../../../types/reservation.tsx';
+import { ReservationInfo } from '../../../types/reservation';
 
 interface LocationState {
     address?: string;

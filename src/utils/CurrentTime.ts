@@ -1,6 +1,6 @@
 // src\utils\CurrentTime.ts
 
-import { getRoundedDate } from "./getRoundedTime.tsx";
+import { getRoundedDate } from "./getRoundedTime";
 
 // 현재 시간으로부터 4시간 이후 계산
 export function getFourHoursLaterRounded(): Date {

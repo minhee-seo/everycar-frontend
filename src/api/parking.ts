@@ -1,9 +1,9 @@
-import client from './client.ts';
-import { ParkingData } from '../types/dto/ParkingDTO.ts'; // 위에서 정의한 타입 임포트
+import client from './client';
+import { ParkingDTO } from '../types/dto/ParkingDTO'; 
 
-export const fetchParkingData = async (region: string): Promise<ParkingData[]> => {
+export const fetchParkingData = async (region: string): Promise<ParkingDTO[]> => {
   try {
-    const response = await client.get<ParkingData[]>(`/parking`, {
+    const response = await client.get<ParkingDTO[]>(`/parking`, {
       params: {
         region: region,
       },

@@ -6,9 +6,9 @@ import { useLocation } from 'react-router-dom';
 import styles from './DesktopGnb.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
-import { authService } from '../../../../api/authService.ts';
-import { logoutAction } from '../../../../store/userSlice.ts';
-import { useLogout } from '../../../../hooks/useLogout.ts';
+import { authService } from '../../../../api/authService';
+import { logoutAction } from '../../../../store/userSlice';
+import { useLogout } from '../../../../hooks/useLogout';
 
 const DesktopGnb: React.FC = () => {
   // 스크롤 상태 감지

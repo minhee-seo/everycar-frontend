@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CarDetailResponse, getCarDetail } from '../api/carDetail.ts';
+import { CarDetailResponse, getCarDetail } from '../api/carDetail';
 
 export const useCarDetail = () => {
     const location = useLocation();
