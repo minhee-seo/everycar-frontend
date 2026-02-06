@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 import { fetchParkingData } from '../../../../api/parking';
 import { ParkingDTO } from '../../../../types/dto/ParkingDTO';
-import { ReservationInfo } from '../../../../types/reservation';
+import { ReservationInfo } from '../../../../types/ReservationInfo';
 import { UserLocation } from '../../../../types/UserLocation';
 import { getFourHoursLaterRounded, getSixHoursAfterFourHoursLater } from '../../../../utils/CurrentTime';
 import ReservationDatePicker from '../datepicker/ReservationDatePicker';

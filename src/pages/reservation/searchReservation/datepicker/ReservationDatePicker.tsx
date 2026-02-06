@@ -15,7 +15,7 @@ import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 import { getRoundedDate } from '../../../../utils/getRoundedTime';
 
 // 날짜, 시간 타입
-import { ReservationInfo } from '../../../../types/reservation';
+import { ReservationInfo } from '../../../../types/ReservationInfo';
 import FormatKoreanDate from '../../../../utils/dateUtils';
 import { TimeCalculator } from '../../../../utils/TimeCalculator';
 import CombineDateAndTime from '../../../../utils/CombineDateAndTime';

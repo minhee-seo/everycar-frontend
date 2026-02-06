@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCar, faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { ParkingDTO } from '../../../../../types/dto/ParkingDTO';
-import { ReservationInfo } from '../../../../../types/reservation';
+import { ReservationInfo } from '../../../../../types/ReservationInfo';
 
 interface ParkingListProps {
     filtered: ParkingDTO[];

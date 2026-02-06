@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useMemo, useState } from 'react';
 import { fetchParkingData } from '../../../../api/parking';
 import { ParkingDTO } from '../../../../types/dto/ParkingDTO';
-import { ReservationInfo } from '../../../../types/reservation';
+import { ReservationInfo } from '../../../../types/ReservationInfo';
 import FormatKoreanDate from '../../../../utils/dateUtils';
 import styles from './ReservationController.module.scss';
 

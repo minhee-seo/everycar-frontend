@@ -5,7 +5,7 @@ import ResponsiveSwitch from '../../../components/responsive/ResponsiveSwitch';
 import Mobile from './reservation_mobile/reservation_mobile';
 import Desktop from './reservation_desktop/reservation_desktop';
 import { useLocation } from 'react-router-dom';
-import { ReservationInfo } from '../../../types/reservation';
+import { ReservationInfo } from '../../../types/ReservationInfo';
 
 interface LocationState {
     address?: string;

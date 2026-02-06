@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './CustomSelect.module.scss';
-import { ReservationInfo } from '../../../../types/reservation';
+import { ReservationInfo } from '../../../../types/ReservationInfo';
 import { getFourHoursLaterRounded } from '../../../../utils/CurrentTime';
 
 interface CustomSelectProps {

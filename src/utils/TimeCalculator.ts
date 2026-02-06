@@ -1,5 +1,5 @@
 // 총 대여 시간 계산기
-import { ReservationInfo } from "../types/reservation";
+import { ReservationInfo } from "../types/ReservationInfo";
 
 interface ReservationTime {
 
