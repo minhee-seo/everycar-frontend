@@ -6,6 +6,8 @@ export interface ContractDetailsParams {
   carId: number;
   userNum: number;
   parkingId: number;
+  rentalDatetime: string;
+  returnDatetime: string;
 }
 
 export const reservationService = {

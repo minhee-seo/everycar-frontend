@@ -70,7 +70,9 @@ function ContractDesktop() {
         const data = await reservationService.getContractDetails({
           carId: Number(carId),
           userNum: Number(userNum),
-          parkingId: Number(parkingId)
+          parkingId: Number(parkingId),
+          rentalDatetime: rentalDatetime!,
+          returnDatetime: returnDatetime!,
         });
         setContractData(data);
 
@@ -246,12 +248,8 @@ function ContractDesktop() {
             <h3 className={styles.sidebarTitle}>결제 상세</h3>
             <div className={styles.priceDetail}>
               <div className={styles.priceRow}>
-                <span>대여 요금 (24시간)</span>
+                <span>대여 요금</span>
                 <span>85,000원</span>
-              </div>
-              <div className={styles.priceRow}>
-                <span>면책 보험료 (라이트)</span>
-                <span>12,400원</span>
               </div>
               <div className={styles.priceRow}>
                 <span>할인 금액</span>
@@ -259,7 +257,7 @@ function ContractDesktop() {
               </div>
               <div className={styles.totalRow}>
                 <span>최종 결제 금액</span>
-                <strong>97,400원</strong>
+                <strong>{totalPrice}원</strong>
               </div>
             </div>
 

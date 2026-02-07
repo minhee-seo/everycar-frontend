@@ -61,7 +61,9 @@ function ContractMobile() {
         const data = await reservationService.getContractDetails({
           carId: Number(carId),
           userNum: Number(userNum),
-          parkingId: Number(parkingId)
+          parkingId: Number(parkingId),
+          rentalDatetime: rentalDatetime!,
+          returnDatetime: returnDatetime!,
         });
         setContractData(data);
 
@@ -183,7 +185,7 @@ function ContractMobile() {
           rentalDatetime={rentalDatetime || ""}
           returnDatetime={returnDatetime || ""}
           onSuccess={handlePaymentSuccess}
-          // className={styles.submitBtn}
+        // className={styles.submitBtn}
         />
       </footer>
     </>
