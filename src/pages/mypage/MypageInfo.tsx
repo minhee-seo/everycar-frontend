@@ -82,7 +82,10 @@ const MyPage = () => {
   }, [reduxId, userNum]);
 
   // 전화번호 포맷팅 (출력용)
-  const formatPhone = (phone: string) => {
+  const formatPhone = (phone: string | undefined | null) => {
+    // 💡 데이터가 없을 경우를 대비한 방어 코드 추가
+    if (!phone) return '';
+
     return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
   };
 
